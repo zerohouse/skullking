@@ -1,0 +1,23 @@
+{
+  "name": "CodersGame",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "angular": "~1.5.3",
+    "angular-essential": "*",
+    "angular-ui-router": "^0.2.18",
+    "angular-sanitize": "^1.5.0",
+    "angular-animate": "^1.5.5",
+    "angular-toastr": "^1.7.0",
+    "moment": "^2.13.0",
+    "vex": "^2.3.4",
+    "sockjs-client": "^1.1.1"
+  },
+  "authors": [
+    "dev <parksungho86@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT"
+}

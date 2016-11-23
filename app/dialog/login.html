@@ -1,0 +1,19 @@
+<nav class="navbar navbar-inverse navbar-embossed">
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            <a class="icon-with-span"><i>vpn_key</i>Login</a>
+        </li>
+    </ul>
+</nav>
+<div class="dialog-body" ng-form="loginForm">
+    <input type="email" ng-pattern="regex.email.regex" name="email" ng-model="user.email" placeholder="이메일" class="form-control" maxlength="50" required>
+    <input type="password" name="password" ng-enter="login(user, loginForm.$valid)" ng-pattern="regex.password.regex" maxlength="20" ng-model="user.password" placeholder="패스워드"
+           required class="form-control">
+    <div class="btn btn-inverse margin-bottom-10" ng-click="login(user, loginForm.$valid)">로그인</div>
+    <div ng-messages="errors(loginForm)" class="error color-red">
+        <div ng-message="email">{{regex.email.message}}</div>
+        <div ng-message="password">{{regex.password.message}}</div>
+    </div>
+
+    <div class="tail">아직 아이디가 없으신가요? <a ng-click="close();registerPopup()">회원가입</a>하기</div>
+</div>

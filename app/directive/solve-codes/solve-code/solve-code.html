@@ -1,0 +1,11 @@
+<div class="layout-row line-summary">
+    <name-and-level user="solveCode.user" class="name margin-left-5 margin-right-5"></name-and-level>
+    <span class="time margin-right-10">{{solveCode.updatedAt.toYMD()}}</span>
+    <like likes="solveCode.likes" type="SOLVE_CODE" like-id="solveCode.id" class="time"></like>
+    <span class="flex"></span>
+    <result-one-line solve-code="solveCode"></result-one-line>
+</div>
+<div code="solveCode.code"></div>
+<div class="layout-row layout-align-end">
+    <span class="btn btn-sm btn-white time margin-right-5" ng-if="solveCode.code" ui-sref="codeReview({id:solveCode.id})">코드리뷰</span>
+</div>

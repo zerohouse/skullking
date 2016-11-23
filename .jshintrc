@@ -1,0 +1,31 @@
+{
+  "bitwise": true,
+  "browser": true,
+  "curly": false,
+  "eqeqeq": true,
+  "esnext": true,
+  "latedef": false,
+  "jasmine": true,
+  "noarg": true,
+  "node": true,
+  "strict": false,
+  "undef": true,
+  "unused": true,
+  "globals": {
+    "angular": true,
+    "$": true,
+    "moment": true,
+    "_": true,
+    "daum": true,
+    "alert": true,
+    "prettyPrint": true,
+    "confirm": true,
+    "introJs": true,
+    "vex": true,
+    "File": true,
+    "diff_match_patch": true,
+    "PR": true,
+    "Chart": true
+  },
+  "validthis": true
+}

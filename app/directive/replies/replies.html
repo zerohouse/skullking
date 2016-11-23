@@ -1,0 +1,6 @@
+<h3 class="flex layout-row"><span class="margin-left-5">{{title}} ({{replies.length}})</span> <span class="flex"></span>
+    <span ng-show="replies.length!==0" ng-click="write=!write" class="write-btn"><span ng-show="write">작성 취소</span><span ng-show="!write">{{title}} 쓰기</span></span>
+</h3>
+<reply-input title="title" ng-show="write || replies.length===0" reply="reply" done="done" replies="replies"></reply-input>
+<reply title="title" ng-repeat="reply in replies | limitTo : limit" replies="replies" reply="reply"></reply>
+<div class="more" ng-show="limit<replies.length" ng-click="more()">더보기</div>

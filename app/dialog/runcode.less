@@ -1,0 +1,54 @@
+.vex.runcode {
+  padding-top: 100px;
+  [code]{
+    max-height: 300px;
+    overflow: auto;
+  }
+  .vex-nav {
+    * {
+      vertical-align: middle;
+    }
+    padding: 8px;
+    font-size: 15px;
+    background: #2f4154;
+    color: white;
+  }
+  .vex-overlay {
+    pointer-events: none;
+  }
+  .vex-content {
+    border-color: #2f4154;
+    width: 600px;
+    max-width: 100%;
+    padding: 0;
+    .vex-body {
+      padding: 30px;
+      padding-top: 15px;
+      font-size: 16px;
+      parameter-value-input {
+        display: block;
+      }
+      parameter-display {
+        display: block;
+      }
+      .option {
+        padding: 10px;
+      }
+      radio-button.second {
+        display: block;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #ededed;
+      }
+    }
+    .vex-footer {
+      padding: 10px 20px;
+      text-align: right;
+      border-top: 1px solid #ededed;
+      .btn {
+        min-width: 80px;
+        text-align: center;
+      }
+    }
+  }
+}

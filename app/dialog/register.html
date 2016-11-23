@@ -1,0 +1,23 @@
+<nav class="navbar navbar-inverse navbar-embossed">
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            <a class="icon-with-span"><i>pool</i>Register</a>
+        </li>
+    </ul>
+</nav>
+<div class="dialog-body" ng-form="registerForm">
+    <input type="email" ng-pattern="regex.email.regex" name="email" ng-model="user.email" placeholder="이메일" class="form-control" maxlength="50"
+           required>
+    <input type="password" name="password" ng-pattern="regex.password.regex" maxlength="20" ng-model="user.password"
+           placeholder="패스워드"
+           required class="form-control">
+    <input type="text" name="name" maxlength="15" ng-enter="register(user, registerForm.$valid)" ng-pattern="regex.name.regex" placeholder="별명" ng-model="user.name"
+           class="form-control" required>
+    <div class="btn btn-inverse margin-bottom-10" ng-click="register(user, registerForm.$valid)">회원가입</div>
+    <div ng-messages="errors(registerForm)" class="error color-red">
+        <div ng-message="email">{{regex.email.message}}</div>
+        <div ng-message="password">{{regex.password.message}}</div>
+        <div ng-message="name">{{regex.name.message}}</div>
+    </div>
+    <div class="tail">이미 가입하셨나요? <a ng-click="close();loginPopup()">로그인</a>하기</div>
+</div>

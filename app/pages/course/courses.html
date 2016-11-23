@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="layout-row play-header">
+        <div>
+            <h5>Course</h5>
+            문제를 단계별로 풀면서 하나씩 마스터!
+        </div>
+        <div class="flex"></div>
+        <div class="layout-column layout-align-center-center">
+            <div ui-sref="courseCreate" class="btn btn-white">코스 만들기</div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-20">
+    <div ng-repeat="course in courses" class="course-summary" ui-sref="courseDetail({id:course.id})">
+        <h5 class="layout-row"><span>{{course.name}}</span><span class="flex"></span><stars ng-model="course.level" max="0" readonly="true"></stars></h5>
+        <p>{{course.description}}</p>
+    </div>
+    <div ng-if="courses.length ===0" class="course-summary" ui-sref="courseDetail({id:course.id})">
+        <h5 class="layout-row">등록된 코스가 없습니다.</h5>
+    </div>
+</div>

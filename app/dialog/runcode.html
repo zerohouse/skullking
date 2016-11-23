@@ -1,0 +1,46 @@
+<nav class="vex-nav layout-row">
+    <i class="material-icons">play_arrow</i>
+    <span>코드 실행</span>
+    <span class="flex"></span>
+    <i ng-click="close()">close</i>
+</nav>
+<div class="vex-body">
+    <radio-button label="'예제 실행'" ng-init="option='example'" ng-click="option='example'" ng-model="option"
+                  value="'example'"></radio-button>
+    <div class="option" ng-show="option==='example'">
+        <div uib-dropdown>
+            <button uib-dropdown-toggle class="btn btn-sm dropdown-toggle btn-white" ng-class="classes"
+                    type="button">
+                예제 {{problem.testCases.indexOf(selectedTestCase) +1}}<span class="caret"></span></button>
+            <ul uib-dropdown-menu role="menu" class="dropdown-menu">
+                <li ng-repeat="testCase in problem.testCases" ng-click="selectTestCase(testCase)"><a href>예제
+                    {{$index
+                    +1}}</a></li>
+            </ul>
+        </div>
+        <div class="margin-top-10 margin-bottom-10">
+            <parameter-display language="selectedLanguage" name="problem.parameters[$index].name"
+                               type="problem.parameters[$index].type"
+                               value="parameter" ng-repeat="parameter in selectedTestCase.data"
+                               ng-if="!$last"></parameter-display>
+            <div class="margin-bottom-10" ng-show="problem.returnType">
+                정답 : ({{problem.returnType | type}}) {{selectedTestCase.data[selectedTestCase.data.length - 1]}}
+            </div>
+            <div ng-if="selectedTestCase.description">
+                <p ng-bind-html="selectedTestCase.description"></p>
+            </div>
+        </div>
+    </div>
+    <radio-button class="second" label="'사용자 입력'" ng-click="option='user'" ng-model="option"
+                  value="'user'"></radio-button>
+    <div class="option" ng-show="option==='user'">
+        <div class="margin-bottom-10">
+            <parameter-value-input language="selectedLanguage" ng-repeat="parameter in problem.parameters" data="userTest"
+                                   index="$index" type="parameter.type" name="parameter.name"></parameter-value-input>
+        </div>
+    </div>
+</div>
+<div class="vex-footer">
+    <div class="btn btn-default" ng-click="close()">취소</div>
+    <div class="btn btn-primary" ng-click="runTest(option)">실행</div>
+</div>

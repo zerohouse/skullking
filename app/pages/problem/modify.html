@@ -1,0 +1,131 @@
+<div class="container vertical-padding">
+    <div class="container">
+        <h5>문제 수정하기</h5>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">제목</div>
+        <input type="text" value="" placeholder="제목" ng-model="problem.name" class="flex form-control">
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">설명</div>
+        <textarea autosize placeholder="설명" ng-model="problem.description" class="form-control"></textarea>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">난이도</div>
+        <stars ng-model="problem.level" style="padding-top:2px" tooltip-placement="right"
+               uib-tooltip="난이도는 조정될 수 있습니다."></stars>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">정책</div>
+        <div class="layout-column layout-gt-md-row">
+            <radio-buttons value="value" label="label" class="margin-bottom-10" ng-model="problem.policy" options="policies"></radio-buttons>
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">실행 환경</div>
+        <div class="layout-row layout-align-center-center icon-with-span">
+            <i>memory</i>
+            <input type="text" placeholder="메모리 제한" uib-tooltip="실행시 메모리 제한입니다." re-size readonly value="256" class="margin-right-5 flex form-control">MB
+            <i class="margin-left-20">alarm_off</i>
+            <input type="text" placeholder="시간 제한" uib-tooltip="실행시간 제한입니다." re-size readonly value="2" class="margin-right-5 flex form-control">초
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">태그
+            <div class="max-length">최대 10개</div>
+        </div>
+        <div class="flex">
+            <tags-input ng-model="problem.tags"
+                        ng-class="{'hasitem':problem.tags.length>0, 'maxitem':problem.tags.length===10}">
+                <auto-complete min-length="1" source="loadFrom($query)"></auto-complete>
+            </tags-input>
+            <span class="badge bg-primary margin-right-5" ng-click="addTag(text)" ng-repeat="text in recommedTags">{{text}}</span>
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">제약조건
+            <div class="max-length">최대 10개</div>
+        </div>
+        <div class="flex">
+            <div class="flex margin-bottom-10 layout-row" ng-repeat="constraint in problem.constraints">
+                <input type="text" ng-model="problem.constraints[$index].value" placeholder="제약조건{{$index+1}}"
+                       class="right-sharp flex form-control">
+                <div class="left-sharp btn btn-danger" ng-click="problem.constraints.remove(constraint)">삭제</div>
+            </div>
+            <div class="flex btn btn-white" ng-click="addConstraint()">
+                새로운 제약 조건 추가하기
+            </div>
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">파라미터
+            <div class="max-length">1개 ~ 10개</div>
+        </div>
+        <div class="flex">
+            <div class="flex layout-row margin-bottom-10" ng-repeat="parameter in problem.parameters">
+                <parameter-input readonly="{type:true}" class="flex" parameter="problem.parameters[$index]"></parameter-input>
+            </div>
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">리턴타입</div>
+        <parameter-types-select readonly="true" type="problem.returnType"></parameter-types-select>
+    </div>
+    <div class="label-form layout-row">
+        <div class="name">
+            주어진 코드
+        </div>
+        <div class="flex">
+            <div class="layout-row margin-bottom-10">
+                <dropdown classes="btn-white btn-group-dropdown narrow-dropdown" class="margin-right-10"
+                          ng-model="language" placeholder="언어"
+                          options="problem.languages" name="name"></dropdown>
+                <checkbox ng-model="useTemplate" label="'코드 자동생성'"></checkbox>
+            </div>
+            <div>
+                <div ng-if="useTemplate" code="language.predefinedCode"></div>
+                <textarea ng-if="!useTemplate" ng-readonly="!language || useTemplate"
+                          ng-model="language.predefinedCode" autosize
+                          placeholder="주어진 코드" class="code form-control"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="label-form layout-row">
+        <div class="name">예제
+            <div class="max-length">1개 ~ 10개</div>
+        </div>
+        <div class="flex">
+            <div ng-repeat="testCase in problem.testCases" class="label-form">
+                <h5>예제 {{$index +1}}</h5>
+                <div class="margin-bottom-10" ng-show="testCase.data.length===0">
+                    <span class="icon-with-span"><i>error_outline</i>파라미터와 리턴타입을 정의해주세요.</span>
+                </div>
+                <div class="margin-bottom-10"
+                     ng-show="(testCase.data.length>0 && !problem.returnType)|| (testCase.data.length>1 && problem.returnType)">
+                    <strong class="margin-right-10">입력</strong>
+                    <parameter-value-input ng-repeat="parameter in problem.parameters" data="testCase.data"
+                                           index="$index"
+                                           type="parameter.type" name="parameter.name"></parameter-value-input>
+                </div>
+
+                <div class="margin-bottom-10" ng-show="problem.returnType">
+                    <strong class="margin-right-10">정답</strong>
+                    <parameter-value-input data="testCase.data" index="testCase.data.length-1"
+                                           type="problem.returnType"></parameter-value-input>
+                </div>
+                <div>
+                    <h5>예제 해설</h5>
+                    <textarea autosize placeholder="예제 해설" ng-model="testCase.description"
+                              class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="label-form layout-row">
+        <div style="font-size:110%" class="flex btn btn-primary margin-top-10 margin-bottom-10"
+             ng-click="createProblem(problem)">
+            수정하기
+        </div>
+    </div>
+</div>

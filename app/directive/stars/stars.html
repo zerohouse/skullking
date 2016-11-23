@@ -1,0 +1,8 @@
+<i ng-repeat="star in getArray()">
+    star
+    <i class="left" ng-style="compute($index*2 + 1)" ng-mouseover="hover($index*2 + 1)"
+       ng-mouseleave="out()" ng-click="click($index*2 + 1)">star</i>
+    <i class="right" ng-style="compute($index*2 + 2)" ng-mouseover="hover($index*2 + 2)"
+       ng-mouseleave="out()" ng-click="click($index*2 + 2)">star</i>
+    <i class="first" ng-mouseover="hover(0)" ng-mouseleave="out()" ng-click="click(0)" ng-if="$first">star</i>
+</i>

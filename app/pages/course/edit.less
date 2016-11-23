@@ -1,0 +1,113 @@
+.course-make {
+  text-editor .wysiwyg-textarea {
+    height: 100%;
+    margin-bottom: 20px;
+  }
+  .course-edit, .course-detail {
+    font-size: 14px;
+    width: 220px;
+    margin-left: 10px;
+    .steps {
+      padding: 5px;
+      margin: 5px;
+      width: 210px;
+      .step-name {
+        border-radius: 2px;
+        padding: 4px 8px;
+      }
+      input {
+        outline: none;
+        font-size: 14px;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+        padding: 3px 7px;
+      }
+      i {
+        vertical-align: middle;
+      }
+    }
+    h5 {
+      i {
+        font-size: 16px;
+        vertical-align: bottom;
+      }
+      width: 100%;
+      font-size: 16px;
+      padding: 0 0 0 15px;
+      margin: 30px 0 0 0;
+    }
+    h5:first-child {
+      margin-top: 0;
+    }
+    .problem-select-wrap {
+      position: relative;
+      .problem-select {
+        border: 2px dotted white;
+        [as-sortable-item] {
+          border-bottom: 1px dashed #eee;
+          margin-bottom: 2px;
+          i {
+            font-size: 18px;
+          }
+        }
+        [as-sortable-item]:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+        }
+        padding: 5px;
+        margin: 5px;
+        height: 300px;
+        overflow-y: auto;
+        width: 210px;
+      }
+      .problem-select.border {
+        border-color: #999;
+      }
+
+      .problem-select.suggest {
+        problem-in-line {
+          width: 140px
+        }
+        padding: 5px 8px;
+        margin: 0;
+        border: 1px solid #ddd;
+        input {
+          width: 170px;
+          font-size: 12px;
+          border-radius: 2px;
+          border: 1px solid #ddd;
+          padding: 3px 7px;
+          outline: none;
+          margin-bottom: 4px;
+        }
+        position: absolute;
+        top: 5px;
+        left: -209px;
+        z-index: 100;
+        background: white;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    }
+
+    .as-sortable-dragging {
+      overflow: hidden;
+      border: none;
+    }
+  }
+
+  .make-box {
+    border-top: 1px dashed #aaa;
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+
+  stars {
+    margin-left: 20px;
+    margin-top: 7px;
+  }
+  .course-make-done {
+    width: 200px;
+    margin-left: 25px;
+  }
+}

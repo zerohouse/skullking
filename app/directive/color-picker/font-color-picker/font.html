@@ -1,0 +1,4 @@
+<div ng-click="toggle()" other-click="selectMod=false" class="display">
+    <i class="font-color-icon" ng-style="{'background-color':getIconColor()}" ng-class="{white:isWhite()}"></i>
+</div>
+<color-picker ng-model="ngModel" style="opacity: 0" ng-style="{opacity:getOpacity()}" change="change" ng-show="selectMod"></color-picker>

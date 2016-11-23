@@ -1,0 +1,12 @@
+<div ng-controller="confirmCtrl">
+    <div class="vex-dialog-message">
+        <h5>{{message.title}}</h5>
+        <div class="vex-body padding-bottom-10" ng-bind-html="message.message">
+        </div>
+    </div>
+    <div class="vex-dialog-buttons">
+        <button class="vex-dialog-button-primary vex-dialog-button vex-first vex-last" ng-click="ok()"> OK</button>
+        <button type="button" class="vex-dialog-button-secondary vex-dialog-button vex-last" ng-click="no()">Cancel
+        </button>
+    </div>
+</div>

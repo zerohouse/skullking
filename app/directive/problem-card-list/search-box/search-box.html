@@ -1,0 +1,7 @@
+<div class="layout-row layout-align-end">
+    <stars ng-model="query.level" ng-show="searchmode"></stars>
+    <div class="word-box" ng-show="searchmode">
+        <input placeholder="검색어" ng-model="query.keyword" class="form-control">
+    </div>
+    <i class="icon" ng-click="searching()">{{getIcon()}}</i>
+</div>

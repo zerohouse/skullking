@@ -1,0 +1,23 @@
+<span class="time margin-right-10">{{solveCode.language.name}}</span>
+<span ng-switch="solveCode.error">
+    <span ng-switch-when="COMPILE_TIMEOUT">
+        <span class="time margin-right-5 color-red">컴파일 실패(시간초과)</span>
+    </span>
+    <span ng-switch-when="COMPILE_ERROR">
+        <span class="time margin-right-5 color-red">컴파일 실패</span>
+    </span>
+    <span ng-switch-when="EXECUTE_TIMEOUT">
+        <span class="time margin-right-5 color-red">실행시간 초과</span>
+    </span>
+    <span ng-switch-when="RETURN_VALUE_TYPE_ERROR">
+        <span class="time margin-right-5 color-red">리턴타입 에러</span>
+    </span>
+    <span ng-switch-when="STANDARD_ERROR">
+        <span class="time margin-right-5 color-red">실행 중 에러</span>
+    </span>
+    <span ng-switch-default>
+        <span class="time margin-right-10">정답률 : {{solveCode | percent : 'score' : 'maxScore'}}%</span>
+        <span class="time margin-right-10">실행시간 : {{solveCode.executeTime}}ms</span>
+        <span class="time margin-right-5">메모리사용 : {{solveCode.memoryPeak}}kb</span>
+    </span>
+</span>

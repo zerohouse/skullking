@@ -1,0 +1,41 @@
+<div class="layout-row layout-align-start-center">
+    <i class="done" ng-if="problem.submitted">check</i>
+    <div class="flex">
+        <h3 class="icon-with-span">
+            <stars max="0" ng-model="problem.level" readonly="true"></stars>
+            {{problem.name}}
+        </h3>
+        <span class="badge bg-primary" ng-repeat="tag in problem.tags">{{tag.text}}</span>
+        <span class="badge icon-with-span" tooltip-placement="bottom"
+              uib-tooltip="메모리가 {{problem.memoryLimitMB}}mb로 제한됩니다."><i>memory</i>{{problem.memoryLimitMB}}mb</span>
+        <span class="badge icon-with-span" tooltip-placement="bottom"
+              uib-tooltip="실행시간이 {{problem.timeLimitSec}}초로 제한됩니다."><i>alarm_off</i>{{problem.timeLimitSec}}s</span>
+    </div>
+</div>
+<div class="margin-top-10 margin-left-10">
+    <p ng-bind-html="problem.description.newLine()"></p>
+    <ul>
+        <li ng-repeat="constraint in problem.constraints">{{constraint.value}}</li>
+    </ul>
+</div>
+<div class="top-border">
+    <h4><i>check</i> 파라미터 및 리턴 타입</h4>
+    <div class="margin-left-10">
+        파라미터 ({{problem.parameters.length}}개) :
+            <span ng-repeat="parameter in problem.parameters.length.toArray()">{{problem.parameters[$index].type | type}}<span
+                    ng-if="!$last">,</span></span>
+        <div>리턴타입 : {{problem.returnType | type}}</div>
+    </div>
+</div>
+<div class="top-border">
+    <h4><i class="material-icons">check</i> 예제</h4>
+    <div class="margin-left-10" ng-repeat="testCase in problem.testCases">
+        <h5>예제 {{$index + 1}}</h5>
+        <parameter-display language="language" name="problem.parameters[$index].name"
+                           type="problem.parameters[$index].type"
+                           value="testCase.data[$index]" ng-repeat="parameter in testCase.data.length.toArray()"
+                           ng-if="!$last"></parameter-display>
+        정답 : ({{problem.returnType | type}}) {{testCase.data[testCase.data.length - 1]}}
+        <p ng-bind-html="testCase.description" ng-if="testCase.description"></p>
+    </div>
+</div>

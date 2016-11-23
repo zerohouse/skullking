@@ -1,0 +1,26 @@
+<div class="layout-row">
+    <div class="profile layout-column layout-align-start-center">
+        <img class="img" ng-if="user.image" ng-src="{{user.image}}">
+        <div class="img" ng-if="!user.image">{{user.name[0]}}</div>
+    </div>
+    <div class="flex">
+        <div class="layout-row layout-align-start-end">
+            <name-and-level user="user" class="name margin-right-5">
+
+            </name-and-level>
+            <span class="time">{{reply.mode || mode || title + '쓰기'}}</span>
+            <span class="flex"></span>
+        </div>
+        <textarea placeholder="{{title}}" autosize ng-model="reply.text"
+                  class="form-control"></textarea>
+        <div class="layout-row margin-bottom-10">
+            <span class="icon-with-span code-help"><i>info</i> <span>#code와 #end로 코드를 입력할 수 있습니다.</span>
+                <span class="hide-sm hide-xs">ex) #code function solution(){} #end</span></span>
+            <span class="flex"></span>
+        </div>
+        <div class="layout-row layout-align-end-end">
+            <div class="btn btn-white margin-right-10" ng-click="cancel()" ng-if="mode">취소</div>
+            <div class="btn btn-white" style="min-width:130px;" ng-click="done()">{{reply.mode || mode || '작성 완료 '}}</div>
+        </div>
+    </div>
+</div>

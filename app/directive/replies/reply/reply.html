@@ -1,0 +1,22 @@
+<div class="layout-row" ng-class="{nested:reply.parentId, new:reply.new}" ng-if="!reply.modify">
+    <div class="profile layout-column layout-align-center-center">
+        <img class="img" ng-if="reply.user.image" ng-src="{{reply.user.image}}">
+        <div class="img" ng-if="!reply.user.image">{{reply.user.name[0]}}</div>
+    </div>
+    <div class="flex">
+        <div class="layout-row layout-align-center-center">
+            <name-and-level user="reply.user" class="name margin-right-5"></name-and-level>
+            <span class="time">{{reply.updatedAt.toYMD()}}</span>
+            <span class="flex"></span>
+            <span class="actions">
+                <span ng-click="modifying()" ng-if="isRootUser()">수정</span>
+                <span ng-click="delete()" ng-if="isRootUser()">삭제</span>
+                <span ng-click="report()" ng-if="!isRootUser()">신고</span>
+            </span>
+        </div>
+        <code-view text="reply.text"></code-view>
+        <like likes="reply.likes" type="REPLY" like-id="reply.id" class="time"></like>
+        <span class="time margin-left-10" ng-show="!reply.parentId" ng-click="nestedReply()">답글 달기</span>
+    </div>
+</div>
+<reply-input mode="수정 하기" ng-class="{new:reply.new}" done="done" cancel="cancel" ng-if="reply.modify" reply="reply"></reply-input>

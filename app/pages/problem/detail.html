@@ -1,0 +1,50 @@
+<div class="container margin-top-20">
+    <div class="layout-column layout-gt-sm-row">
+        <problem-detail class="flex-66" problem="problem" language="selectedLanguage"></problem-detail>
+        <div class="layout-column flex-33">
+            <div class="icon-with-span btn btn-white margin-top-20 margin-bottom-20"
+                 ui-sref="problemPlayground({id:problem.id})">
+                <i>play_circle_filled</i> 문제 풀러 가기
+            </div>
+            <div class="icon-with-span btn btn-white" ng-if="user.id===problem.maker.id"
+                 ui-sref="problemModify({id:problem.id})">
+                <i>mode_edit</i> 문제 수정하기
+            </div>
+            <div ng-if="length>0" class="statistics">
+                <h4 class="statistics-header">주요 통계</h4>
+                <div class="layout-row">
+                    <div class="numbers flex layout-column layout-align-center-center">
+                        <label>정답률</label>
+                        <span class="number"><span odometer="percent"></span><span class="unit">%</span></span>
+                    </div>
+                    <div class="numbers flex layout-column layout-align-center-center">
+                        <label>문제를 푼 사람</label>
+                        <span class="number"><span odometer="solvePeoples"></span><span class="unit">명</span></span>
+                    </div>
+                </div>
+                <div class="layout-row">
+                    <div class="numbers flex layout-column layout-align-center-center">
+                        <label>평균 메모리 사용량</label>
+                        <span class="number"><span odometer="memory"></span><span class="unit">kb</span></span>
+                    </div>
+                    <div class="numbers flex layout-column layout-align-center-center">
+                        <label>평균 실행 시간</label>
+                        <span class="number"><span odometer="time"></span><span class="unit">ms</span></span>
+                    </div>
+                </div>
+                <div class="layout-column layout-align-center-center">
+                    <span>사용된 프로그래밍 언어</span>
+                    <canvas style="max-width: 300px;max-height: 300px" width="300" height="300" chart="languages"
+                            data="languages"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="margin-top-20" ng-if="myCodes.length > 0">
+        <h3 class="border-title"><strong>나의 코드</strong> ({{myCodes.length}})</h3>
+        <solve-codes limit="1" solve-codes="myCodes"></solve-codes>
+        <h3 ng-if="solveCodes.length>0" class="border-title"><strong>다른 사람들의 코드</strong> ({{solveCodes.length}})</h3>
+        <solve-codes ng-if="solveCodes.length>0" solve-codes="solveCodes"></solve-codes>
+    </div>
+    <replies type="PROBLEM" replies-id="problem.id"></replies>
+</div>

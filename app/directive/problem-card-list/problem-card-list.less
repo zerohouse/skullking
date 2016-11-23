@@ -1,0 +1,29 @@
+problem-card-list, .problem-card-list {
+  .set {
+    border-top: 1px dashed #ddd;
+    > .left {
+      padding: 40px 30px 40px 0;
+    }
+    .divider {
+      border-right: 1px dashed #ddd;
+    }
+    > .right {
+      padding: 40px 0 40px 30px;
+    }
+  }
+  .set:first-child {
+    border-top: none;
+  }
+  @media (max-width: 960px) {
+    .set {
+      border-top: 1px dashed #ddd;
+      > .left {
+        padding: 40px 10px;
+        border-bottom: 1px dashed #ddd;
+      }
+      > .right {
+        padding: 40px 10px;
+      }
+    }
+  }
+}
