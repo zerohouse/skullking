@@ -5,9 +5,7 @@
 
     /* Controllers */
 
-    function welcomeCtrl($scope, $interval, pop, ChatSocket, loading) {
-
-        loading.done();
+    function welcomeCtrl($scope, $interval, pop, ChatSocket) {
 
         var typing = undefined;
 

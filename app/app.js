@@ -4,5 +4,6 @@ angular
         'ngSanitize',
         'ngAnimate',
         'ui.router',
-        'toastr'
+        'toastr',
+        'as.sortable'
     ]);

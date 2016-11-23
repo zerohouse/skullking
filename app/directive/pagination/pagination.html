@@ -1,9 +1,0 @@
-<div class="layout-row layout-align-center-center">
-    <div class="page-btn"><i ng-click="setPage(page-1)" ng-show="page > 0">chevron_left</i></div>
-    <div ng-class="{active:isPage(page)}" ng-click="setPage(page)" class="page-btn"
-         ng-repeat="page in (pages-1).toArray() | limitTo : showPageLength : start">
-        {{page + 1}}
-    </div>
-    <div class="page-btn"><i ng-click="setPage(page+1)"
-                             ng-show="page < pages - 2">chevron_right</i></div>
-</div>

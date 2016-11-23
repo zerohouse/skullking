@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=11"/>
     <meta charset="utf-8">
-    <title>Coders Game</title>
+    <title>Avalon YesYes Jam</title>
     <meta name="description" content="Coders Game"/>
     <meta name="keywords" content="Kewords"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -24,15 +24,6 @@
         }
     </style>
 
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=(false)"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-
     <!-- build:js(.) /scripts/vendor.js -->
     <!-- 직접 관리할 라이브러리 -->
     <!-- 라이브러리 종료 -->
@@ -48,6 +39,7 @@
     <script src="/bower_components/vex/js/vex.js"></script>
     <script src="/bower_components/vex/js/vex.dialog.js"></script>
     <script src="/bower_components/sockjs-client/dist/sockjs.js"></script>
+    <script src="/bower_components/ng-sortable/dist/ng-sortable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -59,73 +51,15 @@
     <script src="/config/ajax.js"></script>
     <script src="/config/route.config.js"></script>
     <script src="/config/route.js"></script>
-    <script src="/directive/ajax-button.directive.js"></script>
-    <script src="/directive/animate.directive.js"></script>
-    <script src="/directive/autosize/autosize.directive.js"></script>
-    <script src="/directive/blank-sref.directive.js"></script>
-    <script src="/directive/chart.directive.js"></script>
-    <script src="/directive/checkbox/checkbox.directive.js"></script>
-    <script src="/directive/code.directive.js"></script>
-    <script src="/directive/color-picker/back-color-picker/back.js"></script>
-    <script src="/directive/color-picker/color-picker.js"></script>
-    <script src="/directive/color-picker/font-color-picker/font.js"></script>
-    <script src="/directive/dropdown/dropdown.directive.js"></script>
-    <script src="/directive/like/like.directive.js"></script>
-    <script src="/directive/loading/loading.directive.js"></script>
-    <script src="/directive/name-and-level/name-and-level.js"></script>
-    <script src="/directive/ng-file.directive.js"></script>
-    <script src="/directive/ng-other-click.js"></script>
-    <script src="/directive/pagination/pagenation.ctrl.js"></script>
-    <script src="/directive/pagination/pagination.js"></script>
-    <script src="/directive/parameter/parameter-display/parameter-display.js"></script>
-    <script src="/directive/parameter/parameter-input/parameter-input.js"></script>
-    <script src="/directive/parameter/parameter-types-select/parameter-types-select.directive.js"></script>
-    <script src="/directive/parameter/parameter-value-input/parameter-value-input.js"></script>
-    <script src="/directive/problem-card-list/problem-card-list.js"></script>
-    <script src="/directive/problem-card-list/problem-card/problem-card.directive.js"></script>
-    <script src="/directive/problem-card-list/search-box/search-box.js"></script>
-    <script src="/directive/problem-detail/problem-detail.ctrl.js"></script>
-    <script src="/directive/problem-detail/problem-detail.directive.js"></script>
-    <script src="/directive/radiobuttons/radiobutton.directive.js"></script>
-    <script src="/directive/radiobuttons/radiobuttons.directive.js"></script>
-    <script src="/directive/replies/code-view.directive.js"></script>
-    <script src="/directive/replies/replies.ctrl.js"></script>
-    <script src="/directive/replies/replies.directive.js"></script>
-    <script src="/directive/replies/reply-input/reply-input.directive.js"></script>
-    <script src="/directive/replies/reply/reply.directive.js"></script>
-    <script src="/directive/resizable.directive.js"></script>
-    <script src="/directive/resize-input.directive.js"></script>
-    <script src="/directive/solve-codes/solve-code/result-one-line/result-one-line.js"></script>
-    <script src="/directive/solve-codes/solve-code/solve-code.directvie.js"></script>
-    <script src="/directive/solve-codes/solve-codes.ctrl.js"></script>
-    <script src="/directive/solve-codes/solve-codes.directive.js"></script>
-    <script src="/directive/stars/stars.directive.js"></script>
-    <script src="/directive/text-editor/text-editor.js"></script>
-    <script src="/directive/textarea.tab.directive.js"></script>
-    <script src="/filter/langauge.filter.js"></script>
-    <script src="/filter/level.filter.js"></script>
-    <script src="/filter/max.length.filter.js"></script>
-    <script src="/filter/percent.filter.js"></script>
-    <script src="/filter/type.filter.js"></script>
+    <script src="/directives/mission/mission.js"></script>
+    <script src="/directives/player/player.js"></script>
     <script src="/lib/jquery-ui.min.js"></script>
     <script src="/lib/moment.ko.js"></script>
     <script src="/lib/stomp.min.js"></script>
     <script src="/pages/404/404.ctrl.js"></script>
-    <script src="/pages/code-review/code-review.js"></script>
-    <script src="/pages/course/courses.js"></script>
-    <script src="/pages/course/detail.ctrl.js"></script>
-    <script src="/pages/course/edit.js"></script>
-    <script src="/pages/course/problem-in-line/problem-in-line.js"></script>
-    <script src="/pages/hero/hero.ctrl.js"></script>
-    <script src="/pages/mypage/mypage.ctrl.js"></script>
-    <script src="/pages/play/play.ctrl.js"></script>
-    <script src="/pages/problem/detail.ctrl.js"></script>
-    <script src="/pages/problem/edit.ctrl.js"></script>
-    <script src="/pages/problem/playground/playground.ctrl.js"></script>
-    <script src="/pages/report/report.js"></script>
+    <script src="/pages/game/game.js"></script>
     <script src="/pages/welcome/welcome.ctrl.js"></script>
     <script src="/part/header/root.scope.setting.js"></script>
-    <script src="/service/loading.service.js"></script>
     <script src="/service/pop.service.js"></script>
     <script src="/service/popup/popup.service.js"></script>
     <script src="/service/socket.js"></script>
@@ -144,52 +78,19 @@
     <link rel="stylesheet" href="/bower_components/vex/css/vex-theme-plain.css" />
     <link rel="stylesheet" href="/bower_components/vex/css/vex-theme-top.css" />
     <link rel="stylesheet" href="/bower_components/vex/css/vex-theme-wireframe.css" />
+    <link rel="stylesheet" href="/bower_components/ng-sortable/dist/ng-sortable.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) /styles/main.css -->
     <!-- include: "type": "css", "files": "**/*.css" -->
 
-  <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
+   <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
     <link href="/dialog/runcode.css" rel="stylesheet" type="text/css">
-    <link href="/directive/autosize/autosize.css" rel="stylesheet" type="text/css">
-    <link href="/directive/checkbox/checkbox.css" rel="stylesheet" type="text/css">
-    <link href="/directive/code.css" rel="stylesheet" type="text/css">
-    <link href="/directive/color-picker/back-color-picker/back.css" rel="stylesheet" type="text/css">
-    <link href="/directive/color-picker/color-picker.css" rel="stylesheet" type="text/css">
-    <link href="/directive/color-picker/font-color-picker/font.css" rel="stylesheet" type="text/css">
-    <link href="/directive/dropdown/dropdown.css" rel="stylesheet" type="text/css">
-    <link href="/directive/like/like.css" rel="stylesheet" type="text/css">
-    <link href="/directive/loading/loading.css" rel="stylesheet" type="text/css">
-    <link href="/directive/name-and-level/name-and-level.css" rel="stylesheet" type="text/css">
-    <link href="/directive/pagination/pagination.css" rel="stylesheet" type="text/css">
-    <link href="/directive/parameter/parameter-display/parameter-display.css" rel="stylesheet" type="text/css">
-    <link href="/directive/parameter/parameter-input/parameter-input.css" rel="stylesheet" type="text/css">
-    <link href="/directive/parameter/parameter-value-input/parameter-value-input.css" rel="stylesheet" type="text/css">
-    <link href="/directive/problem-card-list/problem-card-list.css" rel="stylesheet" type="text/css">
-    <link href="/directive/problem-card-list/problem-card/problem-card.css" rel="stylesheet" type="text/css">
-    <link href="/directive/problem-card-list/search-box/search-box.css" rel="stylesheet" type="text/css">
-    <link href="/directive/problem-detail/problem-detail.css" rel="stylesheet" type="text/css">
-    <link href="/directive/radiobuttons/radiobutton.css" rel="stylesheet" type="text/css">
-    <link href="/directive/replies/replies.css" rel="stylesheet" type="text/css">
-    <link href="/directive/replies/reply/reply.css" rel="stylesheet" type="text/css">
-    <link href="/directive/solve-codes/solve-code/solve-code.css" rel="stylesheet" type="text/css">
-    <link href="/directive/stars/stars.css" rel="stylesheet" type="text/css">
-    <link href="/directive/text-editor/test-editor.css" rel="stylesheet" type="text/css">
     <link href="/lib/angular-material.layouts.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/flat-ui.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/jquery-ui.min.css" rel="stylesheet" type="text/css">
     <link href="/pages/404/404.css" rel="stylesheet" type="text/css">
-    <link href="/pages/code-review/code-review.css" rel="stylesheet" type="text/css">
-    <link href="/pages/course/course.css" rel="stylesheet" type="text/css">
-    <link href="/pages/course/detail.css" rel="stylesheet" type="text/css">
-    <link href="/pages/course/edit.css" rel="stylesheet" type="text/css">
-    <link href="/pages/course/problem-in-line/problem-in-line.css" rel="stylesheet" type="text/css">
-    <link href="/pages/hero/hero.css" rel="stylesheet" type="text/css">
-    <link href="/pages/play/play.css" rel="stylesheet" type="text/css">
-    <link href="/pages/problem/detail.css" rel="stylesheet" type="text/css">
-    <link href="/pages/problem/labelform.css" rel="stylesheet" type="text/css">
-    <link href="/pages/problem/playground/editor.css" rel="stylesheet" type="text/css">
     <link href="/pages/welcome/welcome.css" rel="stylesheet" type="text/css">
     <link href="/part/header/header.css" rel="stylesheet" type="text/css">
     <link href="/service/pop.css" rel="stylesheet" type="text/css">
@@ -208,14 +109,20 @@
     <!-- endbuild -->
 
     <!-- 직접 관리할 스타일시트 -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet" type="text/css">
     <!-- 스타일시트 종료 -->
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-79832552-1', 'auto');
         ga('send', 'pageview');
@@ -224,7 +131,7 @@
 <body ng-cloak class="layout-column">
 <header ng-include="'/part/header/header.html'"></header>
 <!-- Contents -->
-<div ui-view class="flex load loading"
+<div ui-view class="flex"
      ng-class="{'layout-row':state.current.layout==='row', 'layout-column':state.current.layout==='column'}"></div>
 </body>
 </html>

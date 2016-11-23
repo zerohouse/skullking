@@ -6,13 +6,10 @@ angular.module('app')
             requireBase: false
         });
     })
-    .run(function ($rootScope, $state, $window, loading, $location) {
+    .run(function ($rootScope, $state, $window, $location) {
         $rootScope.state = $state;
         $rootScope.$on('$stateChangeSuccess', function () {
             $window.ga('send', 'pageview', $location.path());
-        });
-        $rootScope.$on('$stateChangeStart', function () { //evt, to
-            loading.start();
         });
 
         $window.onbeforeunload = function (event) {

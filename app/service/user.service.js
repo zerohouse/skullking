@@ -24,7 +24,6 @@
         this.register = (data)=> {
             return $q((ok, no)=> {
                 $ajax.post('/api/v1/user', data, true).then(response=> {
-                    this.set(response);
                     ok(response);
                 }, no);
             });
