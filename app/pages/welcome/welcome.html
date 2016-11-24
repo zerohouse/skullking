@@ -3,7 +3,8 @@
         <h5>레지스탕스:아발론</h5>
         <div class="flex"></div>
         <div>
-            <a ng-show="!game.playing" ng-click="start()" class="btn btn-sm btn-primary">게임시작</a>
+            <a ng-show="!game.playing && players.length>4 && players.length<11" ng-click="start()"
+               class="btn btn-sm btn-primary">게임시작</a>
             <a ng-show="game.playing" ng-click="reset()" class="btn btn-sm btn-primary">게임종료</a>
         </div>
     </div>

@@ -93,6 +93,7 @@ Game.prototype.start = function () {
         user.state = state;
         chars.remove(state);
     });
+    io.of('/ws').emit('start');
 };
 
 function userReset() {
@@ -107,6 +108,10 @@ Game.prototype.maxSelect = function () {
 };
 
 io.of('/ws').on('connection', function (socket) {
+    if (!game.playing && users.length > 9) {
+        socket.emit('over');
+        return;
+    }
     socket.on('reset', function (data) {
         if (data.password != 1234)
             return;
@@ -242,7 +247,6 @@ io.of('/ws').on('connection', function (socket) {
         game.start();
         io.of('/ws').emit('players', users);
         io.of('/ws').emit('game', game);
-        io.of('/ws').emit('start');
     });
 
     socket.on('player', function () {

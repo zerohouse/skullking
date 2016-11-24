@@ -47,6 +47,10 @@
         };
 
 
+        ChatSocket.on("over", function () {
+            popup.alert("인원 초과입니다.");
+        });
+
         ChatSocket.on("start", function () {
             popup.open('/dialog/state.html', '', $scope);
         });
