@@ -25,7 +25,9 @@
     "File": true,
     "diff_match_patch": true,
     "PR": true,
-    "Chart": true
+    "Chart": true,
+    "io": true,
+    "prompt": true
   },
   "validthis": true
 }

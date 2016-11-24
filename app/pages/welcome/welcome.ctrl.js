@@ -1,10 +1,7 @@
 (function () {
     angular.module('app').controller('welcomeCtrl', welcomeCtrl);
     /* @ng-inject */
-    'use strict';
-
     /* Controllers */
-
     function welcomeCtrl($scope, $rootScope, popup, ChatSocket, $timeout) {
 
         $scope.start = function () {
@@ -70,7 +67,7 @@
             apply();
         });
 
-        ChatSocket.on("voteStart", function (player) {
+        ChatSocket.on("voteStart", function () {
             popup.alert("이 멤버로 투표시작한다.");
             $scope.votingDone = false;
             $scope.game.voting = true;
@@ -78,7 +75,7 @@
             apply();
         });
 
-        ChatSocket.on("missionStart", function (player) {
+        ChatSocket.on("missionStart", function () {
             $scope.missioningDone = false;
             $scope.game.missioning = true;
             apply();
@@ -104,7 +101,7 @@
             $scope.id = data.id;
         });
 
-        ChatSocket.on("reset", function (data) {
+        ChatSocket.on("reset", function () {
             location.reload();
         });
 

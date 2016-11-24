@@ -1,0 +1,61 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11"/>
+    <meta charset="utf-8">
+    <title>Avalon YesYes Jam</title>
+    <meta name="description" content="Coders Game"/>
+    <meta name="keywords" content="Kewords"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta property="og:image" content="Coders Game image"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@on_coder"/>
+    <meta name="twitter:creator" content="@on_coder"/>
+    <meta name="twitter:title" content="Coders Game"/>
+    <meta name="twitter:description"
+          content="설명"/>
+    <meta property="twitter:image" content="메타태그"/>
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <style>
+        [ng-cloak] {
+            display: none !important;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.js"></script>
+
+    <script src="/scripts/vendor.js"></script>
+
+    <script src="/scripts/scripts.js"></script>
+
+    <link rel="stylesheet" href="/styles/vendor.css">
+    <link rel="stylesheet" href="/styles/main.css">
+
+    <!-- 직접 관리할 스타일시트 -->
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet" type="text/css">
+    <!-- 스타일시트 종료 -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-79832552-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body ng-cloak class="layout-column">
+<!-- Contents -->
+<div ui-view class="flex"
+     ng-class="{'layout-row':state.current.layout==='row', 'layout-column':state.current.layout==='column'}"></div>
+</body>
+</html>

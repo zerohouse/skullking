@@ -7,10 +7,7 @@
             templateUrl: '/directives/mission/mission.html',
             scope: {
                 mission: '='
-            },
-            controller: function () {
-
             }
-        }
+        };
     }
 })();

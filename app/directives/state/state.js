@@ -24,7 +24,7 @@
                     var know = [];
                     getName('merlin', know);
                     getName('morgana', know);
-                    if (know.length == 1) {
+                    if (know.length === 1) {
                         if (know[0].state === 'morgana')
                             return know[0] + "= 모르가나입니다.";
                         return know[0] + "= 멀린입니다.";
@@ -56,6 +56,6 @@
                     know.pushIfNotExist(ment);
                 }
             }
-        }
+        };
     }
 })();

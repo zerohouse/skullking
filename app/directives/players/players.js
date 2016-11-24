@@ -15,8 +15,8 @@
                         return;
                     player.select = !player.select;
                     ChatSocket.emit('select', $scope.players.filter(player=>player.select).map(player=>$scope.players.indexOf(player)));
-                }
+                };
             }
-        }
+        };
     }
 })();
