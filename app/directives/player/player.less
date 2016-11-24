@@ -1,25 +1,38 @@
 player {
-  border: 3px solid #eee;
-  border-radius: 10px;
-  max-width: 300px;
-  min-width: 150px;
-  width: 40%;
-  margin: 20px 10px;
-  padding: 20px;
-
-  img {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-    border-radius: 50%;
+  .number {
+    padding: 8px 15px;
+    margin: 0 0 0 20px;
   }
+  .fa-star {
+    color: red;
+    font-size: 16px;
+    margin: 0 3px;
+  }
+  padding: 30px 2px 25px;
+  border: 1px solid #bbb;
+  border-bottom: none;
+  display: block;
+  .name {
+    font-size: 14px;
+  }
+  .description {
+    padding-top: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+  img {
+    border-radius: 42px;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 10px;
+  }
+}
 
-  float: left;
-  text-align: center;
+player:last-child {
+  border-bottom: 1px solid #ccc;
 }
 
 player.selected {
-  border: 3px solid #ccc;
   background: #eee;
 }
 

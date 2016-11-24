@@ -53,6 +53,7 @@
     <script src="/config/ajax.js"></script>
     <script src="/config/route.config.js"></script>
     <script src="/config/route.js"></script>
+    <script src="/directives/chat/chat.js"></script>
     <script src="/directives/checkbox/checkbox.directive.js"></script>
     <script src="/directives/mission/mission.js"></script>
     <script src="/directives/missions/missions.js"></script>
@@ -66,6 +67,7 @@
     <script src="/service/pop.service.js"></script>
     <script src="/service/popup/popup.service.js"></script>
     <script src="/service/socket.js"></script>
+    <script src="/template.js"></script>
     <!-- /include -->
     <!-- endbuild -->
 
@@ -87,10 +89,11 @@
     <!-- include: "type": "css", "files": "**/*.css" -->
 
   <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
-    <link href="/dialog/runcode.css" rel="stylesheet" type="text/css">
+    <link href="/directives/chat/chat.css" rel="stylesheet" type="text/css">
     <link href="/directives/checkbox/checkbox.css" rel="stylesheet" type="text/css">
     <link href="/directives/mission/mission.css" rel="stylesheet" type="text/css">
     <link href="/directives/player/player.css" rel="stylesheet" type="text/css">
+    <link href="/directives/players/players.css" rel="stylesheet" type="text/css">
     <link href="/lib/angular-material.layouts.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/flat-ui.min.css" rel="stylesheet" type="text/css">
@@ -100,16 +103,9 @@
     <link href="/pages/welcome/welcome.css" rel="stylesheet" type="text/css">
     <link href="/service/pop.css" rel="stylesheet" type="text/css">
     <link href="/service/popup/popup.css" rel="stylesheet" type="text/css">
-    <link href="/style/console.css" rel="stylesheet" type="text/css">
     <link href="/style/global/bg.css" rel="stylesheet" type="text/css">
-    <link href="/style/global/btn.css" rel="stylesheet" type="text/css">
     <link href="/style/global/color.css" rel="stylesheet" type="text/css">
-    <link href="/style/global/font.css" rel="stylesheet" type="text/css">
     <link href="/style/global/margin.css" rel="stylesheet" type="text/css">
-    <link href="/style/global/override.css" rel="stylesheet" type="text/css">
-    <link href="/style/global/style.css" rel="stylesheet" type="text/css">
-    <link href="/style/loading.css" rel="stylesheet" type="text/css">
-    <link href="/style/numbers.css" rel="stylesheet" type="text/css">
     <!-- /include -->
     <!-- endbuild -->
 
@@ -134,6 +130,7 @@
     </script>
 </head>
 <body ng-cloak class="layout-column">
+
 <!-- Contents -->
 <div ui-view class="flex"
      ng-class="{'layout-row':state.current.layout==='row', 'layout-column':state.current.layout==='column'}"></div>

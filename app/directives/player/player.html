@@ -1,7 +1,12 @@
-<div>
-    <img src="images/profile.png">
+<div class="layout-row">
+    <h5 class="number">{{index+1}}</h5>
+    <!--<img src="images/profile.png">-->
+    <div ng-class="{green:isMe}" class="description">
+            <span class="name">
+                {{player.name || '플레이어'}}
+            </span>
+        <i ng-if="player.king" class="fa fa-star"></i>
+        <small ng-if="player.disconnected">연결끊김</small>
+    </div>
 </div>
-<span ng-if="isMe" style="color: green;">나</span>
-<span class="name">{{index+1}} {{player.name || '플레이어'}}</span>
-<span ng-if="player.king">왕</span>
-<span ng-if="player.disconnected">연결끊김</span>
+

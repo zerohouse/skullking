@@ -12,17 +12,7 @@
             ChatSocket.emit("reset", {password: prompt("종료?")});
         };
 
-        $scope.voteStart = function () {
-            if (!$scope.allSelect())
-                return;
-            popup.confirm("투표 시작한다.").then(function () {
-                ChatSocket.emit("voteStart");
-            });
-        };
-
         $scope.vote = function (vote) {
-            if (!$scope.allSelect())
-                return;
             var word = vote ? "찬성" : "반대";
             popup.confirm(word + " 투표한다.").then(function () {
                 $scope.votingDone = true;
@@ -51,13 +41,16 @@
         };
 
         $scope.showState = function () {
-            if (!$scope.show)
-                popup.confirm("정체를 확인합니다").then(function () {
-                    $scope.show = true;
-                });
-            else
-                $scope.show = false;
+            popup.confirm("정체를 확인합니다").then(function () {
+                popup.open('/dialog/state.html', '', $scope);
+            });
         };
+
+
+        ChatSocket.on("start", function () {
+            popup.open('/dialog/state.html', '', $scope);
+        });
+
 
         $scope.players = [];
         $scope.player = {};
@@ -82,6 +75,7 @@
         });
 
         ChatSocket.on("voteResult", function (data) {
+            $scope.game.voting = false;
             if (data.agree > data.disagree) {
                 popup.alert("찬성:" + data.agree + ", 반대:" + data.disagree + "로 가결되었습니다.");
                 return;
@@ -90,6 +84,7 @@
         });
 
         ChatSocket.on("missionResult", function (data) {
+            $scope.game.missioning = false;
             if (data.result) {
                 popup.alert("실패:" + data.fails + "개로 성공하였습니다.");
                 return;
@@ -118,11 +113,6 @@
 
         $scope.game = {};
 
-        $scope.allSelect = function () {
-            if (!$scope.game.missions || $scope.game.round === undefined || !$scope.game.missions[$scope.game.round])
-                return;
-            return $scope.game.missions[$scope.game.round].size === $scope.players.filter(p=>p.select).length;
-        };
 
         function apply() {
             $timeout(function () {
@@ -132,5 +122,4 @@
         }
 
     }
-
 })();

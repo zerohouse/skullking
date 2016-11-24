@@ -1,0 +1,15 @@
+<div class="header layout-row" ng-click="chatShow=!chatShow">
+    <span>채팅</span>
+    <i class="fa fa-commenting-o" ng-show="new" style="color:red;margin-left:5px;"></i>
+    <div class="flex"></div>
+    <i class="fa fa-minus" ng-show="chatShow"></i>
+    <i class="fa fa-window-maximize" ng-show="!chatShow"></i>
+</div>
+<div class="messages" id="chat" ng-show="chatShow">
+    <div ng-repeat="message in messages" ng-class="{right:message.me}"><span
+            ng-if="!message.me">{{message.name}}</span><span class="message-body">{{message.message}}</span></div>
+</div>
+<div class="layout-row" ng-show="chatShow">
+    <input placeholder="메세지" ng-model="message" ng-enter="send(message)" class="flex">
+    <div class="send" ng-click="send(message)">보내기</div>
+</div>

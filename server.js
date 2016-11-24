@@ -18,6 +18,7 @@ var users = [];
 var game = new Game();
 
 function Game() {
+    this.vote = 1;
     this.round = 0;
     if (users.length > 4) {
         this.merlin = true;
@@ -110,6 +111,7 @@ io.of('/ws').on('connection', function (socket) {
         if (data.password != 1234)
             return;
         game = new Game();
+        users = [];
         io.of('/ws').emit('reset');
     });
     socket.emit('id', {id: socket.id});
@@ -155,6 +157,12 @@ io.of('/ws').on('connection', function (socket) {
         io.of('/ws').emit('players', users);
     });
 
+    socket.on('chat', function (message) {
+        message.name = socket.user.name || ("플레이어" + (users.indexOf(socket.user) + 1));
+        socket.broadcast.emit('chat', message);
+    });
+
+
     socket.on('voteStart', function () {
         game.voting = true;
         socket.user.king = false;
@@ -190,7 +198,7 @@ io.of('/ws').on('connection', function (socket) {
         game.missions[game.round].result = success ? 'success' : 'fail';
         game.round++;
         game.missioning = false;
-        game.reject = 0;
+        game.vote = 0;
         io.of('/ws').emit('missionResult', {result: success, fails: fails});
         io.of('/ws').emit('game', game);
         nextKing();
@@ -200,6 +208,7 @@ io.of('/ws').on('connection', function (socket) {
         var agree = users.filter(u=>u.vote).length;
         var disagree = users.filter(u=>!u.vote).length;
         io.of('/ws').emit('voteResult', {agree: agree, disagree: disagree});
+        game.voting = false;
         if (agree > disagree) {
             game.missioning = true;
             io.of('/ws').emit('missionStart');
@@ -219,7 +228,7 @@ io.of('/ws').on('connection', function (socket) {
             user.king = false;
         });
         users[game.king].king = true;
-        game.reject++;
+        game.vote++;
         io.of('/ws').emit('game', game);
         io.of('/ws').emit('players', users);
     }
@@ -233,6 +242,7 @@ io.of('/ws').on('connection', function (socket) {
         game.start();
         io.of('/ws').emit('players', users);
         io.of('/ws').emit('game', game);
+        io.of('/ws').emit('start');
     });
 
     socket.on('player', function () {

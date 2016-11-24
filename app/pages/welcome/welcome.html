@@ -1,30 +1,59 @@
-<div class="container">
-    <div>
-        <input ng-model="name" style="width:150px;margin:10px;" class="form-control" placeholder="이름">
+<div class="container margin-vertical">
+    <div class="layout-row layout-align-center-center">
+        <h5>레지스탕스:아발론</h5>
+        <div class="flex"></div>
+        <div>
+            <a ng-show="!game.playing" ng-click="start()" class="btn btn-sm btn-primary">게임시작</a>
+            <a ng-show="game.playing" ng-click="reset()" class="btn btn-sm btn-primary">게임종료</a>
+        </div>
     </div>
-    <div ng-show="!game.playing" ng-click="start()">게임시작</div>
-    <div ng-show="game.playing" ng-click="reset()">게임종료</div>
-    <div> {{game.round+1}} 라운드</div>
-    <div>악의세력 : {{game.evil}}</div>
+    <div>악의 세력 : {{game.evil}}</div>
     <checkbox ng-model="game.merlin" label="멀린" ng-click="changeCard('merlin')"></checkbox>
     <checkbox ng-model="game.percival" label="퍼시발" ng-click="changeCard('percival')"></checkbox>
     <checkbox ng-model="game.morgana" label="모르가나" ng-click="changeCard('morgana')"></checkbox>
     <checkbox ng-model="game.modred" label="모드레드" ng-click="changeCard('modred')"></checkbox>
     <checkbox ng-model="game.assasin" label="어쌔신" ng-click="changeCard('assasin')"></checkbox>
     <checkbox ng-model="game.overon" label="오베론" ng-click="changeCard('overon')"></checkbox>
-    <div ng-if="player.king">나는 왕입니다.</div>
-    <div ng-click="showState()" ng-show="game.playing">내 정체 <span ng-if="!show">확인</span><span ng-if="show">숨기기</span>
+</div>
+<div class="container" ng-show="game.voting">
+    <div ng-if="!votingDone" class="layout-row">
+        <a class="btn flex btn-lg btn-full btn-primary" ng-click="vote(true)">찬성</a>
+        <a class="btn flex btn-full  btn-lg btn-danger" ng-click="vote()">반대</a>
     </div>
-    <state players="players" ng-show="show" player="player"></state>
-    <div ng-show="allSelect()" ng-click="voteStart()">원정대 투표</div>
-    <div ng-show="game.voting && !votingDone">
-        <div class="vote" ng-click="vote(true)">찬성</div>
-        <div class="vote reject" ng-click="vote()">반대</div>
+    <h1 ng-if="votingDone">투표를 완료했습니다.</h1>
+</div>
+<div class="container" ng-show="game.missioning">
+    <div ng-if="player.select">
+        <div ng-if="!missioningDone" class="layout-row">
+            <a class="btn flex btn-lg btn-full btn-primary" ng-click="mission(true)">성공</a>
+            <a class="btn flex btn-lg btn-full btn-danger" ng-click="mission()">실패</a>
+        </div>
+        <h1 ng-if="missioningDone">미션 수행을 완료했습니다.</h1>
     </div>
-    <div ng-show="game.missioning && !missioningDone && player.select">
-        <div class="vote" ng-click="mission(true)">성공</div>
-        <div class="vote reject" ng-click="mission()">실패</div>
+    <h1 ng-if="!player.select">다른 플레이어가 미션 수행 중입니다.</h1>
+</div>
+<div class="container margin-vertical">
+    <missions missions="game.missions"></missions>
+</div>
+<div class="container margin-vertical">
+    <h5>
+        {{game.round+1}} 라운드
+        <small style="color:#777"> {{game.vote}}번째 투표</small>
+        <small ng-if="player.king" style="color:red">의장입니다. 원정대를 구성합니다.</small>
+    </h5>
+    <players max="game.missions[game.round].size" player="player" players="players"></players>
+</div>
+<div class="container margin-vertical">
+    <div class="layout-row">
+        <div>
+            <div class="form-group">
+                <input ng-model="name" class="form-control" placeholder="이름">
+            </div>
+        </div>
+        <div class="flex"></div>
+        <div ng-click="showState()" ng-show="game.playing">
+            <a class="btn btn-sm btn-primary"> 내 정체 확인 </a>
+        </div>
     </div>
 </div>
-<players class="container" player="player" players="players"></players>
-<missions class="container" missions="game.missions"></missions>
+<chat></chat>
