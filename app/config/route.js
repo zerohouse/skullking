@@ -5,8 +5,7 @@ angular.module('app')
             .state("welcome", {
                 url: "/",
                 templateUrl: '/pages/welcome/welcome.html',
-                controller: 'welcomeCtrl',
-                layout: 'column'
+                controller: 'welcomeCtrl'
             })
         ;
 

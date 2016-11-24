@@ -1,15 +1,17 @@
 <div class="container">
-    <input ng-model="name" class="form-control" placeholder="이름">
+    <div>
+        <input ng-model="name" style="width:150px;margin:10px;" class="form-control" placeholder="이름">
+    </div>
     <div ng-show="!game.playing" ng-click="start()">게임시작</div>
     <div ng-show="game.playing" ng-click="reset()">게임종료</div>
     <div> {{game.round+1}} 라운드</div>
+    <div>악의세력 : {{game.evil}}</div>
     <checkbox ng-model="game.merlin" label="멀린" ng-click="changeCard('merlin')"></checkbox>
     <checkbox ng-model="game.percival" label="퍼시발" ng-click="changeCard('percival')"></checkbox>
     <checkbox ng-model="game.morgana" label="모르가나" ng-click="changeCard('morgana')"></checkbox>
     <checkbox ng-model="game.modred" label="모드레드" ng-click="changeCard('modred')"></checkbox>
     <checkbox ng-model="game.assasin" label="어쌔신" ng-click="changeCard('assasin')"></checkbox>
     <checkbox ng-model="game.overon" label="오베론" ng-click="changeCard('overon')"></checkbox>
-    악의세력 : {{game.evil}}
     <div ng-if="player.king">나는 왕입니다.</div>
     <div ng-click="showState()" ng-show="game.playing">내 정체 <span ng-if="!show">확인</span><span ng-if="show">숨기기</span>
     </div>
@@ -24,7 +26,5 @@
         <div class="vote reject" ng-click="mission()">실패</div>
     </div>
 </div>
-<div class="container">
-    <players player="player" players="players"></players>
-    <missions missions="game.missions"></missions>
-</div>
+<players class="container" player="player" players="players"></players>
+<missions class="container" missions="game.missions"></missions>
