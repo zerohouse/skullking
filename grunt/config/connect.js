@@ -11,7 +11,7 @@ module.exports = {
                 port: 8080
             },
             {
-                context: ['/ws'], host: '127.0.0.1',
+                context: ['/ws', '/socket.io'], host: '127.0.0.1',
                 port: 8080,
                 ws: true
             }

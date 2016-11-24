@@ -1,1 +1,7 @@
-플레이어
+<div>
+    <img src="images/profile.png">
+</div>
+<span ng-if="isMe" style="color: green;">나</span>
+<span class="name">{{index+1}} {{player.name || '플레이어'}}</span>
+<span ng-if="player.king">왕</span>
+<span ng-if="player.disconnected">연결끊김</span>

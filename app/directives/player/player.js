@@ -4,7 +4,12 @@
     function player() {
         return {
             restrict: 'E',
-            templateUrl: '/directives/player/player.html'
+            templateUrl: '/directives/player/player.html',
+            scope: {
+                player: '=',
+                index: '=',
+                isMe:'='
+            }
         }
     }
 })();

@@ -1,0 +1,14 @@
+<span ng-switch="player.state">
+    <span ng-switch-default>나는 선의 세력입니다.</span>
+    <span ng-switch-when="merlin">나는 선의 세력입니다. 나는 멀린입니다. <span>{{getMerlin()}}</span>
+    </span>
+    <span ng-switch-when="percival">
+        나는 선의 세력입니다. 나는 퍼시발입니다.
+        <span>{{getPercival()}}</span>
+    </span>
+    <span ng-switch-when="evil">나는 악의 세력입니다. {{getEvil()}}</span>
+    <span ng-switch-when="assasin">나는 악의 세력입니다. 나는 어쌔신입니다. {{getEvil()}}</span>
+    <span ng-switch-when="morgana">나는 악의 세력입니다. 나는 모르가나입니다.{{getEvil()}}</span>
+    <span ng-switch-when="modred">나는 악의 세력입니다. 나는 모드레드입니다. {{getEvil()}}</span>
+    <span ng-switch-when="overon">나는 악의 세력입니다. 나는 오베론입니다. </span>
+</span>

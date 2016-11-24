@@ -11,8 +11,8 @@
     "angular-toastr": "^1.7.0",
     "moment": "^2.13.0",
     "vex": "^2.3.4",
-    "sockjs-client": "^1.1.1",
-    "ng-sortable": "^1.3.7"
+    "ng-sortable": "^1.3.7",
+    "components-font-awesome": "^4.7.0"
   },
   "authors": [
     "dev <parksungho86@gmail.com>"
