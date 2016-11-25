@@ -1,9 +1,8 @@
 <h3 ng-if="!mission.result">{{mission.size}}</h3>
 <div ng-switch="mission.result">
-    <img ng-switch-when="success"
-         src="https://dai38yvbnhjmj.cloudfront.net/assets/success_icon-5c37f96f087f9c9cf42977bb69b805a4.gif">
-    <img ng-switch-when="fail" src="http://jonathanbecher.com/wp-content/uploads/2013/11/Fail.jpg">
-    <img ng-switch-default src="https://image.freepik.com/free-icon/spinner-circle_318-40730.jpg">
+    <img ng-switch-when="success" src="/images/success.gif">
+    <img ng-switch-when="fail" src="/images/fail.png">
+    <img ng-switch-default src="/images/circle.png">
 </div>
 <small style="font-size:13px; margin-top:-10px" ng-if="mission.twoFailRequired">2개의 실패</small>
 <div class="hint">{{mission.quest}}</div>

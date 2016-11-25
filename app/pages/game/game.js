@@ -4,6 +4,7 @@
     /* Controllers */
     function gameCtrl($scope, $rootScope, popup, ChatSocket, $timeout, pop, $stateParams) {
 
+
         $scope.$watch(function () {
             return $stateParams.id;
         }, function (id) {
@@ -43,6 +44,8 @@
         $scope.$watch('name', function (name) {
             ChatSocket.emit("name", {name: name});
         });
+
+        $scope.name = prompt("이름이??");
 
         $scope.changeCard = function (charactor) {
             if ($scope.game.playing)
