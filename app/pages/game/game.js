@@ -45,8 +45,6 @@
             ChatSocket.emit("name", {name: name});
         });
 
-        $scope.name = prompt("이름이??");
-
         $scope.changeCard = function (charactor) {
             if ($scope.game.playing)
                 return;
