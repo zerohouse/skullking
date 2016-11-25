@@ -9,6 +9,9 @@
             <div>{{room.size}}/10</div>
             <div>{{room.host}}</div>
         </div>
+        <div ng-if="rooms.length===0" class="layout-row room">
+            <div> 방이 없네요;</div>
+        </div>
         <div ng-click="go(rooms.length+1);" class="btn btn-primary margin-vertical">방만들기</div>
     </div>
 </div>

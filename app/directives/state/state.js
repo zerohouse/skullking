@@ -52,7 +52,7 @@
                         return;
                     if ($scope.player.id === player.id)
                         return;
-                    var ment = ($scope.players.indexOf(player) + 1) + " " + (player.name || "플레이어");
+                    var ment = (player.name || ("플레이어 " + ($scope.players.indexOf(player) + 1)));
                     know.pushIfNotExist(ment);
                 }
             }

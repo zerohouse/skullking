@@ -4,6 +4,29 @@
     /* Controllers */
     function gameCtrl($scope, $rootScope, popup, ChatSocket, $timeout, pop, $stateParams) {
 
+        $scope.openAvartar = function () {
+            popup.open('/dialog/avartar.html', '', $scope);
+        };
+
+        $scope.selectAvartar = function (index) {
+            ChatSocket.emit("user", {
+                avartar: index
+            });
+            popup.close();
+        };
+
+        $scope.images = [
+            '/images/0.jpg',
+            '/images/1.jpg',
+            '/images/2.jpg',
+            '/images/3.jpg',
+            '/images/4.jpg',
+            '/images/5.png',
+            '/images/6.jpg',
+            '/images/7.jpg',
+            '/images/8.png',
+            '/images/9.png',
+        ];
 
         $scope.$watch(function () {
             return $stateParams.id;
@@ -42,7 +65,7 @@
         };
 
         $scope.$watch('name', function (name) {
-            ChatSocket.emit("name", {name: name});
+            ChatSocket.emit("user", {name: name});
         });
 
         $scope.changeCard = function (charactor) {

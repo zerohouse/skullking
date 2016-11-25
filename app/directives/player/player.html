@@ -1,10 +1,10 @@
 <div class="layout-row">
-    <h5 class="number">{{index+1}}</h5>
-    <!--<img src="images/profile.png">-->
+    <!--<h5 class="number"></h5>-->
+    <img ng-src="{{player.avartar===undefined?images[index]:images[player.avartar]}}">
     <div ng-class="{green:isMe}" class="description">
-            <span class="name">
-                {{player.name || '플레이어'}}
-            </span>
+        <span class="name">
+               {{player.name || ('플레이어 '+(index+1))}}
+        </span>
         <i ng-if="player.king" class="fa fa-star"></i>
         <small ng-if="isVoting && player.vote != null"><i class="fa fa-check"></i>투표완료</small>
         <small ng-if="player.disconnected" style="color:red">연결끊김</small>
