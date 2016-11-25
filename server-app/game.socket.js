@@ -106,7 +106,7 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
     socket.on('user', function (data) {
         if (data.name)
             socket.user.name = data.name;
-        if (data.avartar)
+        if (data.avartar !== undefined)
             socket.user.avartar = data.avartar;
         io.of(nameSpace).to(room).emit('players', game.users);
     });
