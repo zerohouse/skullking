@@ -2,7 +2,7 @@
     angular.module('app').controller('welcomeCtrl', welcomeCtrl);
     /* @ng-inject */
     /* Controllers */
-    function welcomeCtrl($scope, $rootScope, popup, ChatSocket, $timeout) {
+    function welcomeCtrl($scope, $rootScope, popup, ChatSocket, $timeout, pop) {
 
         $scope.start = function () {
             ChatSocket.emit("start");
@@ -21,8 +21,10 @@
         };
 
         $scope.mission = function (vote) {
-            if (($scope.player.state === "merlin" || $scope.player.state === "percival" || !$scope.player.state) && !vote)
+            if (($scope.player.state === "merlin" || $scope.player.state === "percival" || !$scope.player.state) && !vote) {
+                pop.alert("선의 세력은 실패를 낼 수 없습니다.");
                 return;
+            }
             var word = vote ? "성공" : "실패";
             popup.confirm(word + "시킨다.").then(function () {
                 ChatSocket.emit("mission", {mission: vote});

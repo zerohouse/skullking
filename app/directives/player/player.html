@@ -6,7 +6,8 @@
                 {{player.name || '플레이어'}}
             </span>
         <i ng-if="player.king" class="fa fa-star"></i>
-        <small ng-if="player.disconnected">연결끊김</small>
+        <small ng-if="isVoting && player.vote != null"><i class="fa fa-check"></i>투표완료</small>
+        <small ng-if="player.disconnected" style="color:red">연결끊김</small>
     </div>
 </div>
 

@@ -8,7 +8,8 @@
             scope: {
                 players: '=',
                 player: '=',
-                max: '='
+                max: '=',
+                isVoting: '='
             },
             controller: function ($scope, ChatSocket, popup) {
                 $scope.voteStart = function () {

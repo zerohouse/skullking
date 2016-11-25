@@ -3,15 +3,15 @@
     /* @ng-inject */
     function pop(toastr) {
         this.success = message => {
-            makeToastr("success", "check", message);
+            makeToastr("success", "", message);
         };
 
         this.alert = message => {
-            makeToastr("info", "error_outline", message);
+            makeToastr("info", "", message);
         };
 
         this.error = message=> {
-            makeToastr("error", "error_outline", message);
+            makeToastr("error", "", message);
             throw message;
         };
 

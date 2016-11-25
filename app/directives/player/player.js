@@ -8,7 +8,8 @@
             scope: {
                 player: '=',
                 index: '=',
-                isMe:'='
+                isMe:'=',
+                isVoting:'='
             }
         };
     }

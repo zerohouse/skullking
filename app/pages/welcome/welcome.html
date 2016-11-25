@@ -28,8 +28,9 @@
 <div class="container" ng-show="game.missioning">
     <div ng-if="player.select">
         <div ng-if="!missioningDone" class="layout-row">
-            <a class="btn flex btn-lg btn-full btn-primary" ng-click="mission(true)">성공</a>
-            <a class="btn flex btn-lg btn-full btn-danger" ng-click="mission()">실패</a>
+            <a class="btn flex btn-lg btn-full btn-primary" ng-click="mission(true)"><i class="fa fa-handshake-o"></i>
+                미션성공</a>
+            <a class="btn flex btn-lg btn-full btn-danger" ng-click="mission()"><i class="fa fa-times"></i> 미션실패</a>
         </div>
         <h1 ng-if="missioningDone">미션 수행을 완료했습니다.</h1>
     </div>
@@ -39,12 +40,16 @@
     <missions missions="game.missions"></missions>
 </div>
 <div class="container margin-vertical">
-    <h5>
-        {{game.round+1}} 라운드
-        <small style="color:#777"> {{game.vote}}번째 투표</small>
-        <small ng-if="player.king" style="color:red">의장입니다. 원정대를 구성합니다.</small>
-    </h5>
-    <players max="game.missions[game.round].size" player="player" players="players"></players>
+    <div class="layout-row layout-align-center-end" style="margin-bottom:10px">
+        <h5 style="margin-bottom: 0">
+            {{game.round+1}} 라운드
+            <small style="color:#777"> {{game.vote}}번째 투표</small>
+            <small ng-if="player.king" style="color:red">의장</small>
+        </h5>
+        <div class="flex"></div>
+        <div ng-if="game.vote===5" style="color: red">이번에 투표가 부결되면 악의 세력의 승리입니다.</div>
+    </div>
+    <players is-voting="game.voting" max="game.missions[game.round].size" player="player" players="players"></players>
 </div>
 <div class="container margin-vertical">
     <div class="layout-row">
