@@ -1,8 +1,16 @@
 (function () {
-    angular.module('app').controller('welcomeCtrl', welcomeCtrl);
+    angular.module('app').controller('gameCtrl', gameCtrl);
     /* @ng-inject */
     /* Controllers */
-    function welcomeCtrl($scope, $rootScope, popup, ChatSocket, $timeout, pop) {
+    function gameCtrl($scope, $rootScope, popup, ChatSocket, $timeout, pop, $stateParams) {
+
+        $scope.$watch(function () {
+            return $stateParams.id;
+        }, function (id) {
+            if (!id)
+                return;
+            ChatSocket.emit('join', {id: id});
+        });
 
         $scope.start = function () {
             ChatSocket.emit("start");

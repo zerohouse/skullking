@@ -2,14 +2,16 @@
 angular.module('app')
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state("welcome", {
+            .state("rooms", {
                 url: "/",
-                templateUrl: '/pages/welcome/welcome.html',
-                controller: 'welcomeCtrl'
+                templateUrl: '/pages/rooms/rooms.html',
+                controller: 'roomCtrl'
             })
-        ;
-
-
+            .state("game", {
+                url: "/game/:id",
+                templateUrl: '/pages/game/game.html',
+                controller: 'gameCtrl'
+            });
 
 
         $urlRouterProvider.otherwise("/404");

@@ -1,14 +1,16 @@
-module.exports = function (io, socket, game, socketUrl) {
+module.exports = function (io, socket, game, room, nameSpace, explode) {
     if (!game.playing && game.users.length > 9) {
         socket.emit('over');
         return;
     }
+
     socket.on('reset', function (data) {
         if (data.password != 1234)
             return;
         game = new Game();
-        io.of(socketUrl).emit('reset');
+        io.of(nameSpace).to(room).emit('reset');
     });
+
     socket.emit('id', {id: socket.id});
     var disconnected = game.getDisconnected();
     if (game.playing && !disconnected) {
@@ -21,7 +23,7 @@ module.exports = function (io, socket, game, socketUrl) {
             socket.user = disconnected;
             socket.user.id = socket.id;
             socket.user.disconnected = false;
-            socket.broadcast.emit('players', game.users);
+            socket.broadcast.to(room).emit('players', game.users);
         }
         socket.emit('game', game);
         socket.emit('players', game.users);
@@ -32,38 +34,39 @@ module.exports = function (io, socket, game, socketUrl) {
         game.users.push(socket.user);
         game.setMissions();
         socket.emit('players', game.users);
-        io.of(socketUrl).emit('game', game);
+        io.of(nameSpace).to(room).emit('game', game);
+        io.of(nameSpace).to(room).emit('players', game.users);
     }
 
     socket.on('select', function (select) {
         if (!socket.user.king)
             return;
         if (select.length > game.maxSelect()) {
-            io.of(socketUrl).emit('players', game.users);
+            io.of(nameSpace).to(room).emit('players', game.users);
             return;
         }
         game.users.forEach(user=>user.select = false);
         select.forEach(i=> {
             game.users[i].select = true;
         });
-        io.of(socketUrl).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('players', game.users);
     });
 
     socket.on('chat', function (message) {
         message.name = socket.user.name || ("플레이어" + (game.users.indexOf(socket.user) + 1));
-        socket.broadcast.emit('chat', message);
+        socket.broadcast.to(room).emit('chat', message);
     });
 
 
     socket.on('voteStart', function () {
         game.voteStart(socket.user);
-        io.of(socketUrl).emit('players', game.users);
-        io.of(socketUrl).emit('voteStart');
+        io.of(nameSpace).to(room).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('voteStart');
     });
 
     socket.on('vote', function (data) {
         socket.user.vote = data.vote;
-        io.of(socketUrl).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('players', game.users);
         if (!game.users.find(u=>u.vote === null))
             endVote();
     });
@@ -77,17 +80,17 @@ module.exports = function (io, socket, game, socketUrl) {
 
     function endMission() {
         var result = game.endMission();
-        io.of(socketUrl).emit('missionResult', {result: result.success, fails: result.fails});
-        io.of(socketUrl).emit('game', game);
+        io.of(nameSpace).to(room).emit('missionResult', {result: result.success, fails: result.fails});
+        io.of(nameSpace).to(room).emit('game', game);
         nextKing();
     }
 
     function endVote() {
         var result = game.endVote();
-        io.of(socketUrl).emit('voteResult', {agree: result.agree, disagree: result.disagree});
+        io.of(nameSpace).to(room).emit('voteResult', {agree: result.agree, disagree: result.disagree});
         if (result.agree > result.disagree) {
             setTimeout(function () {
-                io.of(socketUrl).emit('missionStart');
+                io.of(nameSpace).to(room).emit('missionStart');
             }, 1000);
             return;
         }
@@ -96,20 +99,20 @@ module.exports = function (io, socket, game, socketUrl) {
 
     function nextKing() {
         game.nextKing();
-        io.of(socketUrl).emit('game', game);
-        io.of(socketUrl).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('game', game);
+        io.of(nameSpace).to(room).emit('players', game.users);
     }
 
     socket.on('name', function (data) {
         socket.user.name = data.name;
-        io.of(socketUrl).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('players', game.users);
     });
 
     socket.on('start', function () {
         game.start();
-        io.of(socketUrl).emit('start');
-        io.of(socketUrl).emit('players', game.users);
-        io.of(socketUrl).emit('game', game);
+        io.of(nameSpace).to(room).emit('start');
+        io.of(nameSpace).to(room).emit('players', game.users);
+        io.of(nameSpace).to(room).emit('game', game);
     });
 
     socket.on('player', function () {
@@ -120,29 +123,41 @@ module.exports = function (io, socket, game, socketUrl) {
         var charactor = data.char;
         if (game[charactor]) {
             game[charactor] = false;
-            io.of(socketUrl).emit('game', game);
+            io.of(nameSpace).to(room).emit('game', game);
             return;
         }
         if (charactor === 'merlin' || charactor === "percival") {
             game[charactor] = !game[charactor];
-            io.of(socketUrl).emit('game', game);
+            io.of(nameSpace).to(room).emit('game', game);
             return;
         }
         if (game.getEvilCount() < game.getEvilSize()) {
             game[charactor] = true;
         }
-        io.of(socketUrl).emit('game', game);
+        io.of(nameSpace).to(room).emit('game', game);
     });
 
-    socket.on('disconnect', function () {
+
+    socket.on('disconnect', function (data) {
+        if (!game)
+            return;
         if (game.playing) {
             socket.user.disconnected = true;
-            socket.broadcast.emit('players', game.users);
+            socket.broadcast.to(room).emit('players', game.users);
+            if (!game.users.find(u=>!u.disconnected)) {
+                explode(room);
+                return;
+            }
             return;
         }
         game.users.remove(socket.user);
+        if (game.users.length === 0) {
+            explode(room);
+            return;
+        }
         game.setMissions();
-        io.of(socketUrl).emit('game', game);
-        socket.broadcast.emit('players', game.users);
+        io.of(nameSpace).to(room).emit('game', game);
+        socket.broadcast.to(room).emit('players', game.users);
     });
-}
+
+};
