@@ -35,7 +35,7 @@
     </div>
     <h1 ng-if="!player.select">다른 플레이어가 미션 수행 중입니다.</h1>
 </div>
-<div class="container margin-vertical">
+<div class="container margin-vertical" ng-show="!game.playing && players.length>4 && players.length<11">
     <missions missions="game.missions"></missions>
 </div>
 <div class="container margin-vertical">

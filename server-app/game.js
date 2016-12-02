@@ -144,15 +144,17 @@ Game.prototype.endMission = function () {
     this.round++;
     this.missioning = false;
     this.vote = 0;
+
     return {successes: successes, fails: fails, success: success};
 };
 
+
 Game.prototype.voteStart = function (user) {
+    if (this.users.filter(p=>p.select).length !== this.maxSelect())
+        return;
     this.voting = true;
     user.king = false;
     this.king = this.users.indexOf(user);
-    if (this.users.filter(p=>p.select).length !== this.maxSelect())
-        return;
     this.users.forEach(u=> {
         u.vote = null;
     });

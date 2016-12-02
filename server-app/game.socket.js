@@ -80,6 +80,24 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
 
     function endMission() {
         var result = game.endMission();
+
+        if (game.missions.filter(function (m) {
+                return m.result === 'fail'
+            }).length > 2) {
+            io.of(nameSpace).to(room).emit('evilWins', {type: 'fail'});
+            return;
+        }
+
+        if (game.missions.filter(function (m) {
+                return m.result === 'success'
+            }).length > 2) {
+            if (!game.merlin || !game.assasin)
+                io.of(nameSpace).to(room).emit('goodWins');
+            else
+                io.of(nameSpace).to(room).emit('missionSuccess');
+            return;
+        }
+
         io.of(nameSpace).to(room).emit('missionResult', {result: result.success, fails: result.fails});
         io.of(nameSpace).to(room).emit('game', game);
         nextKing();
@@ -92,6 +110,10 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
             setTimeout(function () {
                 io.of(nameSpace).to(room).emit('missionStart');
             }, 1000);
+            return;
+        }
+        if (game.vote > 4) {
+            io.of(nameSpace).to(room).emit('evilWins', {type: 'vote'});
             return;
         }
         nextKing();

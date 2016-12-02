@@ -5,8 +5,18 @@
         return {
             restrict: 'E',
             templateUrl: '/directives/chat/chat.html',
-            controller: function ($scope, ChatSocket, $timeout) {
+            controller: function ($scope, ChatSocket, $timeout, logs) {
+                $scope.showLog = function (log) {
+                    $scope.log = log;
+                    $scope.chatShow = true;
+                    if (log)
+                        $scope.newLog = false;
+                    else
+                        $scope.newChat = false;
+                };
+
                 $scope.messages = [];
+                $scope.logs = logs;
                 $scope.chatShow = false;
 
                 $scope.send = function (message) {
@@ -15,29 +25,32 @@
                     $scope.messages.push({message: message, me: true});
                     ChatSocket.emit("chat", {message: message});
                     $scope.message = '';
-                    $timeout(function () {
-                        document.getElementById("chat").scrollTop = 9999999999999999;
-                    });
+                    scrollAdjust();
                 };
 
-                $scope.$watch('chatShow', function () {
-                    $scope.new = false;
-                    $timeout(function () {
-                        document.getElementById("chat").scrollTop = 9999999999999999;
-                    });
-                });
-
                 ChatSocket.on("chat", function (message) {
-                    if (!$scope.chatShow)
-                        $scope.new = true;
+                    if (!$scope.chatShow || $scope.log)
+                        $scope.newChat = true;
                     $scope.messages.push(message);
                     if (!$scope.$$phase)
                         $scope.$apply();
-                    $timeout(function () {
-                        document.getElementById("chat").scrollTop = 9999999999999999;
-                    });
+                    scrollAdjust();
                 });
 
+
+                logs.new = function (message, type) {
+                    if (!$scope.chatShow || !$scope.log)
+                        $scope.newLog = true;
+                    logs.push({type: type + " >> " +message});
+                    scrollAdjust();
+                };
+
+                function scrollAdjust() {
+                    var chat = document.getElementById("chat");
+                    $timeout(function () {
+                        chat.scrollTop = chat.scrollHeight;
+                    });
+                }
             }
         };
     }

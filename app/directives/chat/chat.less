@@ -7,12 +7,24 @@ chat {
   border: 1px solid #34495e;
   font-size: 14px;
   .header {
-    padding: 5px 10px;
+    .tab {
+      padding: 5px 10px;
+      border-radius: 3px 3px 0 0;
+      margin: 0 5px;
+    }
+    .tab.selected {
+      background: #fff;
+      color: #34495e;
+    }
+    padding: 5px 5px 0;
     background: #34495e;
     color: white;
     .fa {
       font-size: 18px;
       margin-top: 3px;
+    }
+    .fa-btn {
+      padding: 5px 10px;
     }
   }
   .messages {
@@ -20,7 +32,7 @@ chat {
     font-size: 12px;
     height: 300px;
     overflow-y: scroll;
-    > div {
+    .message {
       margin-top: 10px;
       margin-bottom: 10px;
     }
@@ -55,3 +67,4 @@ chat {
     color: white;
   }
 }
+
