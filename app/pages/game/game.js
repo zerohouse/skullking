@@ -172,11 +172,11 @@
                 alertAndLog("미션에 실패하여 악의 세력이 승리하였습니다.", "게임 종료");
         });
 
-        ChatSocket.on("goodWins", function (data) {
+        ChatSocket.on("goodWins", function () {
             alertAndLog("선의 세력이 승리하였습니다.", "게임 종료");
         });
 
-        ChatSocket.on("missionSuccess", function (data) {
+        ChatSocket.on("missionSuccess", function () {
             alertAndLog("미션에 성공하였습니다. 암살자는 멀린을 찾습니다.", "미션 성공");
         });
 
