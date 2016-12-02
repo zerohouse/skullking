@@ -39,7 +39,7 @@
     <missions missions="game.missions"></missions>
 </div>
 <div class="container margin-vertical">
-    <div class="layout-row layout-align-center-end" style="margin-bottom:10px">
+    <div class="layout-row layout-align-center-end" style="margin-bottom:10px" ng-if="game.playing">
         <h5 style="margin-bottom: 0">
             {{game.round+1}} 라운드
             <small style="color:#777"> {{game.vote}}번째 투표</small>
