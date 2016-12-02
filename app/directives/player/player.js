@@ -9,8 +9,7 @@
                 player: '=',
                 index: '=',
                 isMe: '=',
-                isVoting: '=',
-                isEnd: '='
+                game: '='
             },
             controller: function ($scope) {
                 $scope.images = [

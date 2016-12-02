@@ -179,6 +179,7 @@
         });
 
         ChatSocket.on("missionSuccess", function () {
+            $scope.game.isDone = true;
             alertAndLog("미션에 성공하였습니다. 암살자는 멀린을 찾습니다.", "미션 성공");
         });
 
@@ -191,6 +192,23 @@
                     $rootScope.$apply();
             });
         }
+
+        $scope.getNames = function (game) {
+            var chars = [];
+            if (game.merlin)
+                chars.push('멀린');
+            if (game.percival)
+                chars.push('퍼시발');
+            if (game.morgana)
+                chars.push('모르가나');
+            if (game.modred)
+                chars.push('모드레드');
+            if (game.assasin)
+                chars.push('어쌔신');
+            if (game.overon)
+                chars.push('오베론');
+            return chars.join(", ");
+        };
 
     }
 })();

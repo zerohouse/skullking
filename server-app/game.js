@@ -4,6 +4,12 @@ function Game() {
     this.round = 0;
 }
 
+Game.prototype.reset = function () {
+    this.users = [];
+    this.vote = 1;
+    this.round = 0;
+};
+
 Game.prototype.setMissions = function () {
     this.evil = this.getEvilSize();
     if (this.users.length > 4) {
@@ -131,6 +137,13 @@ Game.prototype.nextKing = function () {
     });
     this.users[this.king].king = true;
     this.vote++;
+};
+
+Game.prototype.assasinate = function () {
+    this.users.forEach(user=> {
+        user.king = false;
+    });
+    this.users.find(user=>user.state === 'assasin').king = true;
 };
 
 Game.prototype.endMission = function () {

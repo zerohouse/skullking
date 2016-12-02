@@ -6,7 +6,8 @@
             restrict: 'A',
             templateUrl: '/directives/player-state/player-state.html',
             scope: {
-                state: '='
+                state: '=',
+                game: '='
             }
         };
     }

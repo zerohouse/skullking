@@ -7,7 +7,7 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
     socket.on('reset', function (data) {
         if (data.password != 1234)
             return;
-        game = new Game();
+        game.reset();
         io.of(nameSpace).to(room).emit('reset');
     });
 
@@ -64,6 +64,13 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
         io.of(nameSpace).to(room).emit('voteStart');
     });
 
+    socket.on('merlinSelect', function () {
+        if(game.users.find(u=>u.state ==='merlin' && u.select))
+            io.of(nameSpace).to(room).emit('evilWins', {type: 'merlin'});
+        else
+            io.of(nameSpace).to(room).emit('goodWins');
+    });
+
     socket.on('vote', function (data) {
         socket.user.vote = data.vote;
         io.of(nameSpace).to(room).emit('players', game.users);
@@ -84,6 +91,7 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
         if (game.missions.filter(function (m) {
                 return m.result === 'fail'
             }).length > 2) {
+            game.isEnd = true;
             io.of(nameSpace).to(room).emit('evilWins', {type: 'fail'});
             return;
         }
@@ -91,10 +99,17 @@ module.exports = function (io, socket, game, room, nameSpace, explode) {
         if (game.missions.filter(function (m) {
                 return m.result === 'success'
             }).length > 2) {
-            if (!game.merlin || !game.assasin)
+            if (!game.merlin || !game.assasin) {
+                game.isEnd = true;
                 io.of(nameSpace).to(room).emit('goodWins');
-            else
+            }
+            else {
+                game.isDone = true;
+                game.assasinate();
+                io.of(nameSpace).to(room).emit('game', game);
+                io.of(nameSpace).to(room).emit('players', game.users);
                 io.of(nameSpace).to(room).emit('missionSuccess');
+            }
             return;
         }
 

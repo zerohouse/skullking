@@ -4,7 +4,7 @@
     <span ng-switch-when="modred" class="red">모드레드</span>
     <span ng-switch-when="assasin" class="red">어쌔신</span>
     <span ng-switch-when="overon" class="red">오베론</span>
-    <span ng-switch-when="merlin" class="blue">멀린</span>
-    <span ng-switch-when="percival" class="blue">퍼시발</span>
-    <span ng-switch-default class="blue">선</span>
+    <span ng-switch-when="merlin" ng-if="game.isEnd" class="blue">멀린</span>
+    <span ng-switch-when="percival" ng-if="game.isEnd" class="blue">퍼시발</span>
+    <span ng-switch-default ng-if="game.isEnd" class="blue">선</span>
 </span>

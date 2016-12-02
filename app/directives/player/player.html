@@ -6,9 +6,8 @@
                {{player.name || ('플레이어 '+(index+1))}}
         </span>
         <i ng-if="player.king" class="fa fa-star"></i>
-        <small ng-if="isVoting && player.vote != null"><i class="fa fa-check"></i>투표완료</small>
+        <small ng-if="game.isVoting && player.vote != null"><i class="fa fa-check"></i>투표완료</small>
         <small ng-if="player.disconnected" style="color:red">연결끊김</small>
-        <small player-state ng-if="isEnd" state="player.state"></small>
+        <small player-state game="game" ng-if="game.isEnd || game.isDone" state="player.state"></small>
     </div>
 </div>
-

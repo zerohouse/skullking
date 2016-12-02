@@ -8,21 +8,31 @@
             scope: {
                 players: '=',
                 player: '=',
-                max: '=',
-                isVoting: '=',
-                isEnd: '='
+                game: '='
             },
             controller: function ($scope, ChatSocket, popup) {
                 $scope.voteStart = function () {
                     if (!$scope.allSelect())
                         return;
-                    popup.confirm("투표 시작한다.").then(function () {
+                    popup.confirm("투표 시작합니다.").then(function () {
                         ChatSocket.emit("voteStart");
                     });
                 };
 
+                $scope.selectMerlin = function () {
+                    if (!$scope.merlinSelected())
+                        return;
+                    popup.confirm("멀린을 지목합니다.").then(function () {
+                        ChatSocket.emit("merlinSelect");
+                    });
+                };
+
                 $scope.allSelect = function () {
-                    return $scope.players.filter(player=>player.select).length >= $scope.max;
+                    return $scope.players.filter(player=>player.select).length === $scope.game.missions[$scope.game.round].size;
+                };
+
+                $scope.merlinSelected = function () {
+                    return $scope.players.filter(player=>player.select).length === 1;
                 };
 
                 $scope.select = function (player) {

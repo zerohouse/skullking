@@ -7,7 +7,7 @@
             <a ng-show="game.playing" ng-click="reset()" class="btn btn-sm btn-primary">게임종료</a>
         </div>
     </div>
-    <div>악의 세력 : {{game.evil}}</div>
+    <div>악의 세력 : {{game.evil}} <small style="margin-left:20px" ng-if="getNames(game)"> ( {{getNames(game)}} )</small></div>
     <div ng-show="!game.playing">
         <checkbox ng-model="game.merlin" label="멀린" ng-click="changeCard('merlin')"></checkbox>
         <checkbox ng-model="game.percival" label="퍼시발" ng-click="changeCard('percival')"></checkbox>
@@ -35,7 +35,7 @@
     </div>
     <h1 ng-if="!player.select">다른 플레이어가 미션 수행 중입니다.</h1>
 </div>
-<div class="container margin-vertical" ng-show="!game.playing && players.length>4 && players.length<11">
+<div class="container margin-vertical" ng-show="players.length>4 && players.length<11">
     <missions missions="game.missions"></missions>
 </div>
 <div class="container margin-vertical">
@@ -48,7 +48,7 @@
         <div class="flex"></div>
         <div ng-if="game.vote===5" style="color: red">이번에 투표가 부결되면 악의 세력의 승리입니다.</div>
     </div>
-    <players is-end="game.isEnd" is-voting="game.voting" max="game.missions[game.round].size" player="player" players="players"></players>
+    <players game="game" player="player" players="players"></players>
 </div>
 <div class="container margin-vertical">
     <div class="layout-row">
