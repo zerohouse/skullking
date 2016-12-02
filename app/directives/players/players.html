@@ -3,5 +3,5 @@
     <span class="flex"></span>
     <span class="btn btn-primary btn-sm" ng-if="player.king" ng-show="allSelect()" ng-click="voteStart()">원정대 투표</span>
 </div>
-<player is-voting="isVoting" ng-class="{selected:p.select}" index="$index" ng-click="select(p);" player="p" is-me="p.id==player.id"
+<player is-end="isEnd" is-voting="isVoting" ng-class="{selected:p.select}" index="$index" ng-click="select(p);" player="p" is-me="p.id==player.id"
         ng-repeat="p in players"></player>

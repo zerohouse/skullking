@@ -9,7 +9,8 @@
                 players: '=',
                 player: '=',
                 max: '=',
-                isVoting: '='
+                isVoting: '=',
+                isEnd: '='
             },
             controller: function ($scope, ChatSocket, popup) {
                 $scope.voteStart = function () {

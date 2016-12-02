@@ -48,7 +48,7 @@
         <div class="flex"></div>
         <div ng-if="game.vote===5" style="color: red">이번에 투표가 부결되면 악의 세력의 승리입니다.</div>
     </div>
-    <players is-voting="game.voting" max="game.missions[game.round].size" player="player" players="players"></players>
+    <players is-end="game.isEnd" is-voting="game.voting" max="game.missions[game.round].size" player="player" players="players"></players>
 </div>
 <div class="container margin-vertical">
     <div class="layout-row">

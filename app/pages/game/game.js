@@ -170,9 +170,11 @@
                 alertAndLog("멀린이 암살되어 악의 세력이 승리하였습니다.", "게임 종료");
             else
                 alertAndLog("미션에 실패하여 악의 세력이 승리하였습니다.", "게임 종료");
+            $scope.game.isEnd = true;
         });
 
         ChatSocket.on("goodWins", function () {
+            $scope.game.isEnd = true;
             alertAndLog("선의 세력이 승리하였습니다.", "게임 종료");
         });
 
