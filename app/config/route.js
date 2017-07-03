@@ -8,7 +8,7 @@ angular.module('app')
                 controller: 'roomCtrl'
             })
             .state("game", {
-                url: "/game/:id",
+                url: "/game/:id/:player",
                 templateUrl: '/pages/game/game.html',
                 controller: 'gameCtrl'
             });

@@ -8,22 +8,14 @@
             scope: {
                 player: '=',
                 index: '=',
-                isMe: '=',
                 game: '='
             },
-            controller: function ($scope) {
-                $scope.images = [
-                    '/images/0.jpg',
-                    '/images/1.jpg',
-                    '/images/2.png',
-                    '/images/3.jpg',
-                    '/images/4.jpg',
-                    '/images/5.png',
-                    '/images/6.jpg',
-                    '/images/7.jpg',
-                    '/images/8.png',
-                    '/images/9.jpg'
-                ];
+            controller: function ($scope, $sce) {
+                $scope.$watch('player', function (player) {
+                    if (!player || !player.points)
+                        return;
+                    $scope.log = $sce.trustAsHtml(player.points.map(p => `${p.name} ${p.point > 0 ? "+" : ""}${p.point}`).join("<br>"));
+                });
             }
         };
     }

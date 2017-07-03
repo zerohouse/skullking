@@ -1,72 +1,35 @@
-<div class="container margin-vertical">
-    <div class="layout-row">
-        <div class="flex"></div>
-        <div>
-            <a ng-show="!game.playing && players.length>4 && players.length<11" ng-click="start()"
-               class="btn btn-sm btn-primary">게임시작</a>
-            <a ng-show="game.playing" ng-click="reset()" class="btn btn-sm btn-primary">게임종료</a>
-        </div>
-    </div>
-    <div>악의 세력 : {{game.evil}} <small style="margin-left:20px" ng-if="getNames(game)"> ( {{getNames(game)}} )</small></div>
-    <div ng-show="!game.playing">
-        <checkbox ng-model="game.merlin" label="멀린" ng-click="changeCard('merlin')"></checkbox>
-        <checkbox ng-model="game.percival" label="퍼시발" ng-click="changeCard('percival')"></checkbox>
-        <checkbox ng-model="game.morgana" label="모르가나" ng-click="changeCard('morgana')"></checkbox>
-        <checkbox ng-model="game.modred" label="모드레드" ng-click="changeCard('modred')"></checkbox>
-        <checkbox ng-model="game.assasin" label="어쌔신" ng-click="changeCard('assasin')"></checkbox>
-        <checkbox ng-model="game.overon" label="오베론" ng-click="changeCard('overon')"></checkbox>
-    </div>
+<h5 ng-if="game.onGame">제 {{game.round}} 라운드 {{names[game.phase]}} 단계</h5>
+<div class="input-group">
+    <input class="form-control" ng-model="game.me.name" placeholder="이름" ng-enter="name(game.me.name)">
+    <div class="input-group-addon" ng-click="name(game.me.name)">변경</div>
 </div>
-<div class="container" ng-show="game.voting">
-    <div ng-if="!votingDone" class="layout-row">
-        <a class="btn flex btn-lg btn-full btn-primary" ng-click="vote(true)">찬성</a>
-        <a class="btn flex btn-full  btn-lg btn-danger" ng-click="vote()">반대</a>
-    </div>
-    <h1 ng-if="votingDone">투표를 완료했습니다.</h1>
+<div ng-if="!game.onGame">
+    게임 준비중
+    <div class="btn btn-primary" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
 </div>
-<div class="container" ng-show="game.missioning">
-    <div ng-if="player.select">
-        <div ng-if="!missioningDone" class="layout-row">
-            <a class="btn flex btn-lg btn-full btn-primary" ng-click="mission(true)"><i class="fa fa-handshake-o"></i>
-                미션성공</a>
-            <a class="btn flex btn-lg btn-full btn-danger" ng-click="mission()"><i class="fa fa-times"></i> 미션실패</a>
-        </div>
-        <h1 ng-if="missioningDone">미션 수행을 완료했습니다.</h1>
-    </div>
-    <h1 ng-if="!player.select">다른 플레이어가 미션 수행 중입니다.</h1>
-</div>
-<div class="container margin-vertical" ng-show="players.length>4 && players.length<11">
-    <missions missions="game.missions"></missions>
-</div>
-<div class="container margin-vertical">
-    <div class="layout-row layout-align-center-end" style="margin-bottom:10px" ng-if="game.playing">
-        <h5 style="margin-bottom: 0">
-            {{game.round+1}} 라운드
-            <small style="color:#777"> {{game.vote}}번째 투표</small>
-            <small ng-if="player.king" style="color:red">의장</small>
-        </h5>
-        <div class="flex"></div>
-        <div ng-if="game.vote===5" style="color: red">이번에 투표가 부결되면 악의 세력의 승리입니다.</div>
-    </div>
-    <players game="game" player="player" players="players"></players>
-</div>
-<div class="container margin-vertical">
-    <div class="layout-row">
-        <div>
-            <div class="layout-row">
-                <a class="btn btn-info" ng-click="openAvartar()">아바타</a>
-                <input ng-model="name" class="form-control" placeholder="이름">
-            </div>
-        </div>
-        <div class="flex"></div>
-        <div ng-click="showState()" ng-show="game.playing">
-            <a class="btn btn-sm btn-primary"> 내 정체 확인 </a>
+<div ng-if="game.phase==='submit'">
+    <div ng-repeat="round in game.rounds" ng-show="$last">
+        <div ng-repeat="step in round.steps" ng-show="$last">
+            <div>{{$index+1}}번째 카드제출</div>
+            <prime-color color="step.prime"></prime-color>
+            <card ng-repeat="card in step.cards" card="card"></card>
         </div>
     </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
+<h1 ng-if="game.me.turn && game.phase==='submit'">내 차례!
+    <small>카드를 끌어서 제출</small>
+</h1>
+
+<div class="card-block" ng-drop="true" ng-drop-success="submit($data)" ng-show="game.phase!=='prediction'">
+    <player index="$index" ng-repeat="player in game.players" game="game" player="player">
+    </player>
+</div>
+
+
+<prediction game="game" ng-show="game.phase==='prediction'"></prediction>
+
+<div class="card-block" ng-if="game.phase==='submit'">
+    <card ng-drag="true" ng-drag-data="card" ng-repeat="card in game.me.cards track by card.id" card="card"></card>
+</div>
+
 <chat></chat>

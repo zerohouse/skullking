@@ -1,34 +1,88 @@
 player {
-  .number {
-    margin: 0 0 0 10px;
-    padding: 16px 5px 16px 12px;
+  text-align: left;
+  display: inline-block;
+  margin: 10px;
+  background: white;
+  .player {
+    position: relative;
+    width: 300px;
+    height: 210px;
+    border: 2px solid #f4f4f4;
+    .name {
+      font-size: 20px;
+      padding: 3px 3px 3px 5px;
+    }
+    .label {
+      font-size: 11px;
+    }
+    .prediction {
+      font-size: 35px;
+      position: absolute;
+      right: 13px;
+      top: 2px;
+      .sub {
+        font-size: 10px;
+        color: #5cc18e;
+      }
+      .sub-done {
+        font-size: 13px;
+        color: #5cc18e;
+      }
+      .sub-not {
+        font-size: 13px;
+        color: #c14036;
+      }
+    }
   }
-  .fa-star {
-    color: red;
-    font-size: 16px;
-    margin: 0 3px;
+
+  .badges {
+    margin-top: -10px;
+    padding-left: 5px;
+    height: 30px;
   }
-  width: 50%;
-  float: left;
-  .name {
-    font-size: 14px;
-  }
-  .description {
-    padding-top: 18px;
-    padding-left: 10px;
-    font-size: 14px;
-    word-wrap: break-word;
-  }
-  img {
-    border-radius: 42px;
-    width: 42px;
-    height: 42px;
-    margin: 10px;
+  .card {
+    text-align: center;
+    padding: 5px;
+    .blank-card {
+      width: 90px;
+      height: 120px;
+      border-radius: 0.25em;
+      border: 2px dotted #eee;
+      display: inline-block;
+      font-size: 13px;
+      text-align: center;
+      padding-top: 50px;
+      color: #777;
+      position: relative;
+      span {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .prepare {
+        display: block;
+      }
+      .submit-card {
+        display: none;
+        font-size: 16px;
+        color: #F0A100;
+      }
+    }
   }
 }
 
-player.selected {
-  background: #1e67b1;
-  color: white;
+.drag-enter {
+  player .player.me.turn {
+    border-color: #f0ad4e;
+    .blank-card {
+      border-color: #f0ad4e;
+      .prepare {
+        display: none;
+      }
+      .submit-card {
+        display: block;
+      }
+    }
+  }
 }
-

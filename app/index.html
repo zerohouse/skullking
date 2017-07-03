@@ -34,7 +34,6 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-essential/angular-essential.js"></script>
-    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
@@ -42,6 +41,8 @@
     <script src="/bower_components/vex/js/vex.js"></script>
     <script src="/bower_components/vex/js/vex.dialog.js"></script>
     <script src="/bower_components/ng-sortable/dist/ng-sortable.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/ngDraggable/ngDraggable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -53,23 +54,23 @@
     <script src="/config/ajax.js"></script>
     <script src="/config/route.config.js"></script>
     <script src="/config/route.js"></script>
+    <script src="/directives/card/card.js"></script>
     <script src="/directives/chat/chat.js"></script>
     <script src="/directives/checkbox/checkbox.directive.js"></script>
-    <script src="/directives/mission/mission.js"></script>
-    <script src="/directives/missions/missions.js"></script>
-    <script src="/directives/player-state/player-state.js"></script>
     <script src="/directives/player/player.js"></script>
-    <script src="/directives/players/players.js"></script>
-    <script src="/directives/state/state.js"></script>
+    <script src="/directives/prediction/prediction.js"></script>
+    <script src="/directives/prime-color/prime.js"></script>
     <script src="/lib/jquery-ui.min.js"></script>
     <script src="/lib/moment.ko.js"></script>
+    <script src="/lib/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
     <script src="/pages/404/404.ctrl.js"></script>
     <script src="/pages/game/game.js"></script>
     <script src="/pages/rooms/rooms.js"></script>
-    <script src="/service/logs.js"></script>
+    <script src="/service/colors.service.js"></script>
     <script src="/service/pop.service.js"></script>
     <script src="/service/popup/popup.service.js"></script>
     <script src="/service/socket.js"></script>
+    <script src="/template.js"></script>
     <!-- /include -->
     <!-- endbuild -->
 
@@ -91,11 +92,12 @@
     <!-- include: "type": "css", "files": "**/*.css" -->
 
   <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/directives/card/card.css" rel="stylesheet" type="text/css">
     <link href="/directives/chat/chat.css" rel="stylesheet" type="text/css">
     <link href="/directives/checkbox/checkbox.css" rel="stylesheet" type="text/css">
-    <link href="/directives/mission/mission.css" rel="stylesheet" type="text/css">
     <link href="/directives/player/player.css" rel="stylesheet" type="text/css">
-    <link href="/directives/players/players.css" rel="stylesheet" type="text/css">
+    <link href="/directives/prediction/prediction.css" rel="stylesheet" type="text/css">
+    <link href="/directives/prime-color/prime.css" rel="stylesheet" type="text/css">
     <link href="/lib/angular-material.layouts.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/flat-ui.min.css" rel="stylesheet" type="text/css">
