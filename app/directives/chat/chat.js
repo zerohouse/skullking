@@ -5,7 +5,7 @@
         return {
             restrict: 'E',
             templateUrl: '/directives/chat/chat.html',
-            controller: function ($scope, ChatSocket, $timeout, logs) {
+            controller: function ($scope, ChatSocket, $timeout) {
                 $scope.showLog = function (log) {
                     $scope.log = log;
                     $scope.chatShow = true;
@@ -16,7 +16,6 @@
                 };
 
                 $scope.messages = [];
-                $scope.logs = logs;
                 $scope.chatShow = false;
 
                 $scope.send = function (message) {
@@ -36,14 +35,6 @@
                         $scope.$apply();
                     scrollAdjust();
                 });
-
-
-                logs.new = function (message, type) {
-                    if (!$scope.chatShow || !$scope.log)
-                        $scope.newLog = true;
-                    logs.push({type: type + " >> " +message});
-                    scrollAdjust();
-                };
 
                 function scrollAdjust() {
                     var chat = document.getElementById("chat");
