@@ -18,7 +18,6 @@
         });
 
         ChatSocket.on("game", function (game) {
-            console.log(game);
             $scope.game = game;
             $scope.$apply();
         });
