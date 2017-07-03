@@ -1,0 +1,8 @@
+<div class="title">
+    <div class="name">{{card.no || getName(card)}}</div>
+    <div class="desc" ng-style="{color:getColor(card.type.name)}">{{card.type.name}}</div>
+    <div class="win" ng-if="card.win">win</div>
+</div>
+<div class="bottom" ng-style="{background:getColor(card.type.name)}">
+    <div class="no" ng-if="card.no">{{card.no}}</div>
+</div>

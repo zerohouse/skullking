@@ -1,8 +1,0 @@
-<h3 ng-if="!mission.result">{{mission.size}}</h3>
-<div ng-switch="mission.result">
-    <img ng-switch-when="success" src="/images/success.gif">
-    <img ng-switch-when="fail" src="/images/fail.png">
-    <img ng-switch-default src="/images/circle.png">
-</div>
-<small style="font-size:13px; margin-top:-10px" ng-if="mission.twoFailRequired">2개의 실패</small>
-<div class="hint">{{mission.quest}}</div>

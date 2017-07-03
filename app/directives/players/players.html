@@ -1,8 +1,0 @@
-<div class="header layout-row">
-    Players ({{players.length}})
-    <span class="flex"></span>
-    <span class="btn btn-primary btn-sm" ng-if="player.king && !game.isDone" ng-show="allSelect()" ng-click="voteStart()">원정대 투표</span>
-    <span class="btn btn-primary btn-sm" ng-if="player.king && game.isDone" ng-show="merlinSelected()" ng-click="selectMerlin()">멀린 지목</span>
-</div>
-<player game="game" ng-class="{selected:p.select}" index="$index" ng-click="select(p);" player="p" is-me="p.id==player.id"
-        ng-repeat="p in players"></player>
