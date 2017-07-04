@@ -18,6 +18,7 @@ SkullKing.prototype.addPlayer = function (player) {
 
 SkullKing.prototype.doneGame = function () {
     this.onGame = false;
+    this.phase = '';
     this.alert("<b>게임이 종료되었습니다.</b><br><br>" + this.players
             .sort((p, p2) => {
                 return p2.point - p.point;
