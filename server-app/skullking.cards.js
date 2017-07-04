@@ -18,6 +18,8 @@ function Card(t, number) {
 }
 
 Card.prototype.submitCheck = function (game, cards) {
+    if (this.type.item)
+        return true;
     var prime = game.rounds.last().steps.last().prime;
     if (prime !== null && prime !== this.type.name && cards.find(c => c.type.name === prime)) {
         return false;

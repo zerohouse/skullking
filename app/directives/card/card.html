@@ -1,4 +1,4 @@
-<div ng-style="{'background-image':s.card.src}">
+<div ng-style="{'background-image':'url('+card.src+')'}" class="back">
     <div class="title" ng-class="{transparent:card.src}">
         <div class="name">{{card.no || card.name}}</div>
         <div class="desc" ng-style="{color:getColor(card.type.name)}">{{card.desc}}</div>

@@ -38,6 +38,8 @@
             $scope.$apply();
         });
         function submitCheck(c, game, cards) {
+            if (c.type.item)
+                return true;
             var prime = game.rounds.last().steps.last().prime;
             if (prime !== null && prime !== c.type.name && cards.find(c => c.type.name === prime)) {
                 return false;

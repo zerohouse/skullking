@@ -1,14 +1,6 @@
 <div ng-class="{myturn:(game.me.turn && game.phase==='submit') || game.phase==='prediction'}"
      class="layout-column flex wrap">
     <phase game="game"></phase>
-    <div>
-        <div ng-repeat="round in game.rounds" ng-show="$last">
-            <div ng-repeat="step in round.steps" ng-show="$last">
-                <prime-color color="step.prime"></prime-color>
-            </div>
-        </div>
-    </div>
-
     <prediction class="flex layout-row layout-align-center-center" game="game"
                 ng-show="game.phase==='prediction'"></prediction>
     <div class="ready flex layout-row layout-align-center-center" ng-show="!game.onGame">
@@ -21,6 +13,8 @@
     <div ng-show="game.phase==='submit'" class="layout-column flex">
         <div class="card-block flex field layout-column layout-align-center-center" ng-drop="true"
              ng-drop-success="submit($data)">
+            <prime-color color="game.rounds.last().steps.last().prime"></prime-color>
+
             <div>
                 <submit-card player="player" game="game"
                              ng-repeat="player in game.players | orderBy:'turnIndex'"
@@ -34,11 +28,14 @@
                   card="card"></card>
         </div>
     </div>
-    <div class="toggles">
+    <div class="toggles layout-row">
+        <span ng-if="remain" ng-class="{red:game.me.turn && (game.duration - remain) / 1000 < 7}" class="time">{{(game.duration - remain) / 1000 | number : 1}}/{{game.duration / 1000| number : 0}}</span>
+        <span class="flex"></span>
         <toggle icon="{{newChat ? 'fa-commenting-o':'fa-comment-o'}}" toggle="chatShow"></toggle>
         <toggle icon="fa-user" toggle="userShow"></toggle>
-        <span ng-if="remain" style="letter-spacing: 0">{{remain / 1000 | number : 0}}/{{game.duration / 1000| number : 0}}</span>
+        <toggle icon="fa-history" toggle="historyShow"></toggle>
     </div>
+
     <progressbar ng-show="game.duration" value="remain/game.duration*100"></progressbar>
     <div ng-show="userShow">
         <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
@@ -48,4 +45,5 @@
         </player>
     </div>
     <chat ng-show="chatShow"></chat>
+    <history ng-if="historyShow" game="game"></history>
 </div>

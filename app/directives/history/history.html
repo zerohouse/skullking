@@ -1,0 +1,30 @@
+<table class="table table-striped" class="round">
+    <thead>
+    <tr>
+        <th>Round</th>
+        <th>단계</th>
+        <th>프라임색</th>
+        <th ng-repeat="player in game.players">{{$index+1}}번째</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="round in game.rounds">
+    <tr ng-repeat="step in round.steps">
+        <td>
+            {{$parent.$index+1}}
+        </td>
+        <td>
+            {{$index+1}}
+        </td>
+        <td>
+            <prime-color ng-if="step.prime" color="step.prime"></prime-color>
+        </td>
+        <td ng-repeat="card in step.cards">
+            <span ng-class="{bold:card.win}">
+                {{card.name || card.type.name +' ' + card.no}}
+                </span>
+            <br>
+            <small>{{getPlayer(card.player).name}}</small>
+        </td>
+    </tr>
+    </tbody>
+</table>
