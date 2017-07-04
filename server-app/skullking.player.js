@@ -125,11 +125,11 @@ Player.prototype.submitable = function (game) {
     return this.cards.find(c => c.submitCheck(game, this.cards));
 };
 
-Player.prototype.alert = function (message) {
+Player.prototype.alert = function (message, title) {
     var socket = this.socket;
     if (!socket)
         return;
-    socket.emit('e', message);
+    socket.emit('e', `<h5>${title}</h5>${message}`);
 };
 
 Player.prototype.pop = function (message) {

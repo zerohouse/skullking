@@ -1,13 +1,14 @@
 require('./prototype');
 var Card = require('./skullking.cards');
 var Round = require('./skullking.round');
-
+var _ = require('lodash');
 
 function SkullKing(id) {
     this.id = id;
     this.madeAt = new Date();
     this.maxRounds = 10;
     this.players = [];
+    this.cardsInGame = Card.newSet();
 }
 
 SkullKing.prototype.addPlayer = function (player) {
@@ -19,22 +20,25 @@ SkullKing.prototype.addPlayer = function (player) {
 SkullKing.prototype.doneGame = function () {
     this.onGame = false;
     this.phase = '';
-    this.alert("<b>게임이 종료되었습니다.</b><br><br>" + this.players
+    this.duetime = null;
+    this.duration = null;
+    clearTimeout(this.countEvent);
+    this.alert(this.players
             .sort((p, p2) => {
                 return p2.point - p.point;
             })
             .map((player, i) => {
                 return `${i + 1}위 ${player.getName()} : ${player.point}`
-            }).join("<br>"));
+            }).join("<br>"), "게임 결과");
 };
 
-SkullKing.prototype.nextRound = function (message) {
+SkullKing.prototype.nextRound = function (message, title) {
     this.round++;
     if (this.round > this.maxRounds) {
-        this.doneGame(message);
+        this.doneGame();
         return;
     } else if (message)
-        this.alert(message);
+        this.alert(message, title);
 
     var first = this.getTurnPlayer();
     if (!first) {
@@ -43,7 +47,7 @@ SkullKing.prototype.nextRound = function (message) {
     }
     first.first = true;
     this.rounds.push(new Round(this.round, first.id, this.players.length, this));
-    this.cards = Card.newSet();
+    this.cards = _.cloneDeep(this.cardsInGame);
     this.players.forEach(p => {
         p.nextRound(this);
     });
@@ -59,6 +63,7 @@ SkullKing.prototype.nextRound = function (message) {
 SkullKing.prototype.countdown = function (ms, cb) {
     this.duetime = new Date().getTime() + ms;
     this.duration = ms;
+    clearTimeout(this.countEvent);
     this.countEvent = () => {
         try {
             cb();
@@ -79,13 +84,13 @@ SkullKing.prototype.predictionDone = function () {
         this.phase = "submit";
         this.alert(this.players.map((p, i) => {
             return `${p.getName()} : ${p.prediction}승 예측`
-        }).join("<br>"));
+        }).join("<br>"), "예측 결과");
         this.nextTurn();
     }
 };
 
-SkullKing.prototype.alert = function (message) {
-    this.players.forEach(p => p.alert(message));
+SkullKing.prototype.alert = function (message, title) {
+    this.players.forEach(p => p.alert(message, title));
 };
 
 SkullKing.prototype.pop = function (message) {

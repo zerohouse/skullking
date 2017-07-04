@@ -1,3 +1,4 @@
+var popup;
 (function () {
     var message = {};
     angular.module('app').controller('confirmCtrl', confirmCtrl);
@@ -13,15 +14,15 @@
             popup.close();
         };
     }
-
     angular.module('app').service('popup', popupService);
     /* @ng-inject */
     function popupService($compile, $rootScope, $q) {
-
+        popup = this;
         this.alert = (message, classes) => {
-            vex.defaultOptions.className = 'vex-theme-os';
+            vex.defaultOptions.className = 'vex-theme-plain';
             if (!classes || !classes.match('theme'))
-                classes = 'vex-theme-wireframe ' + classes;
+                classes = 'vex-theme-plain ' + classes;
+            vex.close();
             vex.dialog.alert({
                 message: message,
                 className: classes

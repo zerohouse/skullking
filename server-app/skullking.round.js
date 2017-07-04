@@ -31,7 +31,7 @@ Round.prototype.submit = function (card, game) {
     var winner = game.players.findById(win.card.player);
     winner.win++;
     if (this.steps.length < this.roundNo) {
-        game.alert(`${winner.getName()}님이 ${win.card.name || win.card.type.name + " " + win.card.no} 카드로 승리했습니다.`);
+        game.alert(`${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`, `${this.roundNo}라운드 ${this.steps.length}번째 결과`);
         this.startStep(this.first, this.playerSize, game);
         return;
     }
@@ -43,7 +43,7 @@ Round.prototype.done = function (game) {
         this.calculatePoint(player);
         var p = player.points.last();
         return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
-    }).join("<br>"));
+    }).join("<br>"), `${game.round}라운드 결과`);
 };
 
 Round.prototype.calculatePoint = function (player) {

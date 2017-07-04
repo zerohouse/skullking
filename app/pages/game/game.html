@@ -1,25 +1,11 @@
 <div ng-class="{myturn:(game.me.turn && game.phase==='submit') || game.phase==='prediction'}"
      class="layout-column flex wrap">
     <phase game="game"></phase>
-    <div ng-show="userShow">
-        <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
-                index="$index"
-                ng-repeat="player in game.players"
-                game="game" player="player">
-        </player>
-    </div>
-    <chat ng-show="chatShow"></chat>
-    <div class="layout-row">
+    <div>
         <div ng-repeat="round in game.rounds" ng-show="$last">
             <div ng-repeat="step in round.steps" ng-show="$last">
                 <prime-color color="step.prime"></prime-color>
             </div>
-        </div>
-        <div class="flex"></div>
-        <div class="toggles">
-            <toggle icon="{{newChat ? 'fa-commenting-o':'fa-comment-o'}}" toggle="chatShow"></toggle>
-            <toggle icon="fa-user" toggle="userShow"></toggle>
-            <span ng-if="remain" style="letter-spacing: 0">{{remain / 1000 | number : 0}}/{{game.duration / 1000| number : 0}}</span>
         </div>
     </div>
 
@@ -48,5 +34,18 @@
                   card="card"></card>
         </div>
     </div>
+    <div class="toggles">
+        <toggle icon="{{newChat ? 'fa-commenting-o':'fa-comment-o'}}" toggle="chatShow"></toggle>
+        <toggle icon="fa-user" toggle="userShow"></toggle>
+        <span ng-if="remain" style="letter-spacing: 0">{{remain / 1000 | number : 0}}/{{game.duration / 1000| number : 0}}</span>
+    </div>
     <progressbar ng-show="game.duration" value="remain/game.duration*100"></progressbar>
+    <div ng-show="userShow">
+        <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
+                index="$index"
+                ng-repeat="player in game.players"
+                game="game" player="player">
+        </player>
+    </div>
+    <chat ng-show="chatShow"></chat>
 </div>
