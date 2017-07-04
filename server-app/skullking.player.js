@@ -1,47 +1,5 @@
-var randomNames = [
-    "둘기",
-    "리",
-    "치",
-    "수리",
-    "매기",
-    "추라기",
-    "루미",
-    "비",
-    "마귀",
-    "뻐꾸기",
-    "꿩",
-    "닭",
-    "고니",
-    "기러기",
-    "논병아리",
-    "딱따구리",
-    "올빼미",
-    "부엉이",
-    "느시",
-    "뜸부기",
-    "매",
-    "솔개",
-    "조롱이",
-    "말똥가리",
-    "병아리",
-    "가마우지",
-    "왜가리",
-    "해오라기",
-    "따오기",
-    "아비",
-    "어치",
-    "꾀꼬리",
-    "할미새사촌",
-    "직박구리",
-    "지빠귀",
-    "찌르레기",
-    "동고비",
-    "나무발발이",
-    "곤줄박이",
-    "오목눈이",
-    "종다리"
-];
-
+var randomNames = require('./skullking.constants').randomNames;
+var _ = require('lodash');
 function Player(id) {
     this.id = id;
     this.cards = [];
@@ -50,6 +8,13 @@ function Player(id) {
     this.points = [];
     this.name = randomNames.random();
 }
+
+Player.prototype.reset = function () {
+    this.cards = [];
+    this.win = 0;
+    this.point = 0;
+    this.points = [];
+};
 
 Player.prototype.nextRound = function (game) {
     for (var i = 0; i < game.round; i++)
@@ -74,7 +39,7 @@ Player.prototype.getName = function () {
     return this.name;
 };
 
-Player.prototype.submit = function (game, id, stepDone, roundDone, arg2) {
+Player.prototype.submit = function (game, id, arg2) {
     if (game.phase !== "submit") {
         this.error('제출 단계가 아닙니다.');
         return;
@@ -89,8 +54,13 @@ Player.prototype.submit = function (game, id, stepDone, roundDone, arg2) {
         return;
     }
     if (submitCard.type.name === 'pirateOR') {
-        if (arg2)
-            this.pirate = true;
+        if (arg2) {
+            submitCard.type.pirate = true;
+            submitCard.desc = "해적";
+        } else {
+            submitCard.type.white = true;
+            submitCard.desc = "도망";
+        }
     }
     if (!submitCard.type.item) {
         var prime = game.rounds.last().steps.last().prime;
@@ -101,10 +71,10 @@ Player.prototype.submit = function (game, id, stepDone, roundDone, arg2) {
     }
     this.cards.remove(submitCard);
     this.submitCard = submitCard;
-    game.submit(submitCard, stepDone, roundDone);
+    game.submit(submitCard);
 };
 
-Player.prototype.predict = function (game, no, predictionDone) {
+Player.prototype.predict = function (game, no) {
     if (game.phase !== "prediction") {
         this.error("예측 단계가 아닙니다.");
         return;
@@ -118,12 +88,51 @@ Player.prototype.predict = function (game, no, predictionDone) {
         return;
     }
     this.prediction = parseInt(no);
-    game.predictionDone(predictionDone);
+    game.predictionDone();
 };
 
 Player.prototype.addPoint = function (name, point) {
     this.point += point;
     this.points.push(new PointLog(name, point));
+};
+
+Player.prototype.update = function () {
+    var socket = this.socket;
+    if (!socket)
+        return;
+    var game = _.cloneDeepWith(socket.game, (value, key) => {
+        if (key === "socket") {
+            return false;
+        }
+    });
+    var me = _.cloneDeepWith(this, (value, key) => {
+        if (key === "socket") {
+            return false;
+        }
+    });
+    game.players.forEach(p => {
+        p.cards = undefined;
+        p.name = p.getName();
+        if (game.phase === "prediction")
+            p.prediction = p.prediction !== null;
+    });
+    game.me = me;
+    game.cards = null;
+    socket.emit('game', game);
+};
+
+Player.prototype.alert = function (message) {
+    var socket = this.socket;
+    if (!socket)
+        return;
+    socket.emit('e', message);
+};
+
+Player.prototype.pop = function (message) {
+    var socket = this.socket;
+    if (!socket)
+        return;
+    socket.emit('p', message);
 };
 
 function PointLog(name, point) {

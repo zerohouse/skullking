@@ -1,0 +1,57 @@
+
+submit-card {
+  display: inline-block;
+}
+
+.card {
+  text-align: center;
+  padding: 5px;
+  .blank-card {
+    width: 90px;
+    height: 120px;
+    border-radius: 0.25em;
+    border: 2px dotted #eee;
+    display: inline-block;
+    font-size: 13px;
+    text-align: center;
+    padding-top: 50px;
+    color: #777;
+    position: relative;
+    span {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .prepare {
+      display: block;
+      font-size: 60px;
+      color: white;
+      .name {
+        font-size: 12px;
+        margin-bottom: -20px;
+        margin-top: 20px;
+      }
+    }
+    .submit-card {
+      display: none;
+      font-size: 16px;
+      color: #F0A100;
+    }
+  }
+}
+
+.drag-enter {
+  .me.turn {
+    border-color: #f0ad4e;
+    .blank-card {
+      border-color: #f0ad4e;
+      .prepare {
+        display: none;
+      }
+      .submit-card {
+        display: block;
+      }
+    }
+  }
+}

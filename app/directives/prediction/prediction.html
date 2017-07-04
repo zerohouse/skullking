@@ -1,16 +1,16 @@
 <div ng-show="!game.me.prediction && game.phase==='prediction'">
-    <h3>이번 라운드에 몇승 할지 예측해주세요!!</h3>
-    <div>
-        <span class="label label-primary" ng-if="game.me.turn">선 플레이어</span>
-    </div>
+    <h5>{{game.round}}라운드 승 예측</h5>
+
+    <div>이번 라운드</div>
+    <div> - <b>{{game.me.turnIndex}}</b>번째 순서</div>
+    <div> - 받은 카드</div>
     <div class="card-block">
-        <h5>이번 라운드에 받은 카드</h5>
         <card ng-repeat="card in game.me.cards track by card.id" card="card"></card>
     </div>
-    <input maxlength="2" ng-model="predictNo" placeholder="0" number-only>
-    <span class="sub">승</span>
-
     <div ng-bind-html="desc" ng-class="{'color-red':error}"></div>
-    <div class="btn btn-primary btn-lg" ng-show="!error" ng-click="predict(predictNo)">{{predictNo}}승 예측</div>
+    <div class="btn btn-lg" ng-class="{'btn-primary':$index !== 0,'btn-danger':$index === 0}" ng-click="predict($index)"
+         ng-repeat="round in (game.round+1).toArray()">
+        {{$index}}승
+    </div>
 </div>
-<h1 ng-show="game.me.prediction && game.phase==='prediction'">예측완료!(완료한사람:{{getDoneSize()}}/{{game.players.length}}명)</h1>
+<h1 ng-show="game.me.prediction && game.phase==='prediction'">{{prediction}}승</h1>

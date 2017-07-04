@@ -14,27 +14,26 @@ Round.prototype.startStep = function (first, playerSize, game) {
     this.steps.push(new Step(first, playerSize));
 };
 
-Round.prototype.submit = function (card, game, stepDone, roundDone) {
+Round.prototype.submit = function (card, game) {
     var win = this.steps.last().submit(card, game);
     if (!win)
         return;
     var winner = game.players.findById(win.card.player);
     winner.win++;
     if (this.steps.length < this.roundNo) {
-        stepDone(`${winner.getName()}님이 ${win.card.type.name} ${win.card.no || ""} 카드로 승리했습니다.`);
+        game.alert(`${winner.getName()}님이 ${win.card.name || win.card.type.name + " " + win.card.no} 카드로 승리했습니다.`);
         this.startStep(this.first, this.playerSize, game);
         return;
     }
-    this.done(game, roundDone);
+    this.done(game);
 };
 
-Round.prototype.done = function (game, roundDone) {
-    roundDone(game.players.map(player => {
+Round.prototype.done = function (game) {
+    game.nextRound(game.players.map(player => {
         this.calculatePoint(player);
         var p = player.points.last();
         return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
     }).join("<br>"));
-    game.nextRound();
 };
 
 Round.prototype.calculatePoint = function (player) {

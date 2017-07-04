@@ -1,35 +1,47 @@
-<h5 ng-if="game.onGame">제 {{game.round}} 라운드 {{names[game.phase]}} 단계</h5>
-<div class="input-group">
-    <input class="form-control" ng-model="game.me.name" placeholder="이름" ng-enter="name(game.me.name)">
-    <div class="input-group-addon" ng-click="name(game.me.name)">변경</div>
+<phase game="game"></phase>
+<!--<div class="input-group">-->
+<!--<input class="form-control" ng-model="game.me.name" placeholder="이름" ng-enter="name(game.me.name)">-->
+<!--<div class="input-group-addon" ng-click="name(game.me.name)">변경</div>-->
+<!--</div>-->
+<div>
+    <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}" index="$index"
+            ng-repeat="player in game.players"
+            game="game" player="player">
+    </player>
 </div>
-<div ng-if="!game.onGame">
-    게임 준비중
-    <div class="btn btn-primary" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
-</div>
+<chat></chat>
+
 <div ng-if="game.phase==='submit'">
     <div ng-repeat="round in game.rounds" ng-show="$last">
         <div ng-repeat="step in round.steps" ng-show="$last">
-            <div>{{$index+1}}번째 카드제출</div>
             <prime-color color="step.prime"></prime-color>
-            <card ng-repeat="card in step.cards" card="card"></card>
         </div>
     </div>
 </div>
-<h1 ng-if="game.me.turn && game.phase==='submit'">내 차례!
-    <small>카드를 끌어서 제출</small>
-</h1>
-
-<div class="card-block" ng-drop="true" ng-drop-success="submit($data)" ng-show="game.phase!=='prediction'">
-    <player index="$index" ng-repeat="player in game.players" game="game" player="player">
-    </player>
-</div>
-
 
 <prediction game="game" ng-show="game.phase==='prediction'"></prediction>
-
-<div class="card-block" ng-if="game.phase==='submit'">
-    <card ng-drag="true" ng-drag-data="card" ng-repeat="card in game.me.cards track by card.id" card="card"></card>
+<div class="ready">
+    <div ng-show="!game.onGame">
+        <div class="btn btn-primary" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
+        <div>게임 시작을 기다리고 있습니다.</div>
+    </div>
 </div>
-
-<chat></chat>
+<div ng-if="game.phase==='submit'" class="layout-column flex">
+    <div class="card-block flex field" ng-drop="true" ng-drop-success="submit($data)">
+        <submit-card player="player" game="game"
+                     ng-repeat="player in game.players | orderBy:'turnIndex'"
+                     card="player.submitCard"></submit-card>
+    </div>
+    <div class="card-block hand">
+        <div ng-if="game.me.turn">
+            내 차례!
+            <small>카드를 끌어서 제출</small>
+        </div>
+        <div ng-if="!game.me.turn">
+            {{getTurnPlayer().name}}님의 차례!
+        </div>
+        <card ng-drag="true" ng-style="getPosition($index, game.me.cards.length)" ng-drag-data="card"
+              ng-repeat="card in game.me.cards track by $index"
+              card="card"></card>
+    </div>
+</div>

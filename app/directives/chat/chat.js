@@ -18,6 +18,11 @@
                 $scope.messages = [];
                 $scope.chatShow = false;
 
+                $scope.chatToggle = function () {
+                    $scope.chatShow = !$scope.chatShow;
+                    $scope.newChat = false;
+                };
+
                 $scope.send = function (message) {
                     if (!message)
                         return;

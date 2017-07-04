@@ -1,47 +1,24 @@
-.btn-full {
-  height: 150px;
-  line-height: 135px;
-  font-size: 30px;
-  margin: 10px;
-}
-
-.welcome {
-  text-align: center;
-  overflow-y: auto;
-  .typings {
-    margin-top: 60px;
-    font-family: Consolas, monospace;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .description {
-    margin-top: 40px;
-    font-size: 14px;
-  }
-
-  .ranker-table {
-    margin: auto;
-    font-size: 14px;
-    width: 600px;
-    max-width: 100%;
-    > div {
-      border-top: 1px solid #ddd;
-      padding-top: 10px;
-      margin-top: 10px;
-    }
-    > div:first-child {
-      border-top: none;
-      font-weight: 400;
-    }
-  }
-}
-
 .card-block {
   padding: 25px;
   text-align: center;
 }
 
+.card-block.hand {
+  position: relative;
+  height:195px;
+  background: #f4f4f4;
+  border-top: 2px dashed white;
+  padding: 10px 0 25px;
+  card {
+    position: absolute;
+  }
+}
+
 .color-red {
   color: #da0000;
+}
+
+.ready {
+  padding: 10px;
+  font-size: 15px;
 }

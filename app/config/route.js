@@ -10,7 +10,8 @@ angular.module('app')
             .state("game", {
                 url: "/game/:id/:player",
                 templateUrl: '/pages/game/game.html',
-                controller: 'gameCtrl'
+                controller: 'gameCtrl',
+                layout: 'column'
             });
 
 

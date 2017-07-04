@@ -6,8 +6,7 @@ var Round = require('./skullking.round');
 function SkullKing(id) {
     this.id = id;
     this.madeAt = new Date();
-    this.round = 0;
-    this.rounds = [];
+    this.maxRounds = 10;
     this.players = [];
 }
 
@@ -17,8 +16,25 @@ SkullKing.prototype.addPlayer = function (player) {
     this.players.push(player);
 };
 
-SkullKing.prototype.nextRound = function () {
+SkullKing.prototype.doneGame = function () {
+    this.onGame = false;
+    this.alert("<b>게임이 종료되었습니다.</b><br><br>" + this.players
+            .sort((p, p2) => {
+                return p2.point - p.point;
+            })
+            .map((player, i) => {
+                return `${i + 1}위 ${player.getName()} : ${player.point}`
+            }).join("<br>"));
+};
+
+SkullKing.prototype.nextRound = function (message) {
     this.round++;
+    if (this.round > this.maxRounds) {
+        this.doneGame(message);
+        return;
+    } else if (message)
+        this.alert(message);
+
     var first = this.getTurnPlayer();
     if (!first) {
         first = this.players.random();
@@ -33,17 +49,31 @@ SkullKing.prototype.nextRound = function () {
     this.phase = "prediction";
 };
 
-SkullKing.prototype.predictionDone = function (predictionDone) {
+SkullKing.prototype.predictionDone = function () {
     if (!this.players.find(p => p.prediction === null)) {
         this.phase = "submit";
-        predictionDone();
+        this.alert(this.players.map((p, i) => {
+            return `${p.getName()} : ${p.prediction}승 예측`
+        }).join("<br>"));
     }
 };
 
-SkullKing.prototype.submit = function (card, stepDone, roundDone) {
-    this.rounds.last().submit(card, this, stepDone, roundDone);
+SkullKing.prototype.alert = function (message) {
+    this.players.forEach(p => p.alert(message));
 };
 
+
+SkullKing.prototype.pop = function (message) {
+    this.players.forEach(p => p.pop(message));
+};
+
+SkullKing.prototype.update = function () {
+    this.players.forEach(p => p.update());
+};
+
+SkullKing.prototype.submit = function (card) {
+    this.rounds.last().submit(card, this);
+};
 
 SkullKing.prototype.allSubmit = function () {
     return !this.players.find(p => !p.submitCard);
@@ -65,8 +95,14 @@ SkullKing.prototype.start = function () {
     if (this.players.length < 2) {
         throw "게임 플레이어가 모자랍니다.";
     }
+    this.players.forEach(p => {
+        p.reset();
+    });
+    this.round = 0;
+    this.rounds = [];
     this.onGame = true;
     this.nextRound();
+    this.pop("게임을 시작합니다.");
 };
 
 SkullKing.prototype.nextTurn = function () {

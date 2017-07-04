@@ -3,11 +3,11 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 8080;
-var protos = require('./app/app.prototype');
 var SkullKing = require('./server-app/skullking');
 var Player = require('./server-app/skullking.player');
 var uuid = require('node-uuid');
 var _ = require('lodash');
+require('./app/app.prototype');
 
 server.listen(port, function () {
     console.log('Server listening at port %d', port);
@@ -26,7 +26,7 @@ io.on('connection', function (socket) {
         var player = game.players.findById(data.player);
         if (game.onGame) {
             if (!player) {
-                player = socket.player = {observer: true};
+                player = socket.player = {observer: true, player: socket};
             } else {
                 if (!player.disconnected) {
                     socket.emit("e", "이미 접속 중입니다.");
@@ -46,10 +46,10 @@ io.on('connection', function (socket) {
                 player.maker = true;
             game.addPlayer(player);
         }
-        player.socket = socket.id;
+        player.socket = socket;
         socket.player = player;
         socket.game = game;
-        updateGame(socket);
+        socket.game.update();
     });
 
     socket.on('event', function (event) {
@@ -60,24 +60,16 @@ io.on('connection', function (socket) {
         catch (e) {
             socket.emit("e", e.toString());
         }
-        updateGame(socket);
+        socket.game.update();
     });
 
     socket.on('playerEvent', function (event, no, arg2) {
         try {
             if (event === 'predict') {
-                socket.player.predict(socket.game, no, function () {
-                    alertRoom(socket, socket.game.players.map((p, i) => {
-                        return `${p.getName()} : ${p.prediction}승 예측`
-                    }).join("<br>"));
-                });
+                socket.player.predict(socket.game, no);
             }
             else if (event === 'submit') {
-                socket.player.submit(socket.game, no, function (message) {
-                    alertRoom(socket, message);
-                }, function (message) {
-                    alertRoom(socket, message);
-                }, arg2);
+                socket.player.submit(socket.game, no, arg2);
             }
             else if (event === 'name') {
                 socket.player.name = no;
@@ -86,7 +78,7 @@ io.on('connection', function (socket) {
         catch (e) {
             socket.emit("e", e.toString());
         }
-        updateGame(socket);
+        socket.game.update();
     });
 
     socket.on('disconnect', function () {
@@ -100,11 +92,13 @@ io.on('connection', function (socket) {
                 socket.game.players[0].maker = true;
             }
         }
-        else
+        else {
             socket.player.disconnected = true;
+            socket.player.socket = undefined;
+        }
         if (!socket.game.players.find(p => !p.disconnected))
             delete games[socket.game.id];
-        updateGame(socket);
+        socket.game.update();
     });
 
     socket.on('chat', function (message) {
@@ -113,24 +107,3 @@ io.on('connection', function (socket) {
     });
 
 });
-
-function alertRoom(socket, message) {
-    io.in(socket.game.id).emit('e', message);
-}
-
-function updateGame(socket) {
-    if (!socket.game || !socket.game.id)
-        return;
-    socket.game.players.forEach(player => {
-        var game = _.cloneDeep(socket.game);
-        game.players.forEach(p => {
-            p.cards = undefined;
-            p.name = p.getName();
-            if (game.phase === "prediction")
-                p.prediction = p.prediction !== null;
-        });
-        game.me = player;
-        game.cards = null;
-        io.in(player.socket).emit('game', game);
-    });
-}

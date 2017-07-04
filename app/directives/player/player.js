@@ -16,6 +16,7 @@
                         return;
                     $scope.log = $sce.trustAsHtml(player.points.map(p => `${p.name} ${p.point > 0 ? "+" : ""}${p.point}`).join("<br>"));
                 });
+
             }
         };
     }

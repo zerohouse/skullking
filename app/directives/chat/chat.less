@@ -1,12 +1,12 @@
 chat {
-  position: fixed;
-  right: 10px;
-  bottom: 0;
-  width: 300px;
   background: white;
-  border: 1px solid #34495e;
-  font-size: 14px;
+  position: relative;
   .header {
+    color: #000000;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    border-radius: 50%;
     .tab {
       padding: 5px 10px;
       border-radius: 3px 3px 0 0;
@@ -16,21 +16,26 @@ chat {
       background: #fff;
       color: #34495e;
     }
-    padding: 5px 5px 0;
-    background: #34495e;
-    color: white;
     .fa {
-      font-size: 18px;
+      font-size: 22px;
       margin-top: 3px;
+      color: #777;
     }
     .fa-btn {
       padding: 5px 10px;
     }
+    .fa-commenting-o {
+      color: red;
+    }
+  }
+  .header.chatShow {
+    right: 16px;
   }
   .messages {
     padding: 5px 10px;
-    font-size: 12px;
-    height: 300px;
+    font-size: 16px;
+    height: 220px;
+    border-top: 1px solid #ddd;
     overflow-y: scroll;
     .message {
       margin-top: 10px;
@@ -53,7 +58,7 @@ chat {
   input {
     background: #f4f4f4;
     outline: none;
-    padding: 5px 10px;
+    padding: 3px 6px;
     border: none;
     border-top: 1px solid;
     font-size: 12px;
@@ -61,10 +66,18 @@ chat {
   .send {
     border-top: 1px solid #34495e;
     border-left: 1px solid #34495e;
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 5px 6px;
+    font-size: 14px;
     background: #34495e;
     color: white;
+  }
+  .close-chat {
+    background: white;
+    color: black;
+    font-size: 16px;
+  }
+  .sendbox {
+    border-bottom: 1px solid #34495e;
   }
 }
 

@@ -1,32 +1,16 @@
-<div class="player" ng-class="{me:player.id === game.me.id, turn:player.turn && game.phase!=='prediction'}">
-    <div class="name">
-        {{player.name}}
-        <small uib-tooltip-html="log">{{player.point}}점</small>
-
-        <span ng-if="game.onGame">
-            <span class="prediction" ng-if="game.phase!=='prediction'">{{player.win}}/{{player.prediction || 0}}<span
-                    class="sub">승/목표</span></span>
+<b>
+    {{player.turnIndex}}.
+    {{player.name}}</b>
+<span uib-tooltip-html="log" tooltip-placement="bottom" style="color:rebeccapurple;margin-left:6px">{{player.point}}점</span>
+<span ng-if="game.onGame">
+    <span class="prediction" ng-if="game.phase!=='prediction'">{{player.win}}<small>승/</small>{{player.prediction || 0}}<small>예측</small></span>
             <span class="prediction" ng-if="game.phase==='prediction'">
             <span class="sub-not" ng-if="!player.prediction">예측 중</span>
             <span class="sub-done" ng-if="player.prediction">예측 완료</span>
         </span>
         </span>
-    </div>
-    <div class="badges">
-        <span class="label label-info" ng-if="player.id === game.me.id">나</span>
-        <span class="label label-primary" ng-if="player.first">선 플레이어</span>
-        <span class="label label-warning" ng-if="player.turn && game.phase!=='prediction'">현재 순서</span>
-        <span class="label label-danger" ng-if="player.disconnected">X 접속끊김</span>
-    </div>
-    <div class="card">
-        <card card="player.submitCard" ng-if="player.submitCard"></card>
-        <span class="blank-card" ng-if="!player.submitCard">
-            <span class="prepare">
-               미제출
-            </span>
-            <span class="submit-card">
-               카드내기
-            </span>
-        </span>
-    </div>
-</div>
+<span style="margin-left:5px"></span>
+<span class="label label-info" ng-if="player.id === game.me.id">나</span>
+<span class="label label-primary" ng-if="player.first && game.phase==='prediction'">선 플레이어</span>
+<span class="label label-warning" ng-if="player.turn && game.phase!=='prediction'">현재 순서</span>
+<span class="label label-danger" ng-if="player.disconnected">X 접속끊김</span>

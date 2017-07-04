@@ -1,88 +1,34 @@
 player {
   text-align: left;
-  display: inline-block;
-  margin: 10px;
   background: white;
-  .player {
-    position: relative;
-    width: 300px;
-    height: 210px;
-    border: 2px solid #f4f4f4;
-    .name {
-      font-size: 20px;
-      padding: 3px 3px 3px 5px;
-    }
-    .label {
-      font-size: 11px;
-    }
-    .prediction {
-      font-size: 35px;
-      position: absolute;
-      right: 13px;
-      top: 2px;
-      .sub {
-        font-size: 10px;
-        color: #5cc18e;
-      }
-      .sub-done {
-        font-size: 13px;
-        color: #5cc18e;
-      }
-      .sub-not {
-        font-size: 13px;
-        color: #c14036;
-      }
-    }
+  display: block;
+  position: relative;
+  border-right: 1px solid #eee;
+  border-top: 1px solid #eee;
+  padding: 5px;
+  font-size: 12px;
+  small {
+    font-size: 10px;
+    color: #999
   }
-
-  .badges {
-    margin-top: -10px;
-    padding-left: 5px;
-    height: 30px;
+  .label {
+    font-size: 11px;
   }
-  .card {
-    text-align: center;
-    padding: 5px;
-    .blank-card {
-      width: 90px;
-      height: 120px;
-      border-radius: 0.25em;
-      border: 2px dotted #eee;
-      display: inline-block;
+  .prediction {
+    font-size: 15px;
+    right: 13px;
+    top: 2px;
+    .sub-done {
       font-size: 13px;
-      text-align: center;
-      padding-top: 50px;
-      color: #777;
-      position: relative;
-      span {
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      .prepare {
-        display: block;
-      }
-      .submit-card {
-        display: none;
-        font-size: 16px;
-        color: #F0A100;
-      }
+      color: #5cc18e;
+    }
+    .sub-not {
+      font-size: 13px;
+      color: #c14036;
     }
   }
 }
 
-.drag-enter {
-  player .player.me.turn {
-    border-color: #f0ad4e;
-    .blank-card {
-      border-color: #f0ad4e;
-      .prepare {
-        display: none;
-      }
-      .submit-card {
-        display: block;
-      }
-    }
-  }
+player.myturn {
+  border: 2px solid #f0ad4e;
 }

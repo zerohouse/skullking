@@ -57,9 +57,11 @@
     <script src="/directives/card/card.js"></script>
     <script src="/directives/chat/chat.js"></script>
     <script src="/directives/checkbox/checkbox.directive.js"></script>
+    <script src="/directives/phase/phase.js"></script>
     <script src="/directives/player/player.js"></script>
     <script src="/directives/prediction/prediction.js"></script>
     <script src="/directives/prime-color/prime.js"></script>
+    <script src="/directives/submit-card/submit-card.js"></script>
     <script src="/lib/jquery-ui.min.js"></script>
     <script src="/lib/moment.ko.js"></script>
     <script src="/lib/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
@@ -70,7 +72,6 @@
     <script src="/service/pop.service.js"></script>
     <script src="/service/popup/popup.service.js"></script>
     <script src="/service/socket.js"></script>
-    <script src="/template.js"></script>
     <!-- /include -->
     <!-- endbuild -->
 
@@ -95,9 +96,11 @@
     <link href="/directives/card/card.css" rel="stylesheet" type="text/css">
     <link href="/directives/chat/chat.css" rel="stylesheet" type="text/css">
     <link href="/directives/checkbox/checkbox.css" rel="stylesheet" type="text/css">
+    <link href="/directives/phase/phase.css" rel="stylesheet" type="text/css">
     <link href="/directives/player/player.css" rel="stylesheet" type="text/css">
     <link href="/directives/prediction/prediction.css" rel="stylesheet" type="text/css">
     <link href="/directives/prime-color/prime.css" rel="stylesheet" type="text/css">
+    <link href="/directives/submit-card/submit-card.css" rel="stylesheet" type="text/css">
     <link href="/lib/angular-material.layouts.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/flat-ui.min.css" rel="stylesheet" type="text/css">
@@ -134,7 +137,7 @@
         ga('send', 'pageview');
     </script>
 </head>
-<body ng-cloak class="layout-column">
+<body ng-cloak class="layout-column flex">
 
 <!-- Contents -->
 <div ui-view class="flex"

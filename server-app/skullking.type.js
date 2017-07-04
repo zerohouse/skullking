@@ -1,10 +1,11 @@
-function Type(name) {
+function Type(name, desc) {
     this.name = name;
     this[name] = true;
     if (this.red || this.blue || this.black || this.yellow)
         this.normal = true;
     else
         this.item = true;
+    this.desc = desc || this.name;
 }
 
 module.exports = {
@@ -12,9 +13,10 @@ module.exports = {
     blue: new Type("blue"),
     black: new Type("black"),
     yellow: new Type("yellow"),
-    pirate: new Type("pirate"),
-    white: new Type("white"),
-    king: new Type("king"),
-    girl: new Type("girl"),
-    pirateOR: new Type("pirateOR")
+    pirate: new Type("pirate","해적"),
+    white: new Type("white","도망가자"),
+    king: new Type("king","해적왕"),
+    girl: new Type("girl","왕을 유혹"),
+    pirateOR: new Type("pirateOR", "해적/도망")
 };
+
