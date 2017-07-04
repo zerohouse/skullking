@@ -48,6 +48,30 @@ SkullKing.prototype.nextRound = function (message) {
         p.nextRound(this);
     });
     this.phase = "prediction";
+    this.pop(`${this.round} 라운드 예측하기`);
+    this.countdown(20000, () => {
+        this.players.filter(p => p.prediction === null).forEach(p => {
+            p.predict(this, 0);
+        });
+    });
+};
+
+SkullKing.prototype.countdown = function (ms, cb) {
+    this.duetime = new Date().getTime() + ms;
+    this.duration = ms;
+    this.countEvent = () => {
+        try {
+            cb();
+            this.update();
+        }
+        catch (e) {
+        }
+    };
+    setTimeout(this.countEvent, ms);
+};
+
+SkullKing.prototype.destroy = function () {
+    clearTimeout(this.countEvent);
 };
 
 SkullKing.prototype.predictionDone = function () {
@@ -56,13 +80,13 @@ SkullKing.prototype.predictionDone = function () {
         this.alert(this.players.map((p, i) => {
             return `${p.getName()} : ${p.prediction}승 예측`
         }).join("<br>"));
+        this.nextTurn();
     }
 };
 
 SkullKing.prototype.alert = function (message) {
     this.players.forEach(p => p.alert(message));
 };
-
 
 SkullKing.prototype.pop = function (message) {
     this.players.forEach(p => p.pop(message));
@@ -103,14 +127,19 @@ SkullKing.prototype.start = function () {
     this.rounds = [];
     this.onGame = true;
     this.nextRound();
-    this.pop("게임을 시작합니다.");
 };
 
 SkullKing.prototype.nextTurn = function () {
-    var next = this.getNextPlayer();
     var now = this.getTurnPlayer();
-    next.turn = true;
+    var next = !now.submitCard ? now : this.getNextPlayer();
     now.turn = false;
+    next.turn = true;
+    next.pop("카드를 낼 차례 입니다.");
+    this.countdown(20000, () => {
+        if (next.turn) {
+            next.submit(this, next.submitable(this).id);
+        }
+    });
 };
 
 module.exports = SkullKing;

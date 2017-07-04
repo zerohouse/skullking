@@ -87,7 +87,7 @@ io.on('connection', function (socket) {
         if (!socket.game.onGame) {
             socket.game.players.remove(socket.player);
             if (socket.game.players.length === 0) {
-                delete games[socket.game.id];
+                destroy(socket.game.id);
             } else if (socket.player.maker) {
                 socket.game.players[0].maker = true;
             }
@@ -96,8 +96,9 @@ io.on('connection', function (socket) {
             socket.player.disconnected = true;
             socket.player.socket = undefined;
         }
-        if (!socket.game.players.find(p => !p.disconnected))
-            delete games[socket.game.id];
+        if (!socket.game.players.find(p => !p.disconnected)) {
+            destroy(socket.game.id);
+        }
         socket.game.update();
     });
 
@@ -107,3 +108,11 @@ io.on('connection', function (socket) {
     });
 
 });
+
+function destroy(id) {
+    var game = games[id];
+    if (!id || !game)
+        return;
+    game.destroy();
+    delete games[id];
+}

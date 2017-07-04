@@ -6,17 +6,7 @@
             restrict: 'E',
             templateUrl: '/directives/chat/chat.html',
             controller: function ($scope, ChatSocket, $timeout) {
-                $scope.showLog = function (log) {
-                    $scope.log = log;
-                    $scope.chatShow = true;
-                    if (log)
-                        $scope.newLog = false;
-                    else
-                        $scope.newChat = false;
-                };
-
                 $scope.messages = [];
-                $scope.chatShow = false;
 
                 $scope.chatToggle = function () {
                     $scope.chatShow = !$scope.chatShow;

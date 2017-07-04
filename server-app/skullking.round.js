@@ -6,12 +6,22 @@ function Round(roundNo, first, playerSize, game) {
     this.steps = [];
     this.first = first;
     this.playerSize = playerSize;
-    this.startStep(first, playerSize, game);
+    this.resetStep(first, playerSize, game);
 }
 
-Round.prototype.startStep = function (first, playerSize, game) {
+Round.prototype.resetStep = function (first, playerSize, game) {
     game.players.forEach(p => p.first = p.turn);
     this.steps.push(new Step(first, playerSize));
+};
+
+Round.prototype.startStep = function (first, playerSize, game) {
+    this.resetStep(first, playerSize, game);
+    var first = game.players.find(p => p.first = p.turn);
+    game.countdown(20000, () => {
+        if (first.turn) {
+            first.submit(game, first.submitable(game).id);
+        }
+    });
 };
 
 Round.prototype.submit = function (card, game) {

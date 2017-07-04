@@ -1,47 +1,52 @@
-<phase game="game"></phase>
-<!--<div class="input-group">-->
-<!--<input class="form-control" ng-model="game.me.name" placeholder="이름" ng-enter="name(game.me.name)">-->
-<!--<div class="input-group-addon" ng-click="name(game.me.name)">변경</div>-->
-<!--</div>-->
-<div>
-    <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}" index="$index"
-            ng-repeat="player in game.players"
-            game="game" player="player">
-    </player>
-</div>
-<chat></chat>
+<div ng-class="{myturn:(game.me.turn && game.phase==='submit') || game.phase==='prediction'}"
+     class="layout-column flex wrap">
+    <phase game="game"></phase>
+    <div ng-show="userShow">
+        <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
+                index="$index"
+                ng-repeat="player in game.players"
+                game="game" player="player">
+        </player>
+    </div>
+    <chat ng-show="chatShow"></chat>
+    <div class="layout-row">
+        <div ng-repeat="round in game.rounds" ng-show="$last">
+            <div ng-repeat="step in round.steps" ng-show="$last">
+                <prime-color color="step.prime"></prime-color>
+            </div>
+        </div>
+        <div class="flex"></div>
+        <div class="toggles">
+            <toggle icon="{{newChat ? 'fa-commenting-o':'fa-comment-o'}}" toggle="chatShow"></toggle>
+            <toggle icon="fa-user" toggle="userShow"></toggle>
+            <span ng-if="remain" style="letter-spacing: 0">{{remain / 1000 | number : 0}}/{{game.duration / 1000| number : 0}}</span>
+        </div>
+    </div>
 
-<div ng-if="game.phase==='submit'">
-    <div ng-repeat="round in game.rounds" ng-show="$last">
-        <div ng-repeat="step in round.steps" ng-show="$last">
-            <prime-color color="step.prime"></prime-color>
+    <prediction class="flex layout-row layout-align-center-center" game="game"
+                ng-show="game.phase==='prediction'"></prediction>
+    <div class="ready flex layout-row layout-align-center-center" ng-show="!game.onGame">
+        <div>
+            <div>게임 시작을 기다리고 있습니다.</div>
+            <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">게임 시작
+            </div>
         </div>
     </div>
-</div>
-
-<prediction game="game" ng-show="game.phase==='prediction'"></prediction>
-<div class="ready">
-    <div ng-show="!game.onGame">
-        <div>게임 시작을 기다리고 있습니다.</div>
-        <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
-    </div>
-</div>
-<div ng-if="game.phase==='submit'" class="layout-column flex">
-    <div class="card-block flex field" ng-drop="true" ng-drop-success="submit($data)">
-        <submit-card player="player" game="game"
-                     ng-repeat="player in game.players | orderBy:'turnIndex'"
-                     card="player.submitCard"></submit-card>
-    </div>
-    <div class="card-block hand">
-        <div ng-if="game.me.turn">
-            내 차례!
-            <small>카드를 끌어서 제출</small>
+    <div ng-show="game.phase==='submit'" class="layout-column flex">
+        <div class="card-block flex field layout-column layout-align-center-center" ng-drop="true"
+             ng-drop-success="submit($data)">
+            <div>
+                <submit-card player="player" game="game"
+                             ng-repeat="player in game.players | orderBy:'turnIndex'"
+                             card="player.submitCard"></submit-card>
+            </div>
         </div>
-        <div ng-if="!game.me.turn">
-            {{getTurnPlayer().name}}님의 차례!
+        <div class="card-block hand">
+            <card ng-drag="true" ng-class="{submitable:game.me.turn && card.submitable}"
+                  ng-style="getPosition($index, game.me.cards.length)" ng-drag-data="card"
+                  ng-repeat="card in game.me.cards track by $index"
+                  card="card"></card>
         </div>
-        <card ng-drag="true" ng-style="getPosition($index, game.me.cards.length)" ng-drag-data="card"
-              ng-repeat="card in game.me.cards track by $index"
-              card="card"></card>
     </div>
+    <progressbar ng-show="game.duration" value="remain/game.duration*100"></progressbar>
 </div>

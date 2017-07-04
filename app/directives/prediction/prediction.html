@@ -1,9 +1,8 @@
 <div ng-show="!game.me.prediction && game.phase==='prediction'">
-    <h5>{{game.round}}라운드 승 예측</h5>
-
-    <div>이번 라운드</div>
-    <div> - <b>{{game.me.turnIndex}}</b>번째 순서</div>
-    <div> - 받은 카드</div>
+    <div style="margin-top:10px;font-size:16px;"><b>{{game.round}}라운드 승 예측</b><br>
+        - <b>{{game.me.turnIndex}}</b>번째 순서<br>
+        - 받은 카드
+    </div>
     <div class="card-block">
         <card ng-repeat="card in game.me.cards track by card.id" card="card"></card>
     </div>

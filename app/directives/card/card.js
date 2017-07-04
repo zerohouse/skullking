@@ -1,7 +1,7 @@
 (function () {
     angular.module('app').directive('card', card);
     /* @ng-inject */
-    function card() {
+    function card($timeout) {
         return {
             restrict: 'E',
             scope: {
@@ -15,7 +15,11 @@
                 $scope.names = {};
             },
             link: function (s, e) {
-                e.css('background-image', `url(${s.card.src})`);
+                $timeout(function () {
+                    if (!s.card || !s.card.src)
+                        return;
+                    e.css('background-image', `url(${s.card.src})`);
+                });
             }
         };
     }

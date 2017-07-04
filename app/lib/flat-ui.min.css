@@ -399,7 +399,6 @@
 body {
     font-size: 18px;
     line-height: 1.72222;
-    color: #34495e;
     background-color: #fff
 }
 
@@ -739,7 +738,6 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 
 .thumbnail .caption {
     7 padding: 9px;
-    color: #34495e
 }
 
 .btn {

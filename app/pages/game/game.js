@@ -3,7 +3,6 @@
     /* @ng-inject */
     /* Controllers */
     function gameCtrl($scope, popup, ChatSocket, $stateParams, $window, pop) {
-
         $scope.names = {
             prediction: "예측하기",
             submit: "카드 제출"
@@ -17,8 +16,16 @@
             ChatSocket.emit('join', {id: id, player: $stateParams.player});
         });
 
+        var onGame;
+        $scope.chatShow = true;
+        $scope.userShow = true;
+
         ChatSocket.on("game", function (game) {
             $scope.game = game;
+            if (game.onGame !== onGame) {
+                onGame = game.onGame;
+                $scope.chatShow = $scope.userShow = !game.onGame;
+            }
             var start = game.players.indexOf(game.players.find(p => p.first));
             if (start === -1)
                 start = 0;
@@ -26,18 +33,26 @@
                 player.turnIndex = (i >= start ? i - start : i + (game.players.length - start)) + 1;
             });
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
+            game.me.cards.forEach(c => c.submitable = submitCheck(c, game, game.me.cards));
+            timeUpdate();
             $scope.$apply();
         });
+        function submitCheck(c, game, cards) {
+            var prime = game.rounds.last().steps.last().prime;
+            if (prime !== null && prime !== c.type.name && cards.find(c => c.type.name === prime)) {
+                return false;
+            }
+            return true;
+        }
+
 
         ChatSocket.on("e", function (error) {
             popup.alert(error);
         });
 
-
         ChatSocket.on("p", function (error) {
             pop.alert(error);
         });
-
 
         $scope.startGame = function () {
             ChatSocket.emit('event', 'startGame');
@@ -91,6 +106,26 @@
             };
         };
 
+        var requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (/* function */ callback /* DOMElement */) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        function timeUpdate() {
+            if (!$scope.game || !$scope.game.duetime)
+                return;
+            $scope.remain = new Date().getTime() - $scope.game.duetime + $scope.game.duration;
+            $scope.$apply();
+            requestAnimationFrame(timeUpdate);
+        }
+
+        timeUpdate();
 
     }
 })();

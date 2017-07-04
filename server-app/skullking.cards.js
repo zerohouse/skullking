@@ -9,13 +9,21 @@ function Card(t, number) {
     else {
         this.no = 0;
         var typeInfo = types[this.type.name][number];
-        if(!typeInfo)
+        if (!typeInfo)
             typeInfo = types[this.type.name].random();
         this.name = typeInfo.name;
         this.src = typeInfo.src;
     }
     this.desc = this.type.desc;
 }
+
+Card.prototype.submitCheck = function (game, cards) {
+    var prime = game.rounds.last().steps.last().prime;
+    if (prime !== null && prime !== this.type.name && cards.find(c => c.type.name === prime)) {
+        return false;
+    }
+    return true;
+};
 
 module.exports = {
     newSet: function () {
@@ -38,7 +46,7 @@ module.exports = {
         for (var i = 0; i < 1; i++) {
             cards.push(new Card(type.king, i));
         }
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 1; i++) {
             cards.push(new Card(type.pirateOR, i));
         }
         cards.forEach((card, i) => {

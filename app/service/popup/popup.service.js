@@ -4,11 +4,11 @@
     /* @ng-inject */
     function confirmCtrl($scope, popup) {
         $scope.message = message;
-        $scope.ok = ()=> {
+        $scope.ok = () => {
             message.ok();
             popup.close();
         };
-        $scope.no = ()=> {
+        $scope.no = () => {
             message.no();
             popup.close();
         };
@@ -18,7 +18,7 @@
     /* @ng-inject */
     function popupService($compile, $rootScope, $q) {
 
-        this.alert = (message, classes)=> {
+        this.alert = (message, classes) => {
             vex.defaultOptions.className = 'vex-theme-os';
             if (!classes || !classes.match('theme'))
                 classes = 'vex-theme-wireframe ' + classes;
@@ -28,8 +28,8 @@
             });
         };
 
-        this.confirm = (m, title)=> {
-            return $q((ok, no)=> {
+        this.confirm = (m, title) => {
+            return $q((ok, no) => {
                 message.message = m;
                 message.title = title;
                 message.ok = ok;
@@ -38,7 +38,7 @@
             });
         };
 
-        this.error = (message, classes)=> {
+        this.error = (message, classes) => {
             this.alert(message, classes);
             throw message;
         };
@@ -64,39 +64,10 @@
             return $vexContent;
         };
 
-        this.close = function (non) {
-            if (non===true)
-                closing();
-            else
-                vex.close(non);
+        this.close = function () {
+            vex.closeAll();
         };
 
         $rootScope.close = this.close;
-
-        function closing() {
-            var $lastVex;
-            $lastVex = vex.getAllVexes().last();
-            if (!$lastVex.length) {
-                return false;
-            }
-            var id = $lastVex.data().vex.id;
-            var $vex, $vexContent, close, options;
-            $vexContent = vex.getVexByID(id);
-            if (!$vexContent.length) {
-                return;
-            }
-            $vex = $vexContent.data().vex.$vex;
-            options = $.extend({}, $vexContent.data().vex);
-            close = function () {
-                $vexContent.trigger('vexClose', options);
-                $vex.remove();
-                $('body').trigger('vexAfterClose', options);
-                if (options.afterClose) {
-                    return options.afterClose($vexContent, options);
-                }
-            };
-            close();
-        }
-
     }
 })();

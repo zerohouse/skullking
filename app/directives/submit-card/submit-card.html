@@ -2,7 +2,7 @@
     <card card="player.submitCard" ng-if="player.submitCard"></card>
     <span class="blank-card" ng-if="!player.submitCard">
     <span class="prepare">
-        <div class="name">{{player.name}}</div>
+        <div class="name">{{player.name}} {{player.win}}/{{player.prediction}}</div>
     {{player.turnIndex}}
     </span>
     <span class="submit-card">

@@ -5,7 +5,6 @@ angular
         'ngAnimate',
         'ui.router',
         'toastr',
-        'as.sortable',
         'ui.bootstrap',
         'ngDraggable'
     ]);

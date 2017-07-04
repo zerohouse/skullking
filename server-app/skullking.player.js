@@ -121,6 +121,10 @@ Player.prototype.update = function () {
     socket.emit('game', game);
 };
 
+Player.prototype.submitable = function (game) {
+    return this.cards.find(c => c.submitCheck(game, this.cards));
+};
+
 Player.prototype.alert = function (message) {
     var socket = this.socket;
     if (!socket)
