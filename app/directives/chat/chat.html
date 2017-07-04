@@ -9,6 +9,6 @@
 </div>
 <div class="layout-row sendbox" ng-show="chatShow && !log">
     <input placeholder="메세지" ng-model="message" ng-enter="send(message)" class="flex">
-    <!--<div class="send" ng-click="send(message)">보내기</div>-->
+    <div class="send" ng-click="send(message)">보내기</div>
     <div class="send close-chat"><i class="fa fa-times" ng-click="chatToggle()"></i></div>
 </div>

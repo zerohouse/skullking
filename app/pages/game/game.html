@@ -22,8 +22,8 @@
 <prediction game="game" ng-show="game.phase==='prediction'"></prediction>
 <div class="ready">
     <div ng-show="!game.onGame">
-        <div class="btn btn-primary" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
         <div>게임 시작을 기다리고 있습니다.</div>
+        <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">게임 시작</div>
     </div>
 </div>
 <div ng-if="game.phase==='submit'" class="layout-column flex">
