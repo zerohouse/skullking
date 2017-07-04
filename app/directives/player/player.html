@@ -10,7 +10,7 @@
         </span>
         </span>
 <span style="margin-left:5px"></span>
-<span class="label label-warning" ng-if="game.me.maker && !game.onGame">방장</span>
+<span class="label label-warning" ng-if="player.maker && !game.onGame">방장</span>
 <span class="label label-info" ng-if="player.id === game.me.id">나</span>
 <span class="label label-primary" ng-if="player.first && game.phase==='prediction'">선 플레이어</span>
 <span class="label label-warning" ng-if="player.turn && game.phase!=='prediction'">현재 순서</span>
