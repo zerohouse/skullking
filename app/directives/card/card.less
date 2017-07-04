@@ -1,65 +1,67 @@
 card {
-  display: inline-block;
-  overflow: hidden;
-  width: 90px;
-  margin: 5px;
-  background: white;
-  background-size: cover;
-  text-align: center;
-  font-weight: normal;
-  font-family: Arial, sans-serif;
-  position: relative;
-  border-radius: 5px;
-  border: 1px solid #666;
-  box-shadow: 3px 3px 3px #333;
-  .title {
-    padding: 3px 3px 3px 8px;
-    height: 55px;
+  > div {
+    display: inline-block;
+    overflow: hidden;
+    width: 90px;
+    margin: 5px;
     background: white;
-  }
-  .transparent.title {
-    background: rgba(255, 255, 255, 0.6);
-    box-shadow: 1px 1px 1px silver;
-  }
-  .bottom, .blank {
-    height: 65px;
-  }
-  .no {
-    font-size: 30px;
-    position: absolute;
-    right: 19px;
+    background-size: cover;
     text-align: center;
-    bottom: 8px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 1px 1px 1px silver;
-  }
-  .title {
-    text-align: left;
-    .name {
-      font-size: 20px;
-      color: #3a3a3a;
-      text-shadow: 1px 1px 1px silver;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    position: relative;
+    border-radius: 5px;
+    border: 1px solid #666;
+    box-shadow: 3px 3px 3px #333;
+    .title {
+      padding: 3px 3px 3px 8px;
+      height: 55px;
+      background: white;
     }
-    .desc {
-      font-size: 11px;
-      margin-left: 3px;
-      letter-spacing: 1px;
-      margin-top: -7px;
+    .transparent.title {
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 1px 1px 1px silver;
     }
-  }
-  .win {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: 5px;
-    top: 5px;
-    border-radius: 50%;
-    background: red;
-    font-size: 10px;
-    color: white;
-    padding: 1px 1px 1px 2px;
+    .bottom, .blank {
+      height: 65px;
+    }
+    .no {
+      font-size: 30px;
+      position: absolute;
+      right: 19px;
+      text-align: center;
+      bottom: 8px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 1px 1px 1px silver;
+    }
+    .title {
+      text-align: left;
+      .name {
+        font-size: 20px;
+        color: #3a3a3a;
+        text-shadow: 1px 1px 1px silver;
+      }
+      .desc {
+        font-size: 11px;
+        margin-left: 3px;
+        letter-spacing: 1px;
+        margin-top: -7px;
+      }
+    }
+    .win {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 5px;
+      top: 5px;
+      border-radius: 50%;
+      background: red;
+      font-size: 10px;
+      color: white;
+      padding: 1px 1px 1px 2px;
+    }
   }
 }

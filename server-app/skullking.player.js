@@ -1,4 +1,5 @@
 var randomNames = require('./skullking.constants').randomNames;
+var name;
 var _ = require('lodash');
 function Player(id) {
     this.id = id;
@@ -6,7 +7,7 @@ function Player(id) {
     this.win = 0;
     this.point = 0;
     this.points = [];
-    this.name = randomNames.random();
+    name = this.name = randomNames.next(name);
 }
 
 Player.prototype.reset = function () {

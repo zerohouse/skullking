@@ -1,8 +1,10 @@
-<div class="title" ng-class="{transparent:card.src}">
-    <div class="name">{{card.no || card.name}}</div>
-    <div class="desc" ng-style="{color:getColor(card.type.name)}">{{card.desc}}</div>
-    <div class="win" ng-if="card.win">win</div>
-</div>
-<div class="bottom" ng-style="{background:getColor(card.type.name)}">
-    <div class="no" ng-if="card.no">{{card.no}}</div>
+<div ng-style="{'background-image':s.card.src}">
+    <div class="title" ng-class="{transparent:card.src}">
+        <div class="name">{{card.no || card.name}}</div>
+        <div class="desc" ng-style="{color:getColor(card.type.name)}">{{card.desc}}</div>
+        <div class="win" ng-if="card.win">win</div>
+    </div>
+    <div class="bottom" ng-style="{background:getColor(card.type.name)}">
+        <div class="no" ng-if="card.no">{{card.no}}</div>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-require('./prototype');
+require('./../app/app.prototype');
 var Card = require('./skullking.cards');
 var Round = require('./skullking.round');
 var _ = require('lodash');

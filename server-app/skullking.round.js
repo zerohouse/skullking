@@ -43,7 +43,7 @@ Round.prototype.done = function (game) {
         this.calculatePoint(player);
         var p = player.points.last();
         return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
-    }).join("<br>"), `${game.round}라운드 결과`);
+    }).join("<br>"), `${game.round} 라운드 결과`);
 };
 
 Round.prototype.calculatePoint = function (player) {

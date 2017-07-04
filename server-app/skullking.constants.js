@@ -1,8 +1,5 @@
 module.exports = {
     randomNames: [
-        "둘기",
-        "리",
-        "치",
         "수리",
         "매기",
         "추라기",

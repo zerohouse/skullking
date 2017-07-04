@@ -13,6 +13,13 @@ if (!Array.prototype.find) {
     };
 }
 
+Array.prototype.next = function (el) {
+    var index = this.indexOf(el) + 1;
+    if (this.length <= index)
+        index = 0;
+    return this[index];
+};
+
 Date.prototype.format = function (f) {
     return moment().format(f);
 };
@@ -175,7 +182,7 @@ Array.prototype.removeById = function (id) {
 Array.prototype.pushAll = function (array) {
     if (!array || !array.forEach)
         return;
-    array.forEach(each=> {
+    array.forEach(each => {
         this.push(each);
     });
 };
@@ -183,7 +190,7 @@ Array.prototype.pushAll = function (array) {
 Array.prototype.removeAll = function (array) {
     if (!array || !array.forEach)
         return;
-    array.forEach(each=> {
+    array.forEach(each => {
         this.remove(each);
     });
 };

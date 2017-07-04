@@ -1,7 +1,7 @@
 <b>
     {{player.turnIndex}}.
     {{player.name}}</b>
-<span uib-tooltip-html="log" tooltip-placement="bottom" style="color:rebeccapurple;margin-left:6px">{{player.point}}점</span>
+<span uib-tooltip-html="log" style="color:rebeccapurple;margin-left:6px">{{player.point}}점</span>
 <span ng-if="game.onGame">
     <span class="prediction" ng-if="game.phase!=='prediction'">{{player.win}}<small>승/</small>{{player.prediction || 0}}<small>예측</small></span>
             <span class="prediction" ng-if="game.phase==='prediction'">
