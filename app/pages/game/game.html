@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="card-block hand">
-            <card ng-drag="true" ng-class="{submitable:game.me.turn && card.submitable}"
+            <card ng-drag="true" ng-dblclick="submit(card)" ng-class="{submitable:game.me.turn && card.submitable}"
                   ng-style="getPosition($index, game.me.cards.length)" ng-drag-data="card"
                   ng-repeat="card in game.me.cards track by $index"
                   card="card"></card>
