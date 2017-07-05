@@ -1,4 +1,4 @@
-var randomNames = require('./skullking.constants').randomNames;
+var randomNames = require('./skullking.constants.js').randomNames;
 var name;
 var _ = require('lodash');
 function Player(id) {
@@ -7,6 +7,7 @@ function Player(id) {
     this.win = 0;
     this.point = 0;
     this.points = [];
+    this.disconnected = true;
     name = this.name = randomNames.next(name);
 }
 

@@ -1,17 +1,24 @@
 <div class="container">
-    <h4>레지스탕스:아발론</h4>
+    <!--<h4>스컬킹</h4>-->
+    <div ng-if="!user._id">
+        <span class="btn btn-primary" ng-click="registerPopup()">회원가입</span>
+        <span class="btn btn-primary" ng-click="loginPopup()">로그인</span>
+    </div>
+    <div ng-if="user._id">
+        {{user.name}}<span class="btn btn-primary" ng-click="logout()">로그아웃</span>
+    </div>
+
     <div>
         <div style="background:#000; color:white;padding:20px;">방목록</div>
         <div class="layout-row room" ng-repeat="room in rooms" ng-click="go(room.id)">
             <div>{{$index+1}}</div>
-            <div>{{room.name}}</div>
-            <div class="flex"></div>
-            <div>{{room.size}}/10</div>
-            <div>{{room.host}}</div>
+            <div class="flex">{{room.name}}</div>
+            <div>{{room.size}}/{{room.maxSize}}</div>
+            <div>{{room.createdAt | date}}</div>
         </div>
         <div ng-if="rooms.length===0" class="layout-row room">
-            <div> 방이 없네요;</div>
+            <div>방이 없네요.</div>
         </div>
-        <div ng-click="go(rooms.length+1);" class="btn btn-primary margin-vertical">방만들기</div>
+        <div ng-click="makeRoom()" class="btn btn-primary margin-vertical">방만들기</div>
     </div>
 </div>

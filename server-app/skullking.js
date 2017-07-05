@@ -1,150 +1,121 @@
-require('./../app/app.prototype');
-var Card = require('./skullking.cards');
-var Round = require('./skullking.round');
-var _ = require('lodash');
+const _ = require('lodash');
+const games = {};
+const SkullKing = require('./skullking/skullking.game');
 
-function SkullKing(id) {
-    this.id = id;
-    this.madeAt = new Date();
-    this.maxRounds = 10;
-    this.players = [];
-    this.cardsInGame = Card.newSet();
-}
+function SkullKingSocket(io) {
+    io.on('connection', function (socket) {
+        socket.emit('rooms', getRooms());
+        socket.on('join', function (data) {
+            socket.join(data.id);
+            let game = games[data.id];
+            if (!game) {
+                socket.emit("e", "잘못된 접근입니다.");
+                socket.disconnect();
+                return;
+            }
+            let player = game.players.findById(data.player);
+            if (!player) {
+                socket.emit("e", "잘못된 접근입니다.");
+                socket.disconnect();
+                return;
+            }
+            if (!player.disconnected) {
+                socket.emit("e", "이미 접속 중입니다.");
+                socket.disconnect();
+                return;
+            }
+            player.disconnected = false;
+            player.socket = socket;
+            socket.player = player;
+            socket.game = game;
+            socket.game.update();
+        });
 
-SkullKing.prototype.addPlayer = function (player) {
-    if (this.players.length > 5)
-        throw "플레이어가 너무 많습니다.";
-    this.players.push(player);
-};
+        socket.on('event', function (event) {
+            try {
+                if (event === 'startGame')
+                    socket.game.start();
+            }
+            catch (e) {
+                socket.emit("e", e.toString());
+            }
+            socket.game.update();
+        });
 
-SkullKing.prototype.doneGame = function () {
-    this.onGame = false;
-    this.phase = '';
-    this.duetime = null;
-    this.duration = null;
-    clearTimeout(this.countEvent);
-    this.alert(this.players
-            .sort((p, p2) => {
-                return p2.point - p.point;
-            })
-            .map((player, i) => {
-                return `${i + 1}위 ${player.getName()} : ${player.point}`
-            }).join("<br>"), "게임 결과");
-};
+        socket.on('playerEvent', function (event, no, arg2) {
+            try {
+                if (event === 'predict') {
+                    socket.player.predict(socket.game, no);
+                }
+                else if (event === 'submit') {
+                    socket.player.submit(socket.game, no, arg2);
+                }
+                else if (event === 'name') {
+                    socket.player.name = no;
+                }
+            }
+            catch (e) {
+                socket.emit("e", e.toString());
+            }
+            socket.game.update();
+        });
 
-SkullKing.prototype.nextRound = function (message, title) {
-    this.round++;
-    if (this.round > this.maxRounds) {
-        this.doneGame();
-        return;
-    } else if (message)
-        this.alert(message, title);
+        socket.on('disconnect', function () {
+            if (!socket.game)
+                return;
+            if (!socket.game.onGame) {
+                socket.game.players.remove(socket.player);
+                updateRooms();
+                if (socket.game.players.length === 0) {
+                    destroy(socket.game.id);
+                } else if (socket.player.maker) {
+                    socket.game.players[0].maker = true;
+                }
+            }
+            else {
+                socket.player.disconnected = true;
+                socket.player.socket = undefined;
+            }
+            if (!socket.game.players.find(p => !p.disconnected)) {
+                destroy(socket.game.id);
+            }
+            socket.game.update();
+        });
 
-    var first = this.getTurnPlayer();
-    if (!first) {
-        first = this.players.random();
-        first.turn = true;
-    }
-    first.first = true;
-    this.rounds.push(new Round(this.round, first.id, this.players.length, this));
-    this.cards = _.cloneDeep(this.cardsInGame);
-    this.players.forEach(p => {
-        p.nextRound(this);
-    });
-    this.phase = "prediction";
-    this.pop(`${this.round} 라운드 예측하기`);
-    this.countdown(20000, () => {
-        this.players.filter(p => p.prediction === null).forEach(p => {
-            p.predict(this, 0);
+        socket.on('chat', function (message) {
+            message.name = socket.player.getName();
+            socket.broadcast.to(socket.game.id).emit('chat', message);
         });
     });
-};
 
-SkullKing.prototype.countdown = function (ms, cb) {
-    this.duetime = new Date().getTime() + ms;
-    this.duration = ms;
-    clearTimeout(this.countEvent);
-    this.countEvent = () => {
-        try {
-            cb();
-            this.update();
-        }
-        catch (e) {
-        }
-    };
-    setTimeout(this.countEvent, ms);
-};
-
-SkullKing.prototype.destroy = function () {
-    clearTimeout(this.countEvent);
-};
-
-SkullKing.prototype.predictionDone = function () {
-    if (!this.players.find(p => p.prediction === null)) {
-        this.phase = "submit";
-        this.alert(this.players.map((p, i) => {
-            return `${p.getName()} : ${p.prediction}승 예측`
-        }).join("<br>"), "예측 결과");
-        this.nextTurn();
+    function destroy(id) {
+        const game = games[id];
+        if (!id || !game)
+            return;
+        game.destroy();
+        delete games[id];
+        updateRooms();
     }
-};
 
-SkullKing.prototype.alert = function (message, title) {
-    this.players.forEach(p => p.alert(message, title));
-};
-
-SkullKing.prototype.pop = function (message) {
-    this.players.forEach(p => p.pop(message));
-};
-
-SkullKing.prototype.update = function () {
-    this.players.forEach(p => p.update());
-};
-
-SkullKing.prototype.submit = function (card) {
-    this.rounds.last().submit(card, this);
-};
-
-SkullKing.prototype.allSubmit = function () {
-    return !this.players.find(p => !p.submitCard);
-};
-
-SkullKing.prototype.getTurnPlayer = function () {
-    return this.players.find(p => p.turn);
-};
-
-SkullKing.prototype.getNextPlayer = function () {
-    var index = this.players.indexOf(this.getTurnPlayer());
-    index++;
-    if (index >= this.players.length)
-        index = 0;
-    return this.players[index];
-};
-
-SkullKing.prototype.start = function () {
-    if (this.players.length < 2) {
-        throw "게임 플레이어가 모자랍니다.";
+    function updateRooms() {
+        io.local.emit('rooms', getRooms());
     }
-    this.players.forEach(p => {
-        p.reset();
-    });
-    this.round = 0;
-    this.rounds = [];
-    this.onGame = true;
-    this.nextRound();
-};
 
-SkullKing.prototype.nextTurn = function () {
-    var now = this.getTurnPlayer();
-    var next = !now.submitCard ? now : this.getNextPlayer();
-    now.turn = false;
-    next.turn = true;
-    next.pop("카드를 낼 차례 입니다.");
-    this.countdown(20000, () => {
-        if (next.turn) {
-            next.submit(this, next.submitable(this).id);
-        }
-    });
-};
+    function getRooms() {
+        return _.map(games, function (v, k) {
+            return {
+                id: k,
+                name: `${v.maker}님의 방`,
+                size: v.players.length,
+                maxSize: v.maxSize,
+                createdAt: v.createdAt,
+                onGame: v.onGame
+            };
+        });
+    }
+}
 
-module.exports = SkullKing;
+module.exports = {
+    socket: SkullKingSocket,
+    games: games
+};

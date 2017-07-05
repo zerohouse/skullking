@@ -1,6 +1,6 @@
-var type = require('./skullking.type');
+var type = require('./skullking.type.js');
 var _ = require('lodash');
-var types = require('./skullking.constants').types;
+var types = require('./skullking.constants.js').types;
 
 function Card(t, number) {
     this.type = _.cloneDeep(t);

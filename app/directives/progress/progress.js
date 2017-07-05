@@ -9,8 +9,10 @@
             },
             templateUrl: '/directives/progress/progress.html',
             controller: function ($scope) {
-                $scope.max = function (value) {
-                    return Math.min(100, value);
+                $scope.getStyle = function () {
+                    var percent = Math.min(100, $scope.value);
+                    var color = percent > 80 ? '#da0000' : '#59ce2c';
+                    return {'background-color': color, width: `${percent}%`};
                 };
             }
         };

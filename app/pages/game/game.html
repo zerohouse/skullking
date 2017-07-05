@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="toggles layout-row">
-        <span ng-if="remain" ng-class="{red:game.me.turn && (game.duration - remain) / 1000 < 7}" class="time">{{(game.duration - remain) / 1000 | number : 1}}/{{game.duration / 1000| number : 0}}</span>
+        <span ng-if="remain>0" ng-class="{red:(game.duration - remain) / 1000 < 5}" class="time">{{(game.duration - remain) / 1000 | number : 1}}/{{game.duration / 1000| number : 0}}</span>
         <span class="flex"></span>
         <toggle icon="{{newChat ? 'fa-commenting-o':'fa-comment-o'}}" toggle="chatShow"></toggle>
         <toggle icon="fa-user" toggle="userShow"></toggle>

@@ -1,4 +1,4 @@
-var type = require('./skullking.type');
+var type = require('./skullking.type.js');
 
 function Step(first, playerSize) {
     this.first = first;

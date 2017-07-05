@@ -49,6 +49,7 @@
 
 
         ChatSocket.on("e", function (error) {
+            vex.close();
             popup.alert(error);
         });
 

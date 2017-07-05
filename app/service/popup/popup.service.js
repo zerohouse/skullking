@@ -1,4 +1,3 @@
-var popup;
 (function () {
     var message = {};
     angular.module('app').controller('confirmCtrl', confirmCtrl);
@@ -17,12 +16,11 @@ var popup;
     angular.module('app').service('popup', popupService);
     /* @ng-inject */
     function popupService($compile, $rootScope, $q) {
-        popup = this;
         this.alert = (message, classes) => {
             vex.defaultOptions.className = 'vex-theme-plain';
             if (!classes || !classes.match('theme'))
                 classes = 'vex-theme-plain ' + classes;
-            vex.close();
+            // vex.close();
             vex.dialog.alert({
                 message: message,
                 className: classes
@@ -35,7 +33,7 @@ var popup;
                 message.title = title;
                 message.ok = ok;
                 message.no = no;
-                this.open("confirm", "vex-theme-plain");
+                this.open("confirm");
             });
         };
 
@@ -44,15 +42,15 @@ var popup;
             throw message;
         };
 
-        this.open = function (template, classes, scope, afterclose) { //TODO scope종료될떄는 생각좀 해야함 destroy
+        this.open = function (template, scope, afterclose) { //TODO scope종료될떄는 생각좀 해야함 destroy
             if (!template.match("html")) {
                 template = "/dialog/" + template + ".html";
             }
             var $vexContent, beforeClose;
             var options = $.extend({}, vex.defaultOptions, vex.dialog.defaultOptions, options);
-            if (!classes || !classes.match('theme'))
-                classes = 'vex-theme-wireframe ' + classes;
-            options.className = classes;
+            // if (!classes || !classes.match('theme'))
+            //     classes = 'vex-theme-plain ' + classes;
+            options.className = 'vex-theme-plain';
             options.afterClose = afterclose;
             if (!scope)
                 scope = $rootScope;
