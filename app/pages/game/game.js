@@ -2,7 +2,7 @@
     angular.module('app').controller('gameCtrl', gameCtrl);
     /* @ng-inject */
     /* Controllers */
-    function gameCtrl($scope, popup, ChatSocket, $stateParams, $window, pop) {
+    function gameCtrl($scope, popup, ChatSocket, $stateParams, $window, pop, $state, $timeout) {
         $scope.names = {
             prediction: "예측하기",
             submit: "카드 제출"
@@ -51,6 +51,15 @@
         ChatSocket.on("e", function (error) {
             vex.close();
             popup.alert(error);
+        });
+
+        ChatSocket.on("err", function (error) {
+            vex.close();
+            popup.alert(error);
+            $state.go('rooms');
+            $timeout(function () {
+                location.reload();
+            }, 1000);
         });
 
         ChatSocket.on("p", function (error) {

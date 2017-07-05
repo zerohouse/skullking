@@ -1,6 +1,8 @@
-var randomNames = require('./skullking.constants.js').randomNames;
-var name;
-var _ = require('lodash');
+const randomNames = require('./skullking.constants.js').randomNames;
+let name;
+const _ = require('lodash');
+const User = require('./../user/user.model');
+
 function Player(id) {
     this.id = id;
     this.cards = [];
@@ -11,6 +13,17 @@ function Player(id) {
     name = this.name = randomNames.next(name);
 }
 
+Player.prototype.saveResult = function (id) {
+    if (!this.userId)
+        return;
+    User.findById(this.userId, (err, user) => {
+        user.point += this.point;
+        user.ranks.push(this.rank);
+        user.save(function (err, user) {
+        });
+    });
+};
+
 Player.prototype.reset = function () {
     this.cards = [];
     this.win = 0;
@@ -19,15 +32,16 @@ Player.prototype.reset = function () {
 };
 
 Player.prototype.nextRound = function (game) {
-    for (var i = 0; i < game.round; i++)
+    for (let i = 0; i < game.round; i++)
         this.drawCard(game);
     this.win = 0;
     this.prediction = null;
     this.submitCard = null;
 };
 
+
 Player.prototype.drawCard = function (game) {
-    var card = game.cards.random();
+    const card = game.cards.random();
     card.player = this.id;
     this.cards.push(card);
     game.cards.remove(card);
@@ -50,7 +64,7 @@ Player.prototype.submit = function (game, id, arg2) {
         this.error("내 차례가 아닙니다.");
         return;
     }
-    var submitCard = this.cards.findById(id);
+    let submitCard = this.cards.findById(id);
     if (!submitCard) {
         this.error("없는 카드입니다.");
         return;
@@ -65,7 +79,7 @@ Player.prototype.submit = function (game, id, arg2) {
         }
     }
     if (!submitCard.type.item) {
-        var prime = game.rounds.last().steps.last().prime;
+        const prime = game.rounds.last().steps.last().prime;
         if (prime !== null && prime !== submitCard.type.name && this.cards.find(c => c.type.name === prime)) {
             this.error(`${prime} 타입의 일반 카드를 먼저 내야합니다.`);
             return;
@@ -99,15 +113,15 @@ Player.prototype.addPoint = function (name, point) {
 };
 
 Player.prototype.update = function () {
-    var socket = this.socket;
+    let socket = this.socket;
     if (!socket)
         return;
-    var game = _.cloneDeepWith(socket.game, (value, key) => {
+    const game = _.cloneDeepWith(socket.game, (value, key) => {
         if (key === "socket") {
             return false;
         }
     });
-    var me = _.cloneDeepWith(this, (value, key) => {
+    const me = _.cloneDeepWith(this, (value, key) => {
         if (key === "socket") {
             return false;
         }
@@ -128,14 +142,14 @@ Player.prototype.submitable = function (game) {
 };
 
 Player.prototype.alert = function (message, title) {
-    var socket = this.socket;
+    let socket = this.socket;
     if (!socket)
         return;
     socket.emit('e', `<h5>${title}</h5>${message}`);
 };
 
 Player.prototype.pop = function (message) {
-    var socket = this.socket;
+    let socket = this.socket;
     if (!socket)
         return;
     socket.emit('p', message);

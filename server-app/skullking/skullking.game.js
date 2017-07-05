@@ -2,6 +2,7 @@ const Card = require('./skullking.cards');
 const Round = require('./skullking.round');
 const Player = require('./skullking.player');
 const _ = require('lodash');
+const GameResult = require('./skullking.result.model');
 
 function SkullKing(id) {
     this.id = id;
@@ -16,9 +17,11 @@ function SkullKing(id) {
 
 SkullKing.prototype.addPlayer = function (playerKey, user) {
     const player = new Player(playerKey);
+    if (this.onGame)
+        throw "게임 중입니다.";
     if (user) {
         player.name = user.name;
-        player.userId = user.id;
+        player.userId = user._id;
     }
     if (this.players.length === 0) {
         player.maker = true;
@@ -27,6 +30,10 @@ SkullKing.prototype.addPlayer = function (playerKey, user) {
     if (this.players.length + 1 > this.maxSize)
         throw "플레이어가 너무 많습니다.";
     this.players.push(player);
+    setTimeout(() => {
+        if (player.disconnected)
+            this.players.remove(player);
+    }, 1000);
 };
 
 SkullKing.prototype.doneGame = function () {
@@ -35,13 +42,24 @@ SkullKing.prototype.doneGame = function () {
     this.duetime = null;
     this.duration = null;
     clearTimeout(this.countEvent);
-    this.alert(this.players
+    const res = this.players
         .sort((p, p2) => {
             return p2.point - p.point;
-        })
+        });
+    this.alert(res
         .map((player, i) => {
             return `${i + 1}위 ${player.getName()} : ${player.point}`
         }).join("<br>"), "게임 결과");
+    const result = new GameResult({
+        users: res.map((player, i) => {
+            player.rank = (i + 1);
+            return {rank: player.rank, name: player.name, userId: player.userId, point: player.point};
+        }),
+        rounds: this.rounds
+    });
+    result.save((err, save) => {
+        this.players.forEach(p => p.saveResult(save._id));
+    });
 };
 
 SkullKing.prototype.nextRound = function (message, title) {

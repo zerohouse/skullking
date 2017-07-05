@@ -14,15 +14,13 @@
             if (!$rootScope.user._id) {
                 popup.confirm("회원으로 가입하면 게임 전적이 기록되고, 포인트가 쌓입니다.", "비회원으로 진행하시겠습니까?").then(function () {
                     $ajax.get('/api/playerCode', {id: id}).then(player => {
-                        var url = $state.href('game', {id: id, player: player});
-                        window.open(url, '_blank');
+                        $state.go('game', {id: id, player: player});
                     });
                 });
                 return;
             }
             $ajax.get('/api/userPlayerCode', {id: id}).then(player => {
-                var url = $state.href('game', {id: id, player: player});
-                window.open(url, '_blank');
+                $state.go('game', {id: id, player: player});
             });
         };
 
@@ -32,8 +30,7 @@
                 return;
             }
             $ajax.get('/api/newRoomCode').then(code => {
-                var url = $state.href('game', {id: code.room, player: code.player});
-                window.open(url, '_blank');
+                $state.go('game', {id: code.room, player: code.player});
             });
         };
 

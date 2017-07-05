@@ -7,7 +7,9 @@ emailField.unique = true;
 const userSchema = mongoose.Schema({
     email: emailField,
     name: mongoose.regexField(String, ".{2,}", "이름은 두글자 이상으로해주세요."),
-    password: String
+    password: String,
+    ranks: [],
+    point: {type: Number, default: 0}
 });
 
 const User = mongoose.model('User', userSchema);

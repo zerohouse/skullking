@@ -9,18 +9,18 @@ function SkullKingSocket(io) {
             socket.join(data.id);
             let game = games[data.id];
             if (!game) {
-                socket.emit("e", "잘못된 접근입니다.");
+                socket.emit("err", "잘못된 접근입니다.");
                 socket.disconnect();
                 return;
             }
             let player = game.players.findById(data.player);
             if (!player) {
-                socket.emit("e", "잘못된 접근입니다.");
+                socket.emit("err", "잘못된 접근입니다.");
                 socket.disconnect();
                 return;
             }
             if (!player.disconnected) {
-                socket.emit("e", "이미 접속 중입니다.");
+                socket.emit("err", "이미 접속 중입니다.");
                 socket.disconnect();
                 return;
             }
