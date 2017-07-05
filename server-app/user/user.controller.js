@@ -18,26 +18,22 @@ module.exports = function (app) {
                 res.sendError("가입하지 않은 계정입니다.");
                 return;
             }
-            user.compare(u.password, ecb(result => {
-                if (!result) {
-                    res.sendError("패스워드가 다릅니다.");
-                    return;
-                }
-                req.session.user = user;
-                res.send(user);
-            }));
+            if (!user.comparePassword(u.password)) {
+                res.sendError("패스워드가 다릅니다.");
+                return;
+            }
+            req.session.user = user;
+            res.send(user);
         }));
     });
 
     app.post('/api/user', function (req, res) {
         let user = req.body;
-        User.encrypt(user.password, ecb(password => {
-            user.password = password;
-            user = new User(user);
-            user.save(ecb(function (user) {
-                req.session.user = user;
-                res.send(user);
-            }));
+        user = new User(user);
+        user.encryptPassword();
+        user.save(ecb(function (user) {
+            req.session.user = user;
+            res.send(user);
         }));
     });
 
