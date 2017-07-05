@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
-mongoose.connect('mongodb://funny.gg:27017/skull',
+const url = process.platform === 'linux' ? '127.0.0.1' : "funny.gg";
+mongoose.connect(`mongodb://${url}:27017/skull`,
     {
         useMongoClient: true
     }
