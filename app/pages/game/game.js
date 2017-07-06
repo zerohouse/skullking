@@ -133,7 +133,7 @@
         function timeUpdate() {
             if (!$scope.game || !$scope.game.duetime)
                 return;
-            $scope.remain = (new Date().getTime() + $scope.timeAdjust) - $scope.game.duetime + $scope.game.duration;
+            $scope.remain = (new Date().getTime() - $scope.timeAdjust) - $scope.game.duetime + $scope.game.duration;
             $scope.$apply();
             requestAnimationFrame(timeUpdate);
         }
