@@ -2,8 +2,8 @@
      class="layout-column flex wrap">
     <phase game="game"></phase>
     <prediction class="flex layout-row layout-align-center-center" game="game"
-                ng-show="game.phase==='prediction'"></prediction>
-    <div class="ready flex layout-row layout-align-center-center" ng-show="!game.onGame" style="overflow-y:auto">
+                ng-if="game.phase==='prediction'"></prediction>
+    <div class="ready flex layout-row layout-align-center-center" ng-if="!game.onGame" style="overflow-y:auto">
         <div>
             <h5>{{game.name}}</h5>
             <div>게임 준비중</div>
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="game.phase==='submit'" class="layout-column flex">
+    <div ng-if="game.phase==='submit'" class="layout-column flex">
         <div class="card-block flex field layout-column layout-align-center-center" ng-drop="true"
              ng-drop-success="submit($data)">
             <prime-color color="game.rounds.last().steps.last().prime"></prime-color>
@@ -50,13 +50,13 @@
     </div>
 
     <progressbar ng-show="game.duration" value="remain/game.duration*100"></progressbar>
-    <div ng-show="userShow">
+    <div ng-if="userShow">
         <player ng-click="name(player)" ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
                 index="$index"
                 ng-repeat="player in game.players"
                 game="game" player="player">
         </player>
     </div>
-    <chat ng-show="chatShow"></chat>
+    <chat ng-if="chatShow"></chat>
     <history ng-if="historyShow" game="game"></history>
 </div>
