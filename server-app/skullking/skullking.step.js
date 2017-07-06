@@ -59,10 +59,14 @@ Step.prototype.winInfo = function () {
             return;
         }
         if (c.type.black) {
-            if (!winCard.black)
+            if (!winCard.type.black) {
                 winCard = c;
-            if (winCard.no < c.no)
+                return;
+            }
+            if (winCard.no < c.no) {
                 winCard = c;
+                return;
+            }
         }
         if ((c.type.name === this.prime) && winCard.no < c.no)
             winCard = c;
