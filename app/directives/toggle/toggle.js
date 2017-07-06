@@ -10,9 +10,12 @@
             },
             templateUrl: '/directives/toggle/toggle.html',
             link: function (s, e) {
-                $(e).bind('click', function () {
+                $(e).on('click', function () {
                     s.$parent[s.toggle] = !s.$parent[s.toggle];
                     s.$apply();
+                });
+                s.$on('$destroy', function () {
+                    $(e).off('click');
                 });
             }
 

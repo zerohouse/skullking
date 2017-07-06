@@ -31,6 +31,10 @@
                     scrollAdjust();
                 });
 
+                $scope.$on('$destroy', function () {
+                    ChatSocket.removeAllListeners("chat");
+                });
+
                 function scrollAdjust() {
                     var chat = document.getElementById("chat");
                     $timeout(function () {

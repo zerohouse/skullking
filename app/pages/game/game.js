@@ -10,13 +10,14 @@
 
         var game = $scope.game = {};
 
-        $scope.$watch(function () {
+        var clearWatch = $scope.$watch(function () {
             return $stateParams.id;
         }, function (id) {
             if (!id)
                 return;
             ChatSocket.emit('join', {id: id, player: $stateParams.player});
         });
+
 
         var onGame;
         $scope.chatShow = true;
@@ -69,14 +70,13 @@
             });
         }
 
-        angular.element($window).bind('resize', function () {
+        angular.element($window).on('resize', function () {
             positioning($scope.game);
             $scope.$apply();
         });
 
-
         ChatSocket.on("e", function (m) {
-            vex.close();
+            popup.close();
             if (m.type === "stepDone") {
                 var scope = $scope.$new();
                 scope.messageAlert = m.message;
@@ -87,8 +87,9 @@
             popup.alert(m);
         });
 
+
         ChatSocket.on("err", function (error) {
-            vex.close();
+            popup.close();
             popup.alert(error);
             $state.go('rooms');
             $timeout(function () {
@@ -99,6 +100,7 @@
         ChatSocket.on("p", function (error) {
             pop.alert(error);
         });
+
 
         $scope.startGame = function () {
             ChatSocket.emit('event', 'startGame');
@@ -122,7 +124,7 @@
             if (!$scope.game.me.turn)
                 return;
             if (card.type.name === 'pirateOR') {
-                popup.confirm("취소시 도망으로 사용한다.", "카드를 해적으로 사용한다.").then(function () {
+                popup.confirm("이 카드는 해적 / 도망 중 선택할 수 있습니다.", "카드를 어떻게 사용할지 선택해주세요.", "해적", "도망").then(function () {
                     ChatSocket.emit('playerEvent', 'submit', card.id, true);
                 }, function () {
                     ChatSocket.emit('playerEvent', 'submit', card.id, false);
@@ -156,6 +158,15 @@
         }
 
         timeUpdate();
+
+        $scope.$on("$destroy", function () {
+            clearWatch();
+            ChatSocket.removeAllListeners("game");
+            ChatSocket.removeAllListeners("e");
+            ChatSocket.removeAllListeners("err");
+            ChatSocket.removeAllListeners("p");
+            angular.element($window).off('resize');
+        });
 
     }
 })();

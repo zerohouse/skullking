@@ -9,9 +9,7 @@
                 player: '=',
                 game: '='
             },
-            templateUrl: '/directives/submit-card/submit-card.html',
-            controller: function () {
-            }
+            templateUrl: '/directives/submit-card/submit-card.html'
         };
     }
 })();

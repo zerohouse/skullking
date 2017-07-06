@@ -5,5 +5,6 @@ angular
         'ngAnimate',
         'ui.router',
         'toastr',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngDialog'
     ]);

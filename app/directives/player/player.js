@@ -11,12 +11,14 @@
                 game: '='
             },
             controller: function ($scope, $sce) {
-                $scope.$watch('player', function (player) {
+                var clear = $scope.$watch('player', function (player) {
                     if (!player || !player.points)
                         return;
                     $scope.log = $sce.trustAsHtml(player.points.map(p => `${p.name} ${p.point > 0 ? "+" : ""}${p.point}`).join("<br>"));
                 });
-
+                $scope.$on('$destroy', function () {
+                    clear();
+                });
             }
         };
     }
