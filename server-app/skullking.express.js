@@ -14,6 +14,21 @@ module.exports = function (app) {
             res.sendError("로그인 안됨");
             return;
         }
+        if (games[req.session.room]) {
+            const player = games[req.session.room].players.findBy("userId", req.session.user._id);
+            if (player && !player.disconnected) {
+                res.sendError("이미 접속중입니다.");
+                return;
+            }
+            if (player) {
+                const key = randomstring.generate();
+                player.id = key;
+                req.session.key = key;
+                req.session.room = req.query.id;
+                res.send(key);
+                return;
+            }
+        }
         keyRoom(req, res);
     });
 
