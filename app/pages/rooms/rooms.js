@@ -44,7 +44,7 @@
         };
 
         $scope.register = function (user) {
-            $ajax.post('/api/user', user, true).then(function () {
+            $ajax.post('/api/user', user, true).then(function (user) {
                 $rootScope.user = user;
                 popup.close();
             });
@@ -81,5 +81,20 @@
         $scope.refresh();
         $interval($scope.refresh, 5000);
 
+        $scope.refreshRank = function () {
+            $ajax.get('/api/ranks').then(function (res) {
+                $scope.ranks = res;
+                $scope.ranks.forEach(r => {
+                    if (r.ranks.length === 0)
+                        return;
+                    r.avgPoint = r.point / r.ranks.length;
+                    r.avgRank = r.ranks.reduce((a, b) => {
+                            return a + (b.rank / b.players);
+                        }, 0) / r.ranks.length;
+                });
+            });
+        };
+
+        $scope.refreshRank();
     }
 })();

@@ -13,12 +13,12 @@ function Player(id) {
     name = this.name = randomNames.next(name);
 }
 
-Player.prototype.saveResult = function (id) {
+Player.prototype.saveResult = function (length) {
     if (!this.userId)
         return;
     User.findById(this.userId, (err, user) => {
         user.point += this.point;
-        user.ranks.push(this.rank);
+        user.ranks.push({rank: this.rank, players: length});
         user.save(function (err, user) {
         });
     });
@@ -122,6 +122,9 @@ Player.prototype.update = function () {
         return;
     const game = _.cloneDeepWith(socket.game, (value, key) => {
         if (key === "socket") {
+            return false;
+        }
+        if (key === "countEvent") {
             return false;
         }
     });

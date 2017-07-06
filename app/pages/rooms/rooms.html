@@ -16,11 +16,11 @@
         <table class="table table-striped room">
             <thead>
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>만든사람</th>
-                <th>인원</th>
-                <th>만든시간</th>
+                <th><i class="fa fa-sort-numeric-asc"></i></th>
+                <th><i class="fa fa-sort-numeric-header"></i></th>
+                <th><i class="fa fa-user"></i></th>
+                <th><i class="fa fa-users"></i></th>
+                <th><i class="fa fa-clock-o"></i></th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +36,31 @@
             </tr>
             </tbody>
         </table>
-        <div ng-click="makeRoomPopup()" class="btn btn-primary margin-vertical">방만들기</div>
+        <div ng-click="makeRoomPopup()" class="btn btn-primary">방만들기</div>
+    </div>
+    <div ng-if="ranks.length>0" style="margin-top:30px;">
+        <div>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></div>
+        <table class="table table-striped room">
+            <thead>
+            <tr style="font-size:12px;">
+                <th><i class="fa fa-sort-numeric-asc"></i></th>
+                <th><i class="fa fa-user"></i></th>
+                <th>참여</th>
+                <th>점수</th>
+                <th>평균 점수</th>
+                <th>평균 상위</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ranker in ranks">
+                <td>{{$index+1}}</td>
+                <td>{{ranker.name}}</td>
+                <td>{{ranker.ranks.length}}</td>
+                <td>{{ranker.point}}</td>
+                <td>{{ranker.avgPoint|number:1}}</td>
+                <td>{{ranker.avgRank*100|number:1}}%</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

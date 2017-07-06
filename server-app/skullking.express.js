@@ -2,6 +2,7 @@ const games = require('./skullking').games;
 const SkullKing = require('./skullking/skullking.game');
 const randomstring = require("randomstring");
 const _ = require('lodash');
+const User = require('./user/user.model');
 
 module.exports = function (app) {
     app.get('/api/playerCode', function (req, res) {
@@ -55,6 +56,21 @@ module.exports = function (app) {
                 maker: v.maker
             };
         }));
+    });
+
+    app.get('/api/ranks', function (req, res) {
+        User.find(null,
+            ['point', 'ranks', 'name'],
+            {
+                skip: 0,
+                limit: 30,
+                sort: {
+                    point: -1
+                }
+            },
+            function (err, rankers) {
+                res.send(rankers);
+            });
     });
 
     app.post('/api/newRoomCode', function (req, res) {

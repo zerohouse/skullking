@@ -62,7 +62,7 @@ SkullKing.prototype.doneGame = function () {
         rounds: this.rounds
     });
     result.save((err, save) => {
-        this.players.forEach(p => p.saveResult(save._id));
+        this.players.forEach(p => p.saveResult(this.players.length));
     });
 };
 
@@ -102,15 +102,14 @@ SkullKing.prototype.countdown = function (ms, cb) {
     this.duetime = new Date().getTime() + ms;
     this.duration = ms;
     clearTimeout(this.countEvent);
-    this.countEvent = () => {
+    this.countEvent = setTimeout(() => {
         try {
             cb();
             this.update();
         }
         catch (e) {
         }
-    };
-    setTimeout(this.countEvent, ms);
+    }, ms);
 };
 
 SkullKing.prototype.destroy = function () {

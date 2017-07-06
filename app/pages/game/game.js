@@ -74,7 +74,7 @@
             if ($scope.game.me.id !== player.id)
                 return;
             $scope.n = $scope.game.me.name;
-            popup.open('name', "vex-theme-plain", $scope);
+            popup.open('name', $scope);
         };
 
         $scope.reName = function (name) {
