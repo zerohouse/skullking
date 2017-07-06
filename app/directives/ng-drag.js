@@ -4,7 +4,18 @@
     function ngDrag() {
         return {
             link: function (s, e) {
-                $(e).draggable({revert: true, revertDuration: 200});
+                var position;
+                $(e).draggable({
+                    start: function () {
+                        position = {
+                            left: $(this).css('left'),
+                            top: $(this).css('top')
+                        };
+                    },
+                    stop: function () {
+                        $(this).animate({top: position.top, left: position.left}, 150);
+                    }
+                });
             }
         };
     }
