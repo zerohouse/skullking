@@ -8,7 +8,7 @@
             submit: "카드 제출"
         };
 
-        $scope.game = {};
+        var game = $scope.game = {};
 
         $scope.$watch(function () {
             return $stateParams.id;
@@ -22,9 +22,9 @@
         $scope.chatShow = true;
         $scope.userShow = true;
 
-        ChatSocket.on("game", function (game) {
+        ChatSocket.on("game", function (g) {
             $scope.timeAdjust = new Date().getTime() - game.timeAdjust;
-            angular.copy(game, $scope.game);
+            angular.copy(g, $scope.game);
             if (game.onGame !== onGame) {
                 onGame = game.onGame;
                 $scope.chatShow = $scope.userShow = !game.onGame;
@@ -36,7 +36,6 @@
                 player.turnIndex = (i >= start ? i - start : i + (game.players.length - start)) + 1;
             });
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
-
             game.me.cards.forEach(c => c.submitable = submitCheck(c, game, game.me.cards));
             positioning(game);
             timeUpdate();
@@ -56,17 +55,16 @@
         function positioning(game) {
             if (!game)
                 return;
-            var max = game.me.cards.length;
             game.me.cards.forEach((c, i) => {
                 var width = $window.innerWidth;
                 if (!width)
                     return;
                 var padding = 30;
-                var step = (width - 90 - padding) / max;
+                var step = (width - 90 - padding) / game.me.cards.length;
                 step = Math.min(step, 110);
                 c.position = {
                     top: 0,
-                    left: (width / 2 + (i - max / 2) * step) - 45 + padding / 2 + "px"
+                    left: (width / 2 + (i - game.me.cards.length / 2) * step) - 45 + padding / 2 + "px"
                 };
             });
         }
