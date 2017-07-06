@@ -52,6 +52,8 @@
         }
 
         function positioning(game) {
+            if (!game)
+                return;
             var max = game.me.cards.length;
             game.me.cards.forEach((c, i) => {
                 var width = $window.innerWidth;
@@ -68,7 +70,7 @@
         }
 
         angular.element($window).bind('resize', function () {
-            positioning();
+            positioning($scope.game);
             $scope.$apply();
         });
 
