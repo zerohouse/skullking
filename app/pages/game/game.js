@@ -22,7 +22,7 @@
 
         ChatSocket.on("game", function (game) {
             $scope.timeAdjust = new Date().getTime() - game.timeAdjust;
-            $scope.game = game;
+            angular.copy(game, $scope.game);
             if (game.onGame !== onGame) {
                 onGame = game.onGame;
                 $scope.chatShow = $scope.userShow = !game.onGame;
@@ -40,6 +40,7 @@
             timeUpdate();
             $scope.$apply();
         });
+
         function submitCheck(c, game, cards) {
             if (c.type.item)
                 return true;
@@ -134,19 +135,6 @@
         $scope.getTurnPlayer = function () {
             return $scope.game.players.find(p => p.turn);
         };
-
-        // $scope.getPosition = function (index, max) {
-        //     var width = $window.innerWidth;
-        //     if (!width)
-        //         return;
-        //     var padding = 30;
-        //     var step = (width - 90 - padding) / max;
-        //     step = Math.min(step, 110);
-        //     return {
-        //         top: 0,
-        //         left: (width / 2 + (index - max / 2) * step) - 45 + padding / 2 + "px"
-        //     };
-        // };
 
         var requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
