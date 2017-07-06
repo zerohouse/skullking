@@ -16,7 +16,7 @@ module.exports = {
     pirate: new Type("pirate","해적"),
     white: new Type("white","도망가자"),
     king: new Type("king","해적왕"),
-    girl: new Type("girl","미녀"),
+    girl: new Type("girl","여해적"),
     pirateOR: new Type("pirateOR", "해적/도망")
 };
 

@@ -57,10 +57,46 @@
                 <td>{{ranker.name}}</td>
                 <td>{{ranker.ranks.length}}</td>
                 <td>{{ranker.point}}</td>
-                <td>{{ranker.avgPoint|number:1}}</td>
-                <td>{{ranker.avgRank*100|number:1}}%</td>
+                <td>{{ranker.avgPoint || 0 | number:1}}</td>
+                <td>{{ranker.avgRank*100 || 0 | number:1}}%</td>
             </tr>
             </tbody>
         </table>
+    </div>
+    <div style="margin-top:30px;">
+        <div>룰 설명</div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                게임은 총 10 라운드로 진행되며, <span uib-tooltip="1라운드는 1번, 2라운드는 2번...">각 라운드 만큼의<span
+                    class="fa fa-question-circle"></span></span>
+                <span uib-tooltip="모든 플레이어가 순서대로 카드를 1장 내고, 가장 높은 카드가 승리합니다.">전투<span
+                        class="fa fa-question-circle"></span></span>가 진행됩니다.
+            </li>
+            <li class="list-group-item">
+                라운드 시작전 플레이어는 해당 라운드에서 몇번 승리할지 예측하고,
+                <br> 라운드 종료시 <span uib-tooltip="예측수 *20 / 0승 예측시 라운드*10">맞았으면 점수를 획득
+                <span class="fa fa-question-circle"></span></span>하고 <span
+                    uib-tooltip="틀린횟수(예측수-실제 승리) * 10 / 0승 예측시 라운드*10">틀렸으면 점수를 잃습니다.<span
+                    class="fa fa-question-circle"></span></span>
+            </li>
+            <li class="list-group-item">
+                10 라운드 종료 후 점수가 가장 높은 플레이어가 승리합니다.
+            </li>
+            <li class="list-group-item">
+                카드는 다음의 순서로 강합니다.<br>
+                해적왕 > 해적 > 여해적 > 블랙 > 빨강 = 파랑 = 노랑 > 도망<br>
+                <b>해적왕과 여해적가 함께 나오면 여해적가 승리합니다.</b><br>
+                빨강, 파랑, 노랑 카드는 해당 라운드에 먼저 나온 카드가 가장 강합니다.
+            </li>
+            <li class="list-group-item">
+                같은 레벨의 카드라면, 먼저 나온 카드가 승리합니다.
+            </li>
+            <li class="list-group-item">
+                같은 색의 카드라면 높은 숫자를 가진 카드가 승리합니다.
+            </li>
+            <li class="list-group-item">
+                먼저 나온 색깔의 카드가 있다면, 그 카드 내거나 색깔이 없는 카드를 내야 합니다.
+            </li>
+        </ul>
     </div>
 </div>
