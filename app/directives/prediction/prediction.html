@@ -1,4 +1,4 @@
-<div ng-show="!game.me.prediction && game.phase==='prediction'">
+<div ng-show="game.me.prediction===null && game.phase==='prediction'">
     <div style="margin-top:10px;font-size:16px;"><b>{{game.round}}라운드 승 예측</b><br>
         - <b>{{game.me.turnIndex}}</b>번째 순서<br>
         - 받은 카드
@@ -12,4 +12,4 @@
         {{$index}}승
     </div>
 </div>
-<h1 ng-show="game.me.prediction && game.phase==='prediction'">예측완료</h1>
+<h1 ng-show="game.me.prediction!==null && game.phase==='prediction'">예측완료</h1>

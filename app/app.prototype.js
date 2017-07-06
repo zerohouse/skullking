@@ -34,6 +34,11 @@ Date.prototype.toYMD = function () {
     return this.getDateTime();
 };
 
+
+Number.prototype.toYMD = function () {
+    return new Date(this).toYMD();
+};
+
 Date.prototype.getDateString = function () {
     if (this.getFullYear() === new Date().getFullYear())
         return moment(this).format("M월 D일");

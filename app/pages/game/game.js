@@ -49,9 +49,17 @@
         }
 
 
-        ChatSocket.on("e", function (error) {
+        ChatSocket.on("e", function (m) {
             vex.close();
-            popup.alert(error);
+            if (m.type === "stepDone") {
+                var scope = $scope.$new();
+                scope.messageAlert = m.message;
+                scope.cards = m.cards;
+                console.log(m);
+                popup.open('stepDone', scope);
+                return;
+            }
+            popup.alert(m);
         });
 
         ChatSocket.on("err", function (error) {

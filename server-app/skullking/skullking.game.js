@@ -14,7 +14,7 @@ function SkullKing(id, options) {
         this.maxRounds = 10;
     this.maxSize = isNaN(options.maxSize) ? 6 : parseInt(options.maxSize);
     this.submitLimitTime = isNaN(options.submitLimitTime) ? 30000 : parseInt(options.submitLimitTime) * 1000;
-    this.predictLimitTime = isNaN(options.predictLimitTime) ? 20000 : parseInt(options.predictLimitTime) * 1000;
+    this.predictLimitTime = isNaN(options.predictLimitTime) ? 30000 : parseInt(options.predictLimitTime) * 1000;
     this.cardOptions = options.cards ? options.cards : {};
     this.cardsInGame = Card.newSet(this.cardOptions);
     this.players = [];
@@ -72,13 +72,13 @@ SkullKing.prototype.newCardsSet = function () {
     this.cards = _.cloneDeep(this.cardsInGame);
 };
 
-SkullKing.prototype.nextRound = function (message, title) {
+SkullKing.prototype.nextRound = function (message) {
     this.round++;
     if (this.round > this.maxRounds) {
         this.doneGame();
         return;
     } else if (message)
-        this.alert(message, title);
+        this.alert(message);
 
     var first = this.getTurnPlayer();
     if (!first) {

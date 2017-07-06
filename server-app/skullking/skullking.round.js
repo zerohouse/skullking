@@ -31,20 +31,25 @@ Round.prototype.submit = function (card, game) {
     var winner = game.players.findById(win.card.player);
     winner.win++;
     if (this.steps.length < this.roundNo) {
-        game.alert(`${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`, `${this.roundNo}라운드 ${this.steps.length}번째 결과`);
+        game.alert({
+            message: `<h5>${this.roundNo}라운드 ${this.steps.length}번째 결과</h5>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+            type: 'stepDone',
+            cards: this.steps.last().cards
+        });
         this.startStep(this.first, this.playerSize, game);
         return;
     }
-    this.done(game);
+    game.nextRound({
+        message: `<h5>${game.round} 라운드 결과</h5>` + game.players.map(player => {
+            this.calculatePoint(player);
+            const p = player.points.last();
+            return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
+        }).join("<br>") + `<h5>${this.roundNo}라운드 마지막 결과</h5>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+        type: 'stepDone',
+        cards: this.steps.last().cards
+    });
 };
 
-Round.prototype.done = function (game) {
-    game.nextRound(game.players.map(player => {
-        this.calculatePoint(player);
-        var p = player.points.last();
-        return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
-    }).join("<br>"), `${game.round} 라운드 결과`);
-};
 
 Round.prototype.calculatePoint = function (player) {
     if (player.prediction === player.win) {

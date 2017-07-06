@@ -155,6 +155,10 @@ Player.prototype.alert = function (message, title) {
     let socket = this.socket;
     if (!socket)
         return;
+    if (typeof message === "object") {
+        socket.emit('e', message);
+        return;
+    }
     socket.emit('e', `<h5>${title}</h5>${message}`);
 };
 

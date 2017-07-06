@@ -13,17 +13,14 @@
             popup.close();
         };
     }
+
     angular.module('app').service('popup', popupService);
     /* @ng-inject */
     function popupService($compile, $rootScope, $q) {
-        this.alert = (message, classes) => {
-            vex.defaultOptions.className = 'vex-theme-plain';
-            if (!classes || !classes.match('theme'))
-                classes = 'vex-theme-plain ' + classes;
-            // vex.close();
+        this.alert = (message) => {
             vex.dialog.alert({
                 message: message,
-                className: classes
+                className: 'vex-theme-plain'
             });
         };
 
@@ -48,8 +45,6 @@
             }
             var $vexContent, beforeClose;
             var options = $.extend({}, vex.defaultOptions, vex.dialog.defaultOptions, options);
-            // if (!classes || !classes.match('theme'))
-            //     classes = 'vex-theme-plain ' + classes;
             options.className = 'vex-theme-plain';
             options.afterClose = afterclose;
             if (!scope)
