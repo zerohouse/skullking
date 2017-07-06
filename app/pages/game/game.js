@@ -34,7 +34,10 @@
                 player.turnIndex = (i >= start ? i - start : i + (game.players.length - start)) + 1;
             });
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
+
             game.me.cards.forEach(c => c.submitable = submitCheck(c, game, game.me.cards));
+
+            positioning();
             timeUpdate();
             $scope.$apply();
         });
@@ -47,6 +50,27 @@
             }
             return true;
         }
+
+        function positioning(game) {
+            var max = game.me.cards.length;
+            game.me.cards.forEach((c, i) => {
+                var width = $window.innerWidth;
+                if (!width)
+                    return;
+                var padding = 30;
+                var step = (width - 90 - padding) / max;
+                step = Math.min(step, 110);
+                c.position = {
+                    top: 0,
+                    left: (width / 2 + (i - max / 2) * step) - 45 + padding / 2 + "px"
+                };
+            });
+        }
+
+        angular.element($window).bind('resize', function () {
+            positioning();
+            $scope.$apply();
+        });
 
 
         ChatSocket.on("e", function (m) {
@@ -106,28 +130,22 @@
             ChatSocket.emit('playerEvent', 'submit', card.id);
         };
 
-        angular.element($window).bind('resize', function () {
-            $scope.width = $window.innerWidth;
-            $scope.$apply();
-        });
-
         $scope.getTurnPlayer = function () {
             return $scope.game.players.find(p => p.turn);
         };
 
-        $scope.getPosition = function (index, max) {
-            var width = $window.innerWidth;
-            if (!width)
-                return;
-            var padding = 30;
-            var step = (width - 90 - padding) / max;
-            step = Math.min(step, 110);
-            // var yStep = 30 / max;
-            return {
-                top: 0,
-                left: (width / 2 + (index - max / 2) * step) - 45 + padding / 2 + "px"
-            };
-        };
+        // $scope.getPosition = function (index, max) {
+        //     var width = $window.innerWidth;
+        //     if (!width)
+        //         return;
+        //     var padding = 30;
+        //     var step = (width - 90 - padding) / max;
+        //     step = Math.min(step, 110);
+        //     return {
+        //         top: 0,
+        //         left: (width / 2 + (index - max / 2) * step) - 45 + padding / 2 + "px"
+        //     };
+        // };
 
         var requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
