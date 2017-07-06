@@ -10,6 +10,7 @@ function Player(id) {
     this.point = 0;
     this.points = [];
     this.disconnected = true;
+    this.predictions = [];
     name = this.name = randomNames.next(name);
 }
 
@@ -108,6 +109,7 @@ Player.prototype.predict = function (game, no) {
         return;
     }
     this.prediction = parseInt(no);
+    this.predictions[game.round] = this.prediction;
     game.predictionDone();
 };
 

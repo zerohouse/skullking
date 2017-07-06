@@ -15,5 +15,5 @@ angular.module('app')
             });
 
 
-        $urlRouterProvider.otherwise("/404");
+        $urlRouterProvider.otherwise("/");
     });

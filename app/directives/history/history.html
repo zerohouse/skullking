@@ -8,6 +8,11 @@
     </tr>
     </thead>
     <tbody ng-repeat="round in game.rounds">
+    <tr>
+        <td colspan="4">
+            {{getPredictions($index + 1)}}
+        </td>
+    </tr>
     <tr ng-repeat="step in round.steps">
         <td>
             {{$parent.$index+1}}
