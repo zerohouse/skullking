@@ -8,6 +8,8 @@
             submit: "카드 제출"
         };
 
+        $scope.game = {};
+
         $scope.$watch(function () {
             return $stateParams.id;
         }, function (id) {
