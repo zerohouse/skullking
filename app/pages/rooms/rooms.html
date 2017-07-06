@@ -12,17 +12,30 @@
     </div>
 
     <div>
-        <div style="background:#000; color:white;padding:20px;">방목록</div>
-        <div class="layout-row room" ng-repeat="room in rooms" ng-click="go(room)">
-            <div>{{$index+1}}</div>
-            <div class="flex">{{room.name}}</div>
-            <div>{{room.maker}}</div>
-            <div>{{room.size}}/{{room.maxSize}}</div>
-            <div>{{room.createdAt | date}}</div>
-        </div>
-        <div ng-if="rooms.length===0" class="layout-row room">
-            <div>방이 없네요.</div>
-        </div>
+        <h5>방목록 <span ng-click="refresh()" class="label-warning label">새로고침</span></h5>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>만든사람</th>
+                <th>인원</th>
+                <th>만든시간</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="room in rooms" ng-click="go(room)">
+                <td>{{$index+1}}</td>
+                <td>{{room.name}}</td>
+                <td>{{room.maker}}</td>
+                <td>{{room.size}}/{{room.maxSize}}</td>
+                <td>{{room.createdAt | date}}</td>
+            </tr>
+            <tr ng-if="rooms.length===0" class="layout-row room">
+                <td colspan="5">방이 없네요.</td>
+            </tr>
+            </tbody>
+        </table>
         <div ng-click="makeRoomPopup()" class="btn btn-primary margin-vertical">방만들기</div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 const games = require('./skullking').games;
 const SkullKing = require('./skullking/skullking.game');
 const randomstring = require("randomstring");
+const _ = require('lodash');
 
 module.exports = function (app) {
     app.get('/api/playerCode', function (req, res) {
@@ -41,6 +42,20 @@ module.exports = function (app) {
         res.send(key);
     }
 
+    app.get('/api/rooms', function (req, res) {
+        res.send(_.map(games, function (v, k) {
+            return {
+                id: k,
+                name: v.name,
+                size: v.players.length,
+                maxSize: v.maxSize,
+                createdAt: v.createdAt,
+                onGame: v.onGame,
+                password: v.password !== null,
+                maker: v.maker
+            };
+        }));
+    });
 
     app.post('/api/newRoomCode', function (req, res) {
         if (!req.session.user) {

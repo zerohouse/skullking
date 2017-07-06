@@ -4,7 +4,6 @@ const SkullKing = require('./skullking/skullking.game');
 
 function SkullKingSocket(io) {
     io.on('connection', function (socket) {
-        socket.emit('rooms', getRooms());
         socket.on('join', function (data) {
             socket.join(data.id);
             let game = games[data.id];
@@ -65,7 +64,6 @@ function SkullKingSocket(io) {
                 return;
             if (!socket.game.onGame) {
                 socket.game.players.remove(socket.player);
-                updateRooms();
                 if (socket.game.players.length === 0) {
                     destroy(socket.game.id);
                 } else if (socket.player.maker) {
@@ -94,30 +92,11 @@ function SkullKingSocket(io) {
             return;
         game.destroy();
         delete games[id];
-        updateRooms();
     }
 
-    function updateRooms() {
-        io.local.emit('rooms', getRooms());
-    }
-
-    function getRooms() {
-        return _.map(games, function (v, k) {
-            return {
-                id: k,
-                name: v.name,
-                size: v.players.length,
-                maxSize: v.maxSize,
-                createdAt: v.createdAt,
-                onGame: v.onGame,
-                password: v.password !== null,
-                maker: v.maker
-            };
-        });
-    }
 }
 
 module.exports = {
     socket: SkullKingSocket,
-    games: games
+    games: games,
 };

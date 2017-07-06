@@ -1,16 +1,11 @@
 (function () {
     angular.module('app').controller('roomCtrl', roomCtrl);
     /* @ng-inject */
-    function roomCtrl($scope, ChatSocket, $timeout, $rootScope, $state, popup, $ajax, pop) {
+    function roomCtrl($scope, $timeout, $rootScope, $state, popup, $ajax, pop, $interval) {
 
         $rootScope.user = {};
 
         $scope.rooms = [];
-
-        ChatSocket.on("rooms", function (rooms) {
-            angular.copy(rooms, $scope.rooms);
-            apply();
-        });
 
         $scope.go = function (room) {
             let password;
@@ -76,11 +71,15 @@
             $rootScope.user = res ? res : {};
         });
 
-        function apply() {
-            $timeout(function () {
-                if (!$rootScope.$$phase)
-                    $rootScope.$apply();
+
+        $scope.refresh = function () {
+            $ajax.get('/api/rooms').then(function (res) {
+                $scope.rooms = res;
             });
-        }
+        };
+
+        $scope.refresh();
+        $interval($scope.refresh, 5000);
+
     }
 })();
