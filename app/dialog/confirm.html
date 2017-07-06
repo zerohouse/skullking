@@ -1,8 +1,6 @@
 <div ng-controller="confirmCtrl">
-    <div class="vex-dialog-message">
-        <h5>{{message.title}}</h5>
-        <div class="vex-body padding-bottom-10" ng-bind-html="message.message">
-        </div>
+    <h5>{{message.title}}</h5>
+    <div class="vex-body padding-bottom-10" ng-bind-html="message.message">
     </div>
     <div class="dialog-btns">
         <span class="ngdialog-button ngdialog-button-primary" ng-click="ok()">{{message.okBtn || "OK"}}</span>

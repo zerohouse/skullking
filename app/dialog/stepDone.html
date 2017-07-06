@@ -1,6 +1,5 @@
 <div ng-bind-html="messageAlert"></div>
 <card card="card" ng-repeat="card in cards" class="stepDone"></card>
-<div class="vex-dialog-buttons">
-    <button type="submit" ng-click="close()" class="vex-dialog-button-primary vex-dialog-button vex-first vex-last">OK
-    </button>
+<div class="dialog-btns">
+    <span class="ngdialog-button ngdialog-button-primary" ng-click="close()">OK</span>
 </div>
