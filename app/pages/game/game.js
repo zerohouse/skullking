@@ -21,6 +21,7 @@
         $scope.userShow = true;
 
         ChatSocket.on("game", function (game) {
+            $scope.timeAdjust = new Date().getTime() - game.timeAdjust;
             $scope.game = game;
             if (game.onGame !== onGame) {
                 onGame = game.onGame;
@@ -132,7 +133,7 @@
         function timeUpdate() {
             if (!$scope.game || !$scope.game.duetime)
                 return;
-            $scope.remain = new Date().getTime() - $scope.game.duetime + $scope.game.duration;
+            $scope.remain = (new Date().getTime() + $scope.timeAdjust) - $scope.game.duetime + $scope.game.duration;
             $scope.$apply();
             requestAnimationFrame(timeUpdate);
         }

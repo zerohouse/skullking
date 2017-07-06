@@ -139,6 +139,7 @@ Player.prototype.update = function () {
         if (game.phase === "prediction")
             p.prediction = p.prediction !== null;
     });
+    game.timeAdjust = new Date().getTime();
     game.me = me;
     game.cards = null;
     socket.emit('game', game);
