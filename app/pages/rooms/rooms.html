@@ -38,31 +38,6 @@
         </table>
         <div ng-click="makeRoomPopup()" class="btn btn-primary">방만들기</div>
     </div>
-    <div ng-if="ranks.length>0" style="margin-top:30px;">
-        <div>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></div>
-        <table class="table table-striped room">
-            <thead>
-            <tr style="font-size:12px;">
-                <th><i class="fa fa-sort-numeric-asc"></i></th>
-                <th><i class="fa fa-user"></i></th>
-                <th>참여</th>
-                <th>점수</th>
-                <th>평균 점수</th>
-                <th>평균 상위</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="ranker in ranks">
-                <td>{{$index+1}}</td>
-                <td>{{ranker.name}}</td>
-                <td>{{ranker.ranks.length}}</td>
-                <td>{{ranker.point}}</td>
-                <td>{{ranker.avgPoint || 0 | number:1}}</td>
-                <td>{{ranker.avgRank*100 || 0 | number:1}}%</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
     <div style="margin-top:30px;">
         <div>룰 설명</div>
         <ul class="list-group">
@@ -98,5 +73,30 @@
                 먼저 나온 색깔의 카드가 있다면, 그 카드 내거나 색깔이 없는 카드를 내야 합니다.
             </li>
         </ul>
+    </div>
+    <div ng-if="ranks.length>0" style="margin-top:30px;">
+        <div>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></div>
+        <table class="table table-striped room">
+            <thead>
+            <tr style="font-size:12px;">
+                <th><i class="fa fa-sort-numeric-asc"></i></th>
+                <th><i class="fa fa-user"></i></th>
+                <th>참여</th>
+                <th>점수</th>
+                <th>평균 점수</th>
+                <th>평균 상위</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ranker in ranks">
+                <td>{{$index+1}}</td>
+                <td>{{ranker.name}}</td>
+                <td>{{ranker.ranks.length}}</td>
+                <td>{{ranker.point}}</td>
+                <td>{{ranker.avgPoint || 0 | number:1}}</td>
+                <td>{{ranker.avgRank*100 || 0 | number:1}}%</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
