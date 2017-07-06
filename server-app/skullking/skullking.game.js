@@ -10,6 +10,8 @@ function SkullKing(id, options) {
     this.password = options.password ? options.password : null;
     this.createdAt = new Date().getTime();
     this.maxRounds = isNaN(options.maxRounds) ? 10 : parseInt(options.maxRounds);
+    if (this.maxRounds < 6)
+        this.maxRounds = 10;
     this.maxSize = isNaN(options.maxSize) ? 6 : parseInt(options.maxSize);
     this.submitLimitTime = isNaN(options.submitLimitTime) ? 30000 : parseInt(options.submitLimitTime) * 1000;
     this.predictLimitTime = isNaN(options.predictLimitTime) ? 20000 : parseInt(options.predictLimitTime) * 1000;
