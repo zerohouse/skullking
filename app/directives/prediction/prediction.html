@@ -3,9 +3,6 @@
         - <b>{{game.me.turnIndex}}</b>번째 순서<br>
         - 받은 카드
     </div>
-    <div class="card-block">
-        <card ng-repeat="card in game.me.cards track by card.id" card="card"></card>
-    </div>
     <div ng-bind-html="desc" ng-class="{'color-red':error}"></div>
     <div class="btn btn-lg" ng-class="{'btn-primary':$index !== 0,'btn-danger':$index === 0}" ng-click="predict($index)"
          ng-repeat="round in (game.round+1).toArray()">

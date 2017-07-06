@@ -55,7 +55,6 @@
                 var scope = $scope.$new();
                 scope.messageAlert = m.message;
                 scope.cards = m.cards;
-                console.log(m);
                 popup.open('stepDone', scope);
                 return;
             }

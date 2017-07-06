@@ -1,6 +1,6 @@
 <div class="card" ng-class="{me:player.id === game.me.id, turn:player.turn}">
     <card card="player.submitCard" ng-if="player.submitCard"></card>
-    <span class="blank-card" ng-if="!player.submitCard">
+    <span class="blank-card" ng-class="{turn:player.turn}" ng-if="!player.submitCard">
     <span class="prepare">
         <div class="name">
             {{player.name}}<br> {{player.point}}점 {{player.win}}/{{player.prediction}}
