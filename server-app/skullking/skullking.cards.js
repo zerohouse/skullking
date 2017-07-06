@@ -1,6 +1,6 @@
-var type = require('./skullking.type.js');
-var _ = require('lodash');
-var types = require('./skullking.constants.js').types;
+const type = require('./skullking.type.js');
+const _ = require('lodash');
+const types = require('./skullking.constants.js').types;
 
 function Card(t, number) {
     this.type = _.cloneDeep(t);
@@ -8,7 +8,7 @@ function Card(t, number) {
         this.no = number;
     else {
         this.no = 0;
-        var typeInfo = types[this.type.name][number];
+        let typeInfo = types[this.type.name][number];
         if (!typeInfo)
             typeInfo = types[this.type.name].random();
         this.name = typeInfo.name;
@@ -20,40 +20,56 @@ function Card(t, number) {
 Card.prototype.submitCheck = function (game, cards) {
     if (this.type.item)
         return true;
-    var prime = game.rounds.last().steps.last().prime;
-    if (prime !== null && prime !== this.type.name && cards.find(c => c.type.name === prime)) {
-        return false;
-    }
-    return true;
+    const prime = game.rounds.last().steps.last().prime;
+    return !(prime !== null && prime !== this.type.name && cards.find(c => c.type.name === prime));
 };
 
 module.exports = {
-    newSet: function () {
-        var cards = [];
-        for (var i = 1; i <= 13; i++) {
+    newSet: function (options) {
+        let i;
+        const cards = [];
+        _.forEach(options, (v, k) => {
+            if (isNaN(v)) {
+                options[k] = undefined;
+            }
+            options[k] = parseInt(v);
+            if (options[k] < 0 || options[k] > 100)
+                options[k] = undefined;
+        });
+
+        options.numbers = options.numbers ? options.numbers : 13;
+        options.pirate = options.pirate ? options.pirate : 5;
+        options.white = options.white ? options.white : 5;
+        options.girl = options.girl ? options.girl : 2;
+        options.pirateOR = options.king ? options.king : 1;
+        options.king = options.pirateOR ? options.pirateOR : 1;
+
+        for (i = 1; i <= options.numbers; i++) {
             cards.push(new Card(type.red, i));
             cards.push(new Card(type.blue, i));
             cards.push(new Card(type.yellow, i));
             cards.push(new Card(type.black, i));
         }
-
-        for (var i = 0; i < 5; i++) {
+        for (i = 0; i < options.pirate; i++) {
             cards.push(new Card(type.pirate, i));
+        }
+        for (i = 0; i < options.white; i++) {
             cards.push(new Card(type.white, i));
         }
-
-        for (var i = 0; i < 2; i++) {
+        for (i = 0; i < options.girl; i++) {
             cards.push(new Card(type.girl, i));
         }
-        for (var i = 0; i < 1; i++) {
+        for (i = 0; i < options.king; i++) {
             cards.push(new Card(type.king, i));
         }
-        for (var i = 0; i < 1; i++) {
+        for (i = 0; i < options.pirateOR; i++) {
             cards.push(new Card(type.pirateOR, i));
         }
         cards.forEach((card, i) => {
             card.id = i;
         });
+        if (cards.length === 0)
+            return module.exports.newSet({});
         return cards;
     }
 };

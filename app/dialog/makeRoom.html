@@ -1,0 +1,17 @@
+<div>방만들기</div>
+<input class="middle" ng-model="options.name" placeholder="방제목(기본: {{user.name}}님의 방)">
+<input class="middle" ng-model="options.submitLimitTime" number-only placeholder="턴 제한 시간(기본: 30초)">
+<input class="middle" ng-model="options.predictLimitTime" number-only placeholder="턴 제한 시간(기본: 20초)">
+<input class="middle" ng-model="options.maxRounds" number-only placeholder="라운드(기본: 10)">
+<input class="middle" ng-model="options.maxSize" number-only placeholder="최대 인원(기본: 6)">
+<input class="middle" ng-model="options.password" type="password" placeholder="입력시 비공개방">
+<div ng-click="cardOptions=!cardOptions">카드 덱 커스터 마이징</div>
+<div ng-show="cardOptions">
+    <input class="middle" ng-model="options.cards.numbers" placeholder="숫자카드(기본: 13)" number-only>
+    <input class="middle" ng-model="options.cards.pirate" placeholder="해적(기본: 5)" number-only>
+    <input class="middle" ng-model="options.cards.white" placeholder="도망(기본: 5)" number-only>
+    <input class="middle" ng-model="options.cards.girl" placeholder="미녀(기본: 2)" number-only>
+    <input class="middle" ng-model="options.cards.king" placeholder="해적왕(기본: 1)" number-only>
+    <input class="middle" ng-model="options.cards.pirateOR" placeholder="해적/도망(기본: 1)" number-only>
+</div>
+<span class="btn btn-primary big" ng-click="makeRoom(options)">방만들기</span>

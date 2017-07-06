@@ -105,11 +105,13 @@ function SkullKingSocket(io) {
         return _.map(games, function (v, k) {
             return {
                 id: k,
-                name: `${v.maker}님의 방`,
+                name: v.name,
                 size: v.players.length,
                 maxSize: v.maxSize,
                 createdAt: v.createdAt,
-                onGame: v.onGame
+                onGame: v.onGame,
+                password: v.password !== null,
+                maker: v.maker
             };
         });
     }

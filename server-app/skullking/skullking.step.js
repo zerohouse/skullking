@@ -1,4 +1,4 @@
-var type = require('./skullking.type.js');
+const type = require('./skullking.type.js');
 
 function Step(first, playerSize) {
     this.first = first;
@@ -33,34 +33,40 @@ Step.prototype.submit = function (card, game) {
 
 Step.prototype.calculateWin = function () {
     this.cards.forEach(c => c.win = false);
-    var winInfo = this.winInfo();
+    const winInfo = this.winInfo();
     winInfo.card.win = true;
     return winInfo;
 };
 
 Step.prototype.winInfo = function () {
-    var king = this.cards.find(c => c.type.king);
-    var girl = this.cards.find(c => c.type.girl);
-    var pirate = this.cards.find(c => c.type.pirate);
+    const king = this.cards.find(c => c.type.king);
+    const girl = this.cards.find(c => c.type.girl);
+    const pirate = this.cards.find(c => c.type.pirate);
     if (king) {
         if (girl)
-            return {card: girl, bonus: 50, name: "왕을 홀려 "};
-        var pirateLength = this.cards.filter(c => c.type.pirate).length;
-        return {card: king, bonus: pirateLength * 30, name: `왕으로 군인 ${pirateLength}명 잡아 `};
+            return {card: girl, bonus: 50, name: "해적왕을 홀려 "};
+        const pirateLength = this.cards.filter(c => c.type.pirate).length;
+        return {card: king, bonus: pirateLength * 30, name: `해적왕으로 해적 ${pirateLength}명 잡아 `};
     }
     if (pirate)
         return {card: pirate};
     if (girl)
         return {card: girl};
-    var winCard;
+    let winCard = null;
     this.cards.forEach(c => {
         if (!winCard) {
             winCard = c;
             return;
         }
-        if (c.black && winCard.no < c.no) {
-            winCard = c;
-            return;
+        if (c.black) {
+            if (!winCard.black) {
+                winCard = c;
+                return;
+            }
+            if (winCard.no < c.no) {
+                winCard = c;
+                return;
+            }
         }
         if ((c.type.name === this.prime) && winCard.no < c.no)
             winCard = c;

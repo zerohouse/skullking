@@ -30,6 +30,10 @@ module.exports = function (app) {
             res.sendError("없는 방");
             return;
         }
+        if (game.password && (game.password !== req.query.password)) {
+            res.sendError("패스워드가 다릅니다.");
+            return;
+        }
         const key = randomstring.generate();
         game.addPlayer(key, req.session.user);
         req.session.key = key;
@@ -38,7 +42,7 @@ module.exports = function (app) {
     }
 
 
-    app.get('/api/newRoomCode', function (req, res) {
+    app.post('/api/newRoomCode', function (req, res) {
         if (!req.session.user) {
             res.sendError("로그인 안됨");
             return;
@@ -54,10 +58,14 @@ module.exports = function (app) {
             });
             return;
         }
+        const options = req.body ? req.body : {};
+        if (!options.name)
+            options.name = `${req.session.user.name}님의 방`;
         const room = randomstring.generate();
-        const game = new SkullKing(room);
+        const game = new SkullKing(room, options);
         games[room] = game;
         const playerKey = randomstring.generate();
+        game.maker = req.session.user.name;
         game.addPlayer(playerKey, req.session.user);
         req.session.key = playerKey;
         req.session.room = room;
@@ -67,13 +75,3 @@ module.exports = function (app) {
         });
     });
 };
-
-function ecb(cb) {
-    return function (err, value) {
-        if (err) {
-            cb(err);
-            return;
-        }
-        cb(value);
-    }
-}

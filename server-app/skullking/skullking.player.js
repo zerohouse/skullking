@@ -41,7 +41,11 @@ Player.prototype.nextRound = function (game) {
 
 
 Player.prototype.drawCard = function (game) {
-    const card = game.cards.random();
+    let card = game.cards.random();
+    if (!card) {
+        game.newCardsSet();
+        card = game.cards.random();
+    }
     card.player = this.id;
     this.cards.push(card);
     game.cards.remove(card);

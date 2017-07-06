@@ -3,6 +3,8 @@
     /* @ng-inject */
     function roomCtrl($scope, ChatSocket, $timeout, $rootScope, $state, popup, $ajax, pop) {
 
+        $rootScope.user = {};
+
         $scope.rooms = [];
 
         ChatSocket.on("rooms", function (rooms) {
@@ -10,27 +12,35 @@
             apply();
         });
 
-        $scope.go = function (id) {
+        $scope.go = function (room) {
+            let password;
+            if (room.password)
+                password = prompt("패스워드를 입력해주세요.");
             if (!$rootScope.user._id) {
                 popup.confirm("회원으로 가입하면 게임 전적이 기록되고, 포인트가 쌓입니다.", "비회원으로 진행하시겠습니까?").then(function () {
-                    $ajax.get('/api/playerCode', {id: id}).then(player => {
-                        $state.go('game', {id: id, player: player});
+                    $ajax.get('/api/playerCode', {id: room.id, password: password}).then(player => {
+                        $state.go('game', {id: room.id, player: player});
                     });
                 });
                 return;
             }
-            $ajax.get('/api/userPlayerCode', {id: id}).then(player => {
-                $state.go('game', {id: id, player: player});
+            $ajax.get('/api/userPlayerCode', {id: room.id, password: password}).then(player => {
+                $state.go('game', {id: room.id, player: player});
             });
         };
 
-        $scope.makeRoom = function () {
+        $scope.makeRoomPopup = function () {
             if (!$rootScope.user._id) {
                 pop.alert("비회원은 방을 만들 수 없습니다.");
                 return;
             }
-            $ajax.get('/api/newRoomCode').then(code => {
+            popup.open('makeRoom', $scope);
+        };
+
+        $scope.makeRoom = function (options) {
+            $ajax.post('/api/newRoomCode', options, true).then(code => {
                 $state.go('game', {id: code.room, player: code.player});
+                popup.close();
             });
         };
 

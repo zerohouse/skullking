@@ -4,16 +4,20 @@ const Player = require('./skullking.player');
 const _ = require('lodash');
 const GameResult = require('./skullking.result.model');
 
-function SkullKing(id) {
+function SkullKing(id, options) {
     this.id = id;
+    this.name = options.name;
+    this.password = options.password ? options.password : null;
     this.createdAt = new Date().getTime();
-    this.maxRounds = 10;
+    this.maxRounds = isNaN(options.maxRounds) ? 10 : parseInt(options.maxRounds);
+    this.maxSize = isNaN(options.maxSize) ? 6 : parseInt(options.maxSize);
+    this.submitLimitTime = isNaN(options.submitLimitTime) ? 30000 : parseInt(options.submitLimitTime) * 1000;
+    this.predictLimitTime = isNaN(options.predictLimitTime) ? 20000 : parseInt(options.predictLimitTime) * 1000;
+    this.cardOptions = options.cards ? options.cards : {};
+    this.cardsInGame = Card.newSet(this.cardOptions);
     this.players = [];
-    this.cardsInGame = Card.newSet();
-    this.maxSize = 6;
-    this.submitLimitTime = 30000;
-    this.predictLimitTime = 20000;
 }
+
 
 SkullKing.prototype.addPlayer = function (playerKey, user) {
     const player = new Player(playerKey);
@@ -62,6 +66,10 @@ SkullKing.prototype.doneGame = function () {
     });
 };
 
+SkullKing.prototype.newCardsSet = function () {
+    this.cards = _.cloneDeep(this.cardsInGame);
+};
+
 SkullKing.prototype.nextRound = function (message, title) {
     this.round++;
     if (this.round > this.maxRounds) {
@@ -77,7 +85,7 @@ SkullKing.prototype.nextRound = function (message, title) {
     }
     first.first = true;
     this.rounds.push(new Round(this.round, first.id, this.players.length, this));
-    this.cards = _.cloneDeep(this.cardsInGame);
+    this.newCardsSet();
     this.players.forEach(p => {
         p.nextRound(this);
     });

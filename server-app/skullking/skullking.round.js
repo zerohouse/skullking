@@ -17,7 +17,7 @@ Round.prototype.resetStep = function (first, playerSize, game) {
 Round.prototype.startStep = function (first, playerSize, game) {
     this.resetStep(first, playerSize, game);
     var first = game.players.find(p => p.first = p.turn);
-    game.countdown(this.submitLimitTime, () => {
+    game.countdown(game.submitLimitTime, () => {
         if (first.turn) {
             first.submit(game, first.submitable(game).id);
         }
