@@ -91,6 +91,8 @@
         };
 
         $scope.submit = function (card) {
+            if (!card.submitable)
+                return;
             if (!$scope.game.me.turn)
                 return;
             if (card.type.name === 'pirateOR') {
@@ -122,6 +124,7 @@
             step = Math.min(step, 110);
             // var yStep = 30 / max;
             return {
+                top: 0,
                 left: (width / 2 + (index - max / 2) * step) - 45 + padding / 2 + "px"
             };
         };

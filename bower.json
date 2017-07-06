@@ -10,8 +10,7 @@
     "angular-toastr": "^1.7.0",
     "moment": "^2.13.0",
     "vex": "^2.3.4",
-    "angular-ui-router": "^1.0.5",
-    "ngDraggable": "^0.1.11"
+    "angular-ui-router": "^1.0.5"
   },
   "authors": [
     "dev <parksungho86@gmail.com>"

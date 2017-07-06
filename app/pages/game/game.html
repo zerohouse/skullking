@@ -24,7 +24,7 @@
         </div>
     </div>
     <div ng-if="game.phase==='submit'" class="layout-column flex">
-        <div class="card-block flex field layout-column layout-align-center-center" ng-drop="true"
+        <div class="card-block flex field layout-column layout-align-center-center" ng-drop
              ng-drop-success="submit($data)">
             <prime-color color="game.rounds.last().steps.last().prime"></prime-color>
 
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="card-block hand" ng-if="game.onGame">
-        <card ng-drag="true" ng-dblclick="submit(card)" ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit'}"
+        <card ng-drag ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit'}"
               ng-style="getPosition($index, game.me.cards.length)" ng-drag-data="card"
               ng-repeat="card in game.me.cards track by $index"
               card="card"></card>
