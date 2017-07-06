@@ -36,8 +36,7 @@
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
 
             game.me.cards.forEach(c => c.submitable = submitCheck(c, game, game.me.cards));
-
-            positioning();
+            positioning(game);
             timeUpdate();
             $scope.$apply();
         });
