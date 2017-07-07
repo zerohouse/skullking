@@ -8,7 +8,12 @@ function SkullKingSocket(io) {
             socket.join(data.id);
             let game = games[data.id];
             if (!game) {
-                socket.emit("err", "잘못된 접근입니다.");
+                socket.emit("err", "없는 게임 입니다.");
+                socket.disconnect();
+                return;
+            }
+            if (game.onGame) {
+                socket.emit("err", "이미 진행중인 게임입니다.");
                 socket.disconnect();
                 return;
             }
