@@ -8,13 +8,13 @@ function SkullKingSocket(io) {
             socket.join(data.id);
             let game = games[data.id];
             if (!game) {
-                socket.emit("err", "없는 게임 입니다.");
+                socket.emit("err", "Not exist game.");
                 socket.disconnect();
                 return;
             }
             let player = game.players.findById(data.player);
             if (!player) {
-                socket.emit("err", "잘못된 접근입니다.");
+                socket.emit("err", "Invalid request.");
                 socket.disconnect();
                 return;
             }
@@ -22,7 +22,7 @@ function SkullKingSocket(io) {
                 const ex = player.socket;
                 player.socket = socket;
                 ex.game = null;
-                ex.emit("err", "같은 플레이어가 접속했습니다. 연결을 종료합니다.");
+                ex.emit("err", "Connect from another place.");
                 ex.disconnect();
             }
             player.disconnected = false;

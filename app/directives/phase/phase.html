@@ -2,7 +2,7 @@
     <div ng-class="{done:round<game.round-1,now:round===game.round-1,flex:round!==game.round-1}"
          ng-repeat="round in getRounds().toArray()">
         <span class="ball" ng-if="game.phase==='prediction'"></span>
-        <span ng-if="round===game.round-1">{{round+1}} Round {{game.phase==='prediction'?'예측':'제출'}}</span>
+        <span ng-if="round===game.round-1">{{round+1}} Round {{game.phase==='prediction'?'Prediction':'Submit'}}</span>
         <span class="ball" ng-if="game.phase!=='prediction'"
               ng-style="{'background-color':getColor($index,$last)}"></span>
     </div>

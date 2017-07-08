@@ -4,8 +4,8 @@
     /* Controllers */
     function gameCtrl($scope, popup, ChatSocket, $stateParams, $window, pop, $state, $timeout) {
         $scope.names = {
-            prediction: "예측하기",
-            submit: "카드 제출"
+            prediction: "Prediction",
+            submit: "Submit a Card"
         };
 
         var game = $scope.game = {};
@@ -142,13 +142,13 @@
 
         $scope.submit = function (card) {
             if (!card.submitable) {
-                pop.error("프라임 카드와 같은 색의 카드를 먼저 내야 합니다.");
+                pop.error("You must submit prime color card first.");
                 return;
             }
             if (!$scope.game.me.turn)
                 return;
             if (card.type.name === 'pirateOR') {
-                popup.confirm("이 카드는 해적 / 도망 중 선택할 수 있습니다.", "카드를 어떻게 사용할지 선택해주세요.", "해적", "도망").then(function () {
+                popup.confirm("You can choose use this card as Pirate or Escape.", "Please make choice.", "Pirate", "Escape").then(function () {
                     ChatSocket.emit('playerEvent', 'submit', card.id, true);
                 }, function () {
                     ChatSocket.emit('playerEvent', 'submit', card.id, false);

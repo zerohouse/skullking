@@ -44,9 +44,9 @@ Step.prototype.winInfo = function () {
     const pirate = this.cards.find(c => c.type.pirate);
     if (king) {
         if (girl)
-            return {card: girl, bonus: 50, name: "해적왕을 홀려 "};
+            return {card: girl, bonus: 50, name: " Catch King "};
         const pirateLength = this.cards.filter(c => c.type.pirate).length;
-        return {card: king, bonus: pirateLength * 30, name: `해적왕으로 해적 ${pirateLength}명 잡아 `};
+        return {card: king, bonus: pirateLength * 30, name: ` Catch ${pirateLength} Pirates `};
     }
     if (pirate)
         return {card: pirate};

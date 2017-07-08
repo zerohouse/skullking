@@ -15,11 +15,11 @@ module.exports = function (app) {
         let u = req.body;
         User.findOne({email: u.email}, ecb(user => {
             if (user === null) {
-                res.sendError("가입하지 않은 계정입니다.");
+                res.sendError("Not registered email.");
                 return;
             }
             if (!user.comparePassword(u.password)) {
-                res.sendError("패스워드가 다릅니다.");
+                res.sendError("Wrong password.");
                 return;
             }
             req.session.user = user;

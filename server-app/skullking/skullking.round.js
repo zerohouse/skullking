@@ -32,7 +32,7 @@ Round.prototype.submit = function (card, game) {
     winner.win++;
     if (this.steps.length < this.roundNo) {
         game.alert({
-            message: `<h3>${this.roundNo}라운드 ${this.steps.length}번째 결과</h3>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+            message: `<h3>${this.roundNo} Round ${this.steps.length} phase result</h3>The Winner is ${winner.getName()}<br>by ${win.card.name || win.card.type.name + " " + win.card.no}`,
             type: 'stepDone',
             cards: this.steps.last().cards
         });
@@ -40,11 +40,11 @@ Round.prototype.submit = function (card, game) {
         return;
     }
     game.nextRound({
-        message: `<h3>${game.round} 라운드 결과</h3>` + game.players.map(player => {
+        message: `<h3>${game.round} Round result</h3>` + game.players.map(player => {
             this.calculatePoint(player);
             const p = player.points.last();
             return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
-        }).join("<br>") + `<h3>${this.roundNo}라운드 마지막 결과</h3>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+        }).join("<br>") + `<h3>${this.roundNo} Round last phase result</h3>The Winner is ${winner.getName()} <br>by ${win.card.name || win.card.type.name + " " + win.card.no}`,
         type: 'stepDone',
         cards: this.steps.last().cards
     });
@@ -54,24 +54,24 @@ Round.prototype.submit = function (card, game) {
 Round.prototype.calculatePoint = function (player) {
     if (player.prediction === player.win) {
         if (player.prediction === 0) {
-            player.addPoint(`${this.roundNo} 라운드 0승 성공`, this.roundNo * 10);
+            player.addPoint(`${this.roundNo} Round 0 win Succeed.`, this.roundNo * 10);
             return;
         }
-        player.addPoint(`${this.roundNo} 라운드 ${player.prediction}승 성공`, player.prediction * 20);
+        player.addPoint(`${this.roundNo} Round ${player.prediction} wins Succeed.`, player.prediction * 20);
         this.steps.forEach((s, i) => {
             if (s.win.card.player !== player.id)
                 return;
             if (!s.win.bonus)
                 return;
-            player.addPoint(`${this.roundNo} 라운드 ${ i + 1 }번째 카드내기 ${s.win.name} 보너스 포인트 획득`, s.win.bonus);
+            player.addPoint(`${this.roundNo} Round ${ i + 1 } phase ${s.win.name} bonus point`, s.win.bonus);
         });
         return;
     }
     if (player.prediction === 0) {
-        player.addPoint(`${this.roundNo} 라운드 0승 실패`, -this.roundNo * 10);
+        player.addPoint(`${this.roundNo} round 0 win Failed.`, -this.roundNo * 10);
         return;
     }
-    player.addPoint(`${this.roundNo} 라운드 ${player.prediction}승 실패`, Math.abs(player.prediction - player.win) * -10);
+    player.addPoint(`${this.roundNo} Round ${player.prediction}win Failed`, Math.abs(player.prediction - player.win) * -10);
 };
 
 module.exports = Round;

@@ -62,16 +62,16 @@ Player.prototype.getName = function () {
 
 Player.prototype.submit = function (game, id, arg2) {
     if (game.phase !== "submit") {
-        this.error('제출 단계가 아닙니다.');
+        this.error('Not a submission step.');
         return;
     }
     if (!this.turn) {
-        this.error("내 차례가 아닙니다.");
+        this.error("Not your turn.");
         return;
     }
     let submitCard = this.cards.findById(id);
     if (!submitCard) {
-        this.error("없는 카드입니다.");
+        this.error("Card is already removed.");
         return;
     }
     if (submitCard.type.name === 'pirateOR') {
@@ -86,7 +86,7 @@ Player.prototype.submit = function (game, id, arg2) {
     if (!submitCard.type.item) {
         const prime = game.rounds.last().steps.last().prime;
         if (prime !== null && prime !== submitCard.type.name && this.cards.find(c => c.type.name === prime)) {
-            this.error(`${prime} 타입의 일반 카드를 먼저 내야합니다.`);
+            this.error(`You must submit ${prime} type card first.`);
             return;
         }
     }
@@ -97,15 +97,15 @@ Player.prototype.submit = function (game, id, arg2) {
 
 Player.prototype.predict = function (game, no) {
     if (game.phase !== "prediction") {
-        this.error("예측 단계가 아닙니다.");
+        this.error("Not a prediction step.");
         return;
     }
     if (no < 0 || no > game.round) {
-        this.error(`예측 범위는 0~${game.round}입니다.`);
+        this.error(`Prediction range is 0~${game.round}.`);
         return;
     }
     if (isNaN(no)) {
-        this.error('예측은 숫자로 해야 합니다.');
+        this.error('Prediction is number.');
         return;
     }
     this.prediction = parseInt(no);

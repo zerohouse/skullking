@@ -11,7 +11,7 @@ module.exports = function (app) {
 
     app.get('/api/userPlayerCode', function (req, res) {
         if (!req.session.user) {
-            res.sendError("로그인 안됨");
+            res.sendError("Not logged");
             return;
         }
         if (games[req.session.user.room]) {
@@ -31,11 +31,11 @@ module.exports = function (app) {
     function keyRoom(req, res) {
         const game = games[req.query.id];
         if (!game) {
-            res.sendError("없는 방");
+            res.sendError("Not exist game.");
             return;
         }
         if (game.password && (game.password !== req.query.password)) {
-            res.sendError("패스워드가 다릅니다.");
+            res.sendError("Wrong password.");
             return;
         }
         const key = randomstring.generate();
@@ -80,7 +80,7 @@ module.exports = function (app) {
 
     app.post('/api/newRoomCode', function (req, res) {
         if (!req.session.user) {
-            res.sendError("로그인 안됨");
+            res.sendError("Not logged.");
             return;
         }
         if (games[req.session.user.room] && games[req.session.user.room].players.findById(req.session.key)) {
@@ -92,7 +92,7 @@ module.exports = function (app) {
         }
         const options = req.body ? req.body : {};
         if (!options.name)
-            options.name = `${req.session.user.name}님의 방`;
+            options.name = `${req.session.user.name}'s game.`;
         const room = randomstring.generate();
         const game = new SkullKing(room, options);
         games[room] = game;

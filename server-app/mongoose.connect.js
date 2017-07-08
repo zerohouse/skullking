@@ -17,7 +17,7 @@ mongoose.regexField = function (type, regex, message) {
         },
         message: message
     };
-    scheme.required = [true, "{PATH} 필드가 필요합니다."];
+    scheme.required = [true, "{PATH} field required."];
     return scheme;
 };
 

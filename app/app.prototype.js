@@ -41,8 +41,8 @@ Number.prototype.toYMD = function () {
 
 Date.prototype.getDateString = function () {
     if (this.getFullYear() === new Date().getFullYear())
-        return moment(this).format("M월 D일");
-    return moment(this).format("YYYY년 M월 D일");
+        return moment(this).format("M. D");
+    return moment(this).format("YYYY. M. D.");
 };
 
 Date.prototype.isPast = function () {
@@ -63,9 +63,6 @@ Date.prototype.isSameDay = function (date) {
     return this.getFullYear() === date.getFullYear() && this.getMonth() === date.getMonth() && this.getDate() === date.getDate();
 };
 
-Date.prototype.getDayKR = function () {
-    return ["일", "월", "화", "수", "목", "금", "토"][this.getDay()];
-};
 
 Date.prototype.range = function (date) {
     var early, late;

@@ -24,7 +24,7 @@ function SkullKing(id, options) {
 SkullKing.prototype.addPlayer = function (playerKey, user) {
     const player = new Player(playerKey);
     if (this.onGame)
-        throw "게임 중입니다.";
+        throw "this room is on game.";
     if (user) {
         player.name = user.name;
         player.userId = user._id;
@@ -34,7 +34,7 @@ SkullKing.prototype.addPlayer = function (playerKey, user) {
         this.maker = player.getName();
     }
     if (this.players.length + 1 > this.maxSize)
-        throw "플레이어가 너무 많습니다.";
+        throw "Too many players.";
     this.players.push(player);
     setTimeout(() => {
         if (player.disconnected)
@@ -54,8 +54,8 @@ SkullKing.prototype.doneGame = function () {
         });
     this.alert(res
         .map((player, i) => {
-            return `${i + 1}위 ${player.getName()} : ${player.point}`
-        }).join("<br>"), "게임 결과");
+            return `${i + 1}. ${player.getName()} : ${player.point}`
+        }).join("<br>"), "Game Result");
     const result = new GameResult({
         users: res.map((player, i) => {
             player.rank = (i + 1);
@@ -92,7 +92,7 @@ SkullKing.prototype.nextRound = function (message) {
         p.nextRound(this);
     });
     this.phase = "prediction";
-    this.pop(`${this.round} 라운드 예측하기`);
+    this.pop(`${this.round} Round Prediction`);
     this.countdown(this.predictLimitTime, () => {
         this.players.filter(p => p.prediction === null).forEach(p => {
             p.predict(this, 0);
@@ -122,8 +122,8 @@ SkullKing.prototype.predictionDone = function () {
     if (!this.players.find(p => p.prediction === null)) {
         this.phase = "submit";
         this.alert(this.players.map((p, i) => {
-            return `${p.getName()} : ${p.prediction}승 예측`
-        }).join("<br>"), "예측 결과");
+            return `${p.getName()} : ${p.prediction}wins prediction.`
+        }).join("<br>"), "Prediction results");
         this.nextTurn();
     }
 };
@@ -162,7 +162,7 @@ SkullKing.prototype.getNextPlayer = function () {
 
 SkullKing.prototype.start = function () {
     if (this.players.length < 2) {
-        throw "게임 플레이어가 모자랍니다.";
+        throw "Not enough players.";
     }
     this.players.forEach(p => {
         p.reset();
@@ -178,7 +178,7 @@ SkullKing.prototype.nextTurn = function () {
     var next = !now.submitCard ? now : this.getNextPlayer();
     now.turn = false;
     next.turn = true;
-    next.pop("카드를 낼 차례 입니다.");
+    next.pop("Your Turn.");
     this.countdown(this.submitLimitTime, () => {
         if (next.turn) {
             next.submit(this, next.submitable(this).id);

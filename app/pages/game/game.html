@@ -6,21 +6,21 @@
     <div class="ready flex layout-row layout-align-center-center" ng-if="!game.onGame" style="overflow-y:auto">
         <div class="room-info">
             <h3>{{game.name}}</h3>
-            <div>게임 준비중</div>
-            <div>총 {{game.maxRounds}}라운드</div>
-            <div>최대 인원: {{game.maxSize}}명</div>
-            <div>턴 제한시간: {{game.submitLimitTime/1000||0}}초</div>
-            <div>예측 제한 시간: {{game.predictLimitTime/1000||0}}초</div>
+            <div>Wait for players...</div>
+            <div>{{game.maxRounds}} rounds</div>
+            <div>Max Players: {{game.maxSize}}</div>
+            <div>Turn Limit Time: {{game.submitLimitTime/1000||0}}Sec</div>
+            <div>Prediction Limit Time: {{game.predictLimitTime/1000||0}}Sec</div>
             <div>
-                <span><b>해적왕:</b> {{game.cardOptions.king}}장,</span>
-                <span><b>해적:</b> {{game.cardOptions.pirate}}장,</span>
-                <span><b>해적/도망:</b> {{game.cardOptions.pirateOR}}장,</span>
-                <span><b>여자:</b> {{game.cardOptions.girl}}장,</span>
-                <span><b>숫자:</b> 1~{{game.cardOptions.numbers}},</span>
-                <span><b>도망:</b> {{game.cardOptions.white}}장</span>
+                <span><b>King:</b> {{game.cardOptions.king}}장,</span>
+                <span><b>Pirate:</b> {{game.cardOptions.pirate}}장,</span>
+                <span><b>Pirate/Escape:</b> {{game.cardOptions.pirateOR}}장,</span>
+                <span><b>Gir:</b> {{game.cardOptions.girl}}장,</span>
+                <span><b>Number:</b> 1~{{game.cardOptions.numbers}},</span>
+                <span><b>Escape:</b> {{game.cardOptions.white}}장</span>
             </div>
-            <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">게임 시작
-            </div>
+            <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">Start Game</div>
+            <div ng-if="!game.me.maker">Host user can start game.</div>
         </div>
     </div>
     <div ng-if="game.phase==='submit'" class="layout-column flex">

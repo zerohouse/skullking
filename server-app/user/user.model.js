@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('../mongoose.connect');
 
-const emailField = mongoose.regexField(String, "(.+)@(.+){2,}\.(.+){2,}", "{VALUE}는 이메일형식에 맞지 않습니다.");
+const emailField = mongoose.regexField(String, "(.+)@(.+){2,}\.(.+){2,}", "{VALUE} is not a valid email.");
 emailField.unique = true;
 
 const userSchema = mongoose.Schema({
     email: emailField,
-    name: mongoose.regexField(String, ".{2,}", "이름은 두글자 이상으로해주세요."),
+    name: mongoose.regexField(String, ".{2,}", "name must longer then 2 chars."),
     password: String,
     ranks: [],
     point: {type: Number, default: 0}

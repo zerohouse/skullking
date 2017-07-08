@@ -14,9 +14,9 @@
                     return $scope.game.players.map(p => {
                         var predict = p.predictions[index];
                         if (predict !== undefined)
-                            predict += "승";
+                            predict += "wins prediction";
                         else
-                            predict = "예측하는 중";
+                            predict = " in prediction...";
                         return `${p.name}: ${predict}`;
                     }).join(", ");
                 };

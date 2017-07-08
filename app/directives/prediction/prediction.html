@@ -1,11 +1,11 @@
 <div ng-show="game.me.prediction===null && game.phase==='prediction'">
-    <h3>{{game.round}}라운드 승 예측 </h3>
-    - <b>{{game.me.turnIndex}}</b>번째 순서
+    <h3>{{game.round}}Round Prediction</h3>
+    - <b>You are the {{game.me.turnIndex}} order</b>
 
     <div ng-bind-html="desc" ng-class="{'color-red':error}"></div>
     <div class="btn" ng-class="{'btn-primary':$index !== 0,'btn-danger':$index === 0}" ng-click="predict($index)"
          ng-repeat="round in (game.round+1).toArray()">
-        {{$index}}승
+        {{$index}}Win
     </div>
 </div>
-<h1 ng-show="game.me.prediction!==null && game.phase==='prediction'">예측완료</h1>
+<h1 ng-show="game.me.prediction!==null && game.phase==='prediction'">Wait for other player's prediction</h1>

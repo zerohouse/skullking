@@ -73,9 +73,9 @@
         $scope.go = function (room) {
             let password;
             if (room.password)
-                password = prompt("패스워드를 입력해주세요.");
+                password = prompt("Password?");
             if (!$rootScope.user._id) {
-                popup.confirm("회원으로 가입하면 게임 전적이 기록되고, 포인트가 쌓입니다.", "비회원으로 진행하시겠습니까?").then(function () {
+                popup.confirm("When you become a member, you are recorded as a whole and accumulated points.", "Do you wish play game as non-member?").then(function () {
                     $ajax.get('/api/playerCode', {id: room.id, password: password}).then(player => {
                         $state.go('game', {id: room.id, player: player});
                     });
@@ -89,7 +89,7 @@
 
         $scope.makeRoomPopup = function () {
             if (!$rootScope.user._id) {
-                pop.alert("비회원은 방을 만들 수 없습니다.");
+                pop.alert("Non-member can't make a new game.");
                 return;
             }
             popup.open('makeRoom', $scope);
