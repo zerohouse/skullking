@@ -37,7 +37,17 @@
                 player.turnIndex = (i >= start ? i - start : i + (game.players.length - start)) + 1;
             });
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
-            game.me.cards.forEach(c => c.submitable = submitCheck(c, game, game.me.cards));
+
+            var stepCards;
+            if (!game.rounds || game.rounds.length === 0 || game.rounds.last().steps.length === 0);
+            else
+                stepCards = game.rounds.last().steps.last().cards;
+            game.me.cards.forEach(c => {
+                c.submitable = submitCheck(c, game, game.me.cards);
+                if (!stepCards)
+                    return;
+                c.winable = getWinCard(stepCards.concat(c), game.prime) === c;
+            });
             positioning(game);
             timeUpdate();
             $scope.$apply();
@@ -53,6 +63,41 @@
             return true;
         }
 
+        function getWinCard(cards, prime) {
+            const king = cards.find(c => c.type.king);
+            const girl = cards.find(c => c.type.girl);
+            const pirate = cards.find(c => c.type.pirate);
+            if (king) {
+                if (girl)
+                    return girl;
+                return king;
+            }
+            if (pirate)
+                return pirate;
+            if (girl)
+                return girl;
+            let winCard = null;
+            cards.forEach(c => {
+                if (!winCard) {
+                    winCard = c;
+                    return;
+                }
+                if (c.type.black) {
+                    if (!winCard.type.black) {
+                        winCard = c;
+                        return;
+                    }
+                    if (winCard.no < c.no) {
+                        winCard = c;
+                        return;
+                    }
+                }
+                if ((c.type.name === prime) && winCard.no < c.no)
+                    winCard = c;
+            });
+            return winCard;
+        }
+
         function positioning(game) {
             if (!game)
                 return;
@@ -61,11 +106,11 @@
                 if (!width)
                     return;
                 var padding = 30;
-                var step = (width - 90 - padding) / game.me.cards.length;
+                var step = (width - 115 - padding) / game.me.cards.length;
                 step = Math.min(step, 110);
                 c.position = {
                     top: 0,
-                    left: (width / 2 + (i - game.me.cards.length / 2) * step) - 45 + padding / 2 + "px"
+                    left: (width / 2 + (i - game.me.cards.length / 2) * step) - 58 + padding / 2 + "px"
                 };
             });
         }

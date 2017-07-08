@@ -2,19 +2,26 @@ card {
   margin: 5px;
   display: inline-block;
   overflow: hidden;
-  width: 90px;
+  width: 117px;
+  height: 160px;
   border-radius: 5px;
-  border: 1px solid #666;
+  border: 1px solid;
   box-shadow: 3px 3px 3px #333;
+  background: white;
+  position: relative;
   .back {
-    width: 100%;
-    height: 100%;
-    background: white center;
+    width: 125px;
+    margin: 4px 5px 5px -4px;
+    overflow: hidden;
+    border-radius: 5px;
+    height: 150px;
     background-size: cover;
     text-align: center;
     font-weight: normal;
     font-family: Arial, sans-serif;
-    position: relative;
+    border-top: none;
+    background-position: center;
+
     .title {
       padding: 3px 3px 3px 8px;
       height: 55px;
@@ -28,24 +35,74 @@ card {
       height: 65px;
     }
     .no {
-      font-size: 30px;
+      font-size: 18px;
+      text-shadow: 1px 1px 2px black;
       position: absolute;
-      right: 19px;
+      color: white;
+      padding: 0 1px 0 0;
       text-align: center;
-      bottom: 8px;
-      width: 48px;
-      height: 48px;
+      width: 33px;
+      height: 33px;
       border-radius: 50%;
-      background: white;
-      box-shadow: 1px 1px 1px silver;
     }
+    .no.first {
+      top: 3px;
+    }
+    .no.second {
+      bottom: 2px;
+    }
+    .no.black.first {
+      left: 3px;
+    }
+    .no.black.second {
+      right: 2px;
+    }
+    .no.red.first {
+      left: 5px;
+    }
+    .no.red.second {
+      right: 4px;
+    }
+    .no.yellow.first {
+      left: 5px;
+    }
+    .no.yellow.second {
+      right: 3px;
+    }
+    .no.blue.first {
+      left: 5px;
+    }
+    .no.blue.second {
+      right: 2px;
+    }
+
+    .name {
+      position: absolute;
+      font-size: 11px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: white;
+      text-shadow: 1px 1px 1px black;
+      border-radius: 5px;
+      bottom: 8px;
+      right: 30px;
+      width: 70px;
+      text-transform: capitalize;
+    }
+
+    .image {
+      width: 100%;
+      height: 102px;
+      margin-top: 24px;
+      background-size: 100%;
+      background: no-repeat center;
+      background-size: 100%;
+    }
+
     .title {
       text-align: left;
-      .name {
-        font-size: 20px;
-        color: #3a3a3a;
-        text-shadow: 1px 1px 1px silver;
-      }
+
       .desc {
         font-size: 11px;
         margin-left: 3px;
@@ -66,4 +123,17 @@ card {
       padding: 1px 1px 1px 2px;
     }
   }
+  .pirateOR .name {
+    right: 35px;
+  }
+}
+
+card.submitable {
+  border-color: #ce380f;
+  box-shadow: 6px 6px 6px #ce380f;
+}
+
+card.winable.submitable {
+  border-color: #59ce2c;
+  box-shadow: 6px 6px 6px #59ce2c;
 }

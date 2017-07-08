@@ -1,7 +1,7 @@
 <div class="container">
+
     <div class="card-block">
         <h5>스컬킹 온라인</h5>
-
         <div ng-if="!user._id">
             <span class="btn btn-primary" ng-click="registerPopup()">회원가입</span>
             <span class="btn btn-primary" ng-click="loginPopup()">로그인</span>
@@ -59,7 +59,25 @@
             </li>
             <li class="list-group-item">
                 카드는 다음의 순서로 강합니다.<br>
-                해적왕 > 해적 > 여해적 > 블랙 > 빨강 = 파랑 = 노랑 > 도망<br>
+                <div style="font-size:10px; vertical-align: mi">
+                    King
+                    <mark mark="king"></mark>
+                    > Pirate
+                    <mark mark="pirate"></mark>
+                    > Girl
+                    <mark mark="girl"></mark>
+                    > Black
+                    <mark mark="black"></mark>
+                    > Red
+                    <mark mark="red"></mark>
+                    = Blue
+                    <mark mark="blue"></mark>
+                    = Yellow
+                    <mark mark="yellow"></mark>
+                    > Escape
+                    <mark mark="white"></mark>
+                </div>
+                <br>
                 <b>해적왕과 여해적이 함께 나오면 여해적이 승리합니다.</b><br>
                 빨강, 파랑, 노랑 카드는 해당 라운드에 먼저 나온 카드가 가장 강합니다.
             </li>
@@ -98,5 +116,11 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="cards">
+        <div>기본 카드</div>
+        <div style="text-align: center">
+            <card card="card" ng-class="{submitable:$even}" ng-repeat="card in cards"></card>
+        </div>
     </div>
 </div>

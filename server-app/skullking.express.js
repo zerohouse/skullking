@@ -14,17 +14,13 @@ module.exports = function (app) {
             res.sendError("로그인 안됨");
             return;
         }
-        if (games[req.session.room]) {
-            const player = games[req.session.room].players.findBy("userId", req.session.user._id);
-            if (player && !player.disconnected) {
-                res.sendError("이미 접속중입니다.");
-                return;
-            }
+        if (games[req.session.user.room]) {
+            const player = games[req.session.user.room].players.findBy("userId", req.session.user._id);
             if (player) {
                 const key = randomstring.generate();
                 player.id = key;
                 req.session.key = key;
-                req.session.room = req.query.id;
+                req.session.user.room = req.query.id;
                 res.send(key);
                 return;
             }
@@ -33,15 +29,6 @@ module.exports = function (app) {
     });
 
     function keyRoom(req, res) {
-        if (games[req.session.room] && req.session.key && games[req.session.room].players.findById(req.session.key)) {
-            if (!games[req.session.room].players.findById(req.session.key).disconnected) {
-                res.sendError("이미 접속중입니다.");
-                return;
-            }
-            res.send(req.session.key);
-            return;
-        }
-
         const game = games[req.query.id];
         if (!game) {
             res.sendError("없는 방");
@@ -54,7 +41,8 @@ module.exports = function (app) {
         const key = randomstring.generate();
         game.addPlayer(key, req.session.user);
         req.session.key = key;
-        req.session.room = req.query.id;
+        if (req.session.user)
+            req.session.user.room = req.query.id;
         res.send(key);
     }
 
@@ -93,13 +81,9 @@ module.exports = function (app) {
             res.sendError("로그인 안됨");
             return;
         }
-        if (games[req.session.room] && games[req.session.room].players.findById(req.session.key)) {
-            if (!games[req.session.room].players.findById(req.session.key).disconnected) {
-                res.sendError("이미 접속중입니다.");
-                return;
-            }
+        if (games[req.session.user.room] && games[req.session.user.room].players.findById(req.session.key)) {
             res.send({
-                player: req.session.room,
+                player: req.session.user.room,
                 room: req.session.key
             });
             return;
@@ -114,7 +98,7 @@ module.exports = function (app) {
         game.maker = req.session.user.name;
         game.addPlayer(playerKey, req.session.user);
         req.session.key = playerKey;
-        req.session.room = room;
+        req.session.user.room = room;
         res.send({
             player: playerKey,
             room: room

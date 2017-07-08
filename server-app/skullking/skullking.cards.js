@@ -4,17 +4,23 @@ const types = require('./skullking.constants.js').types;
 
 function Card(t, number) {
     this.type = _.cloneDeep(t);
+    if (t.name === "white")
+        this.name = "escape";
+    else if (t.name === "pirateOR")
+        this.name = "pirate/escape";
+    else
+        this.name = t.name;
+
+    if (types[this.type.name] > number)
+        this.src = `/images/cards/${this.type.name}${number}.jpg`;
+    else
+        this.src = `/images/cards/${this.type.name}${types[this.type.name] - 1}.jpg`;
+
     if (this.type.name === type.red.name || this.type.name === type.blue.name || this.type.name === type.black.name || this.type.name === type.yellow.name)
         this.no = number;
     else {
         this.no = 0;
-        let typeInfo = types[this.type.name][number];
-        if (!typeInfo)
-            typeInfo = types[this.type.name].random();
-        this.name = typeInfo.name;
-        this.src = typeInfo.src;
     }
-    this.desc = this.type.desc;
 }
 
 Card.prototype.submitCheck = function (game, cards) {

@@ -12,11 +12,6 @@ function SkullKingSocket(io) {
                 socket.disconnect();
                 return;
             }
-            if (game.onGame) {
-                socket.emit("err", "이미 진행중인 게임입니다.");
-                socket.disconnect();
-                return;
-            }
             let player = game.players.findById(data.player);
             if (!player) {
                 socket.emit("err", "잘못된 접근입니다.");
@@ -24,9 +19,11 @@ function SkullKingSocket(io) {
                 return;
             }
             if (!player.disconnected) {
-                socket.emit("err", "이미 접속 중입니다.");
-                socket.disconnect();
-                return;
+                const ex = player.socket;
+                player.socket = socket;
+                ex.game = null;
+                ex.emit("err", "같은 플레이어가 접속했습니다. 연결을 종료합니다.");
+                ex.disconnect();
             }
             player.disconnected = false;
             player.socket = socket;

@@ -77,10 +77,10 @@ Player.prototype.submit = function (game, id, arg2) {
     if (submitCard.type.name === 'pirateOR') {
         if (arg2) {
             submitCard.type.pirate = true;
-            submitCard.desc = "해적";
+            submitCard.name = "pirate";
         } else {
             submitCard.type.white = true;
-            submitCard.desc = "도망";
+            submitCard.name = "escape";
         }
     }
     if (!submitCard.type.item) {

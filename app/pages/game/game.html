@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="card-block hand" ng-if="game.onGame">
-        <card ng-drag ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit'}"
+        <card ng-drag ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit',winable:game.me.turn && card.winable && game.phase==='submit'}"
               ng-style="card.position" ng-drag-data="card"
               ng-repeat="card in game.me.cards track by $index"
               card="card"></card>
