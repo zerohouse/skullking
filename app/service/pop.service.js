@@ -12,7 +12,6 @@
 
         this.error = message => {
             makeToastr("error", message);
-            throw message;
         };
 
         function makeToastr(type, message) {

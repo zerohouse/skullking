@@ -1,18 +1,18 @@
 <div class="container">
 
-    <h3>스컬킹 온라인</h3>
+    <h3>SkullKing Online - OnePiece Theme</h3>
     <div>
         <div ng-if="!user._id">
-            <span class="btn btn-primary" ng-click="registerPopup()">회원가입</span>
-            <span class="btn btn-primary" ng-click="loginPopup()">로그인</span>
+            <span class="btn btn-primary" ng-click="registerPopup()">Register</span>
+            <span class="btn btn-primary" ng-click="loginPopup()">Login</span>
         </div>
         <div ng-if="user._id">
-            {{user.name}} ({{user.point}}) <span class="btn btn-primary" ng-click="logout()">로그아웃</span>
+            {{user.name}} ({{user.point}}) <span class="btn btn-primary" ng-click="logout()">Logout</span>
         </div>
     </div>
 
     <div>
-        <h5>방목록 <span ng-click="refresh()" class="label-warning label">새로고침</span></h5>
+        <h5>Rooms <span ng-click="refresh()" class="label-warning label">Refresh</span></h5>
         <table class="table table-striped room">
             <thead>
             <tr>
@@ -32,14 +32,14 @@
                 <td>{{room.createdAt.toYMD()}}</td>
             </tr>
             <tr ng-if="rooms.length===0">
-                <td colspan="5">방이 없네요.</td>
+                <td colspan="5">No games.</td>
             </tr>
             </tbody>
         </table>
-        <div ng-click="makeRoomPopup()" class="btn btn-primary">방만들기</div>
+        <div ng-click="makeRoomPopup()" class="btn btn-primary">Make Room</div>
     </div>
     <div style="margin-top:30px;">
-        <h5>룰 설명</h5>
+        <h5>Rule</h5>
         <ul class="list-group">
             <li class="list-group-item">
                 게임은 총 10 라운드로 진행되며, <span uib-tooltip="1라운드는 1번, 2라운드는 2번...">각 라운드 만큼의<span
@@ -93,16 +93,16 @@
         </ul>
     </div>
     <div ng-if="ranks.length>0" style="margin-top:30px;">
-        <h5>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></h5>
+        <h5>Rank (1st~30th) <span ng-click="refreshRank()" class="label-warning label">Refresh</span></h5>
         <table class="table table-striped room">
             <thead>
             <tr style="font-size:12px;">
                 <th><i class="fa fa-sort-numeric-asc"></i></th>
                 <th><i class="fa fa-user"></i></th>
-                <th>참여</th>
-                <th>점수</th>
-                <th>평균 점수</th>
-                <th>평균 상위</th>
+                <th>Games</th>
+                <th>Point</th>
+                <th>Avg.Point</th>
+                <th>Avg.Percent</th>
             </tr>
             </thead>
             <tbody>

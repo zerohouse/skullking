@@ -48,7 +48,6 @@
                     return;
                 c.winable = getWinCard(stepCards.concat(c), game.prime) === c;
             });
-            positioning(game);
             timeUpdate();
             $scope.$apply();
         });
@@ -98,28 +97,6 @@
             return winCard;
         }
 
-        function positioning(game) {
-            if (!game)
-                return;
-            game.me.cards.forEach((c, i) => {
-                var width = $window.innerWidth;
-                if (!width)
-                    return;
-                var padding = 30;
-                var step = (width - 115 - padding) / game.me.cards.length;
-                step = Math.min(step, 110);
-                c.position = {
-                    top: 0,
-                    left: (width / 2 + (i - game.me.cards.length / 2) * step) - 58 + padding / 2 + "px"
-                };
-            });
-        }
-
-        angular.element($window).on('resize', function () {
-            positioning($scope.game);
-            $scope.$apply();
-        });
-
         ChatSocket.on("e", function (m) {
             popup.close();
             if (m.type === "stepDone") {
@@ -164,8 +141,10 @@
         };
 
         $scope.submit = function (card) {
-            if (!card.submitable)
+            if (!card.submitable) {
+                pop.error("프라임 카드와 같은 색의 카드를 먼저 내야 합니다.");
                 return;
+            }
             if (!$scope.game.me.turn)
                 return;
             if (card.type.name === 'pirateOR') {

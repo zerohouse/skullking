@@ -24,7 +24,8 @@
         </div>
     </div>
     <div ng-if="game.phase==='submit'" class="layout-column flex">
-        <div class="card-block flex field layout-column layout-align-center-center" ng-drop
+        <div class="card-block flex field layout-column layout-align-center-center"
+             ng-class="{red:(game.duration - remain) / 1000 < 5}" ng-drop
              ng-drop-success="submit($data)">
             <prime-color color="game.rounds.last().steps.last().prime"></prime-color>
 
@@ -35,12 +36,16 @@
             </div>
         </div>
     </div>
-    <div class="card-block hand" ng-if="game.onGame">
-        <card ng-drag
-              ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit',winable:game.me.turn && card.winable && game.phase==='submit'}"
-              ng-style="card.position" ng-drag-data="card"
-              ng-repeat="card in game.me.cards track by $index"
-              card="card"></card>
+    <div class="layout-row" ng-if="game.onGame">
+        <div class="flex"></div>
+        <div class="flex" ng-repeat="card in game.me.cards track by $index">
+            <card ng-drag
+                  ng-class="{submitable:game.me.turn && card.submitable && game.phase==='submit',winable:game.me.turn && card.winable && game.phase==='submit'}"
+                   ng-drag-data="card"
+
+                  card="card"></card>
+        </div>
+        <div style="width:125px"></div>
     </div>
     <div class="toggles layout-row">
         <span ng-if="remain>0 && game.onGame" ng-class="{red:(game.duration - remain) / 1000 < 5}" class="time">{{(game.duration - remain) >0?(game.duration - remain) / 1000:0 | number : 1}}/{{game.duration / 1000| number : 0}}</span>
