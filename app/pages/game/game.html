@@ -12,12 +12,12 @@
             <div>Turn Limit Time: {{game.submitLimitTime/1000||0}}Sec</div>
             <div>Prediction Limit Time: {{game.predictLimitTime/1000||0}}Sec</div>
             <div>
-                <span><b>King:</b> {{game.cardOptions.king}}장,</span>
-                <span><b>Pirate:</b> {{game.cardOptions.pirate}}장,</span>
-                <span><b>Pirate/Escape:</b> {{game.cardOptions.pirateOR}}장,</span>
-                <span><b>Gir:</b> {{game.cardOptions.girl}}장,</span>
+                <span><b>King:</b> {{game.cardOptions.king}},</span>
+                <span><b>Pirate:</b> {{game.cardOptions.pirate}},</span>
+                <span><b>Pirate/Escape:</b> {{game.cardOptions.pirateOR}},</span>
+                <span><b>Gir:</b> {{game.cardOptions.girl}},</span>
                 <span><b>Number:</b> 1~{{game.cardOptions.numbers}},</span>
-                <span><b>Escape:</b> {{game.cardOptions.white}}장</span>
+                <span><b>Escape:</b> {{game.cardOptions.white}}</span>
             </div>
             <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">Start Game</div>
             <div ng-if="!game.me.maker">Host user can start game.</div>
