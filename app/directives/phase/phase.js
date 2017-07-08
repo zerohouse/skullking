@@ -14,6 +14,11 @@
                         return $scope.game.maxRounds;
                     return 10;
                 };
+
+                $scope.getColor = function (round) {
+                    if (round === ($scope.game.round - 1) && $scope.game.rounds[round])
+                        return $scope.game.rounds[round].steps.last().prime;
+                };
             }
         };
     }

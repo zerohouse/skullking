@@ -20,7 +20,7 @@
 
 
         var onGame;
-        $scope.chatShow = true;
+        $scope.chatShow = false;
         $scope.userShow = true;
 
         ChatSocket.on("game", function (g) {

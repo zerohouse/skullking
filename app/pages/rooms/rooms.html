@@ -59,26 +59,26 @@
             </li>
             <li class="list-group-item">
                 카드는 다음의 순서로 강합니다.<br>
-                <div style="font-size:10px; vertical-align: mi">
-                    King
+                <div style="font-size:10px;">
+                    <span>King</span>
                     <mark mark="king"></mark>
-                    > Pirate
+                    <span>> Pirate</span>
                     <mark mark="pirate"></mark>
-                    > Girl
+                    <span>> Girl</span>
                     <mark mark="girl"></mark>
-                    > Black
+                    <span>> Black</span>
                     <mark mark="black"></mark>
-                    > Red
+                    <span>> Red</span>
                     <mark mark="red"></mark>
-                    = Blue
+                    <span>= Blue</span>
                     <mark mark="blue"></mark>
-                    = Yellow
+                    <span>= Yellow</span>
                     <mark mark="yellow"></mark>
-                    > Escape
+                    <span>> Escape</span>
                     <mark mark="white"></mark>
                 </div>
                 <br>
-                <b>해적왕과 여해적이 함께 나오면 여해적이 승리합니다.</b><br>
+                <b>해적왕과 여자가 함께 나오면 여자가 승리합니다.</b><br>
                 빨강, 파랑, 노랑 카드는 해당 라운드에 먼저 나온 카드가 가장 강합니다.
             </li>
             <li class="list-group-item">
@@ -101,8 +101,8 @@
                 <th><i class="fa fa-user"></i></th>
                 <th>Games</th>
                 <th>Point</th>
-                <th>Avg.Point</th>
-                <th>Avg.Percent</th>
+                <th class="hidden-sm">Avg.Point</th>
+                <th class="hidden-sm">Avg.Percent</th>
             </tr>
             </thead>
             <tbody>
@@ -111,8 +111,8 @@
                 <td>{{ranker.name}}</td>
                 <td>{{ranker.ranks.length}}</td>
                 <td>{{ranker.point}}</td>
-                <td>{{ranker.avgPoint || 0 | number:1}}</td>
-                <td>{{ranker.avgRank*100 || 0 | number:1}}%</td>
+                <td class="hidden-sm">{{ranker.avgPoint || 0 | number:1}}</td>
+                <td class="hidden-sm">{{ranker.avgRank*100 || 0 | number:1}}%</td>
             </tr>
             </tbody>
         </table>
@@ -120,7 +120,7 @@
     <div class="cards">
         <div>기본 카드</div>
         <div style="text-align: center">
-            <card card="card" ng-class="{submitable:$even}" ng-repeat="card in cards"></card>
+            <card card="card" ng-class="{submitable:card.submitable,'winable':card.winable}" ng-repeat="card in cards"></card>
         </div>
     </div>
 </div>

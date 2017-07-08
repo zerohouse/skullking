@@ -22,18 +22,6 @@ card {
     border-top: none;
     background-position: center;
 
-    .title {
-      padding: 3px 3px 3px 8px;
-      height: 55px;
-      background: white;
-    }
-    .transparent.title {
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 1px 1px 1px silver;
-    }
-    .bottom, .blank {
-      height: 65px;
-    }
     .no {
       font-size: 18px;
       text-shadow: 1px 1px 2px black;
@@ -46,10 +34,10 @@ card {
       border-radius: 50%;
     }
     .no.first {
-      top: 3px;
+      top: 6px;
     }
     .no.second {
-      bottom: 2px;
+      bottom: 0;
     }
     .no.black.first {
       left: 3px;
@@ -100,16 +88,6 @@ card {
       background-size: 100%;
     }
 
-    .title {
-      text-align: left;
-
-      .desc {
-        font-size: 11px;
-        margin-left: 3px;
-        letter-spacing: 1px;
-        margin-top: -7px;
-      }
-    }
     .win {
       position: absolute;
       width: 20px;
@@ -128,9 +106,88 @@ card {
   }
 }
 
+
+@media screen and (max-width: 400px) {
+  card {
+    width: 100px;
+    height: 142px;
+    .back {
+      width: 114px;
+      margin: 1px 0 0px -8px;
+      height: 140px;
+      .bottom, .blank {
+        height: 65px;
+      }
+      .no {
+        font-size: 18px;
+        text-shadow: 1px 1px 2px black;
+        position: absolute;
+        color: white;
+        padding: 0 1px 0 0;
+        text-align: center;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+      }
+      .no.first {
+        top: 4px;
+      }
+      .no.second {
+        bottom: -5px;
+      }
+      .no.black.first {
+        left: -3px;
+      }
+      .no.black.second {
+        right: -2px;
+      }
+      .no.red.first {
+        left: -2px;
+      }
+      .no.red.second {
+        right: 0;
+      }
+      .no.yellow.first {
+        left: -1px;
+      }
+      .no.yellow.second {
+        right: -1px;
+      }
+      .no.blue.first {
+        left: -2px;
+      }
+      .no.blue.second {
+        right: -2px;
+      }
+
+      .name {
+        position: absolute;
+        font-size: 11px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        border-radius: 5px;
+        bottom: 4px;
+        right: 26px;
+        width: 70px;
+        text-transform: capitalize;
+      }
+
+    }
+    .pirateOR .name {
+      right: 27px;
+      font-size: 10px;
+      bottom: 5px;
+    }
+  }
+}
+
+
 card.submitable {
-  border-color: #cecc36;
-  box-shadow: 6px 6px 6px #cecc36;
+  border-color: white;
+  box-shadow: 6px 6px 6px white;
 }
 
 card.winable.submitable {

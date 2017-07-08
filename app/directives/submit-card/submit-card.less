@@ -42,17 +42,33 @@ submit-card {
   }
 }
 
-.ui-droppable-hover {
-  .me.turn {
-    border-color: #f0ad4e;
-    .blank-card {
-      border-color: #f0ad4e;
-      .prepare {
-        display: none;
-      }
-      .submit-card {
-        display: block;
+@media screen and (max-width: 400px) {
+  submit-card {
+    display: inline-block;
+
+    .card {
+      text-align: center;
+      padding: 1px;
+      .blank-card {
+        width: 105px;
+        height: 140px;
       }
     }
+  }
+
+  .ui-droppable-hover {
+    .me.turn {
+      border-color: #f0ad4e;
+      .blank-card {
+        border-color: #f0ad4e;
+        .prepare {
+          display: none;
+        }
+        .submit-card {
+          display: block;
+        }
+      }
+    }
+
   }
 }
