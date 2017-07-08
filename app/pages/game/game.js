@@ -120,7 +120,7 @@
         });
 
         ChatSocket.on("p", function (error) {
-            pop.alert(error);
+            pop.error(error);
         });
 
 

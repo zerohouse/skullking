@@ -75,7 +75,7 @@
             if (room.password)
                 password = prompt("Password?");
             if (!$rootScope.user._id) {
-                popup.confirm("When you become a member, you are recorded as a whole and accumulated points.", "Do you wish play game as non-member?").then(function () {
+                popup.confirm("When you become a member, your game recorded and you can earn points.", "Do you wish play game as non-member?").then(function () {
                     $ajax.get('/api/playerCode', {id: room.id, password: password}).then(player => {
                         $state.go('game', {id: room.id, player: player});
                     });

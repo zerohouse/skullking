@@ -19,13 +19,16 @@
                 <span><b>Number:</b> 1~{{game.cardOptions.numbers}},</span>
                 <span><b>Escape:</b> {{game.cardOptions.white}}</span>
             </div>
-            <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker" ng-click="startGame()">Start Game</div>
-            <div ng-if="!game.me.maker">Host user can start game.</div>
+            <div class="btn btn-primary" style="margin-top:40px;" ng-if="game.me.maker && game.players.length>1"
+                 ng-click="startGame()">Start Game
+            </div>
+            <div ng-if="!game.me.maker && game.players.length>1">Host user can start game.</div>
+            <div ng-if="game.players.length<2">At least 2 players required to play.</div>
         </div>
     </div>
     <div ng-if="game.phase==='submit'" class="layout-column flex">
         <div class="card-block flex field layout-column layout-align-center-center"
-             ng-class="{red:(game.duration - remain) / 1000 < 5}" ng-drop
+             ng-class="{red-block:(game.duration - remain) / 1000 < 5}" ng-drop
              ng-drop-success="submit($data)">
             <prime-color class="hidden-sm" color="game.rounds.last().steps.last().prime"></prime-color>
             <div>
@@ -66,7 +69,8 @@
         </div>
         <chat ng-if="chatShow"></chat>
         <history ng-if="historyShow" game="game"></history>
-        <div class="close-btn" ng-click="historyShow=false;chatShow=false;userShow=false" ng-show="historyShow||chatShow||userShow"><i class="fa fa-times"></i>
+        <div class="close-btn" ng-click="historyShow=false;chatShow=false;userShow=false"
+             ng-show="historyShow||chatShow||userShow"><i class="fa fa-times"></i>
         </div>
     </div>
 </div>
