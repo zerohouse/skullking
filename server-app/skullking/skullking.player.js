@@ -159,7 +159,7 @@ Player.prototype.alert = function (message, title) {
         socket.emit('e', message);
         return;
     }
-    socket.emit('e', `<h5>${title}</h5>${message}`);
+    socket.emit('e', `<h3>${title}</h3>${message}`);
 };
 
 Player.prototype.pop = function (message) {

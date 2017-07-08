@@ -6,7 +6,16 @@
 
 .card-block.field {
   overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 }
+
+@media screen and (min-width: 400px) {
+  .card-block.field {
+    margin: 10px;
+  }
+}
+
+
 
 .card-block.hand {
   position: relative;
@@ -21,13 +30,22 @@
   color: #da0000;
 }
 
-.ready {
+.ready, prediction {
   text-align: center;
   padding: 10px;
   margin-top: 20px;
   font-size: 15px;
 }
 
-.wrap.myturn {
-  background: #f0ad4e;
+//.wrap.myturn {
+//  background: #f0ad4e;
+//}
+
+.wrap {
+}
+
+.room-info {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 30px;
 }

@@ -48,6 +48,8 @@ module.exports = function (app) {
 
     app.get('/api/rooms', function (req, res) {
         res.send(_.map(games, function (v, k) {
+            if (v.onGame)
+                return;
             return {
                 id: k,
                 name: v.name,
@@ -58,7 +60,7 @@ module.exports = function (app) {
                 password: v.password !== null,
                 maker: v.maker
             };
-        }));
+        }).filter(r => r));
     });
 
     app.get('/api/ranks', function (req, res) {

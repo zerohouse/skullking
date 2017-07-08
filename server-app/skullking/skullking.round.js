@@ -32,7 +32,7 @@ Round.prototype.submit = function (card, game) {
     winner.win++;
     if (this.steps.length < this.roundNo) {
         game.alert({
-            message: `<h5>${this.roundNo}라운드 ${this.steps.length}번째 결과</h5>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+            message: `<h3>${this.roundNo}라운드 ${this.steps.length}번째 결과</h3>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
             type: 'stepDone',
             cards: this.steps.last().cards
         });
@@ -40,11 +40,11 @@ Round.prototype.submit = function (card, game) {
         return;
     }
     game.nextRound({
-        message: `<h5>${game.round} 라운드 결과</h5>` + game.players.map(player => {
+        message: `<h3>${game.round} 라운드 결과</h3>` + game.players.map(player => {
             this.calculatePoint(player);
             const p = player.points.last();
             return `${player.getName()} : ${p.name} ${p.point > 0 ? "+" : ""}${p.point}`
-        }).join("<br>") + `<h5>${this.roundNo}라운드 마지막 결과</h5>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
+        }).join("<br>") + `<h3>${this.roundNo}라운드 마지막 결과</h3>${winner.getName()} 승리 : ${win.card.name || win.card.type.name + " " + win.card.no} 카드`,
         type: 'stepDone',
         cards: this.steps.last().cards
     });

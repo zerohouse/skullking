@@ -1,8 +1,8 @@
 <div ng-show="game.me.prediction===null && game.phase==='prediction'">
-    <div style="margin-top:10px;font-size:16px;"><b>{{game.round}}라운드 승 예측</b><br>
-        - <b>{{game.me.turnIndex}}</b>번째 순서<br>
-        - 받은 카드
-    </div>
+    <h3>{{game.round}}라운드 승 예측 </h3>
+    - <b>{{game.me.turnIndex}}</b>번째 순서<br>
+    - 받은 카드
+
     <div ng-bind-html="desc" ng-class="{'color-red':error}"></div>
     <div class="btn btn-lg" ng-class="{'btn-primary':$index !== 0,'btn-danger':$index === 0}" ng-click="predict($index)"
          ng-repeat="round in (game.round+1).toArray()">

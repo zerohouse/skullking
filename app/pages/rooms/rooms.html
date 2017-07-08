@@ -1,7 +1,7 @@
 <div class="container">
 
-    <div class="card-block">
-        <h5>스컬킹 온라인</h5>
+    <h3>스컬킹 온라인</h3>
+    <div>
         <div ng-if="!user._id">
             <span class="btn btn-primary" ng-click="registerPopup()">회원가입</span>
             <span class="btn btn-primary" ng-click="loginPopup()">로그인</span>
@@ -39,7 +39,7 @@
         <div ng-click="makeRoomPopup()" class="btn btn-primary">방만들기</div>
     </div>
     <div style="margin-top:30px;">
-        <div>룰 설명</div>
+        <h5>룰 설명</h5>
         <ul class="list-group">
             <li class="list-group-item">
                 게임은 총 10 라운드로 진행되며, <span uib-tooltip="1라운드는 1번, 2라운드는 2번...">각 라운드 만큼의<span
@@ -93,7 +93,7 @@
         </ul>
     </div>
     <div ng-if="ranks.length>0" style="margin-top:30px;">
-        <div>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></div>
+        <h5>순위 (1~30위) <span ng-click="refreshRank()" class="label-warning label">새로고침</span></h5>
         <table class="table table-striped room">
             <thead>
             <tr style="font-size:12px;">
