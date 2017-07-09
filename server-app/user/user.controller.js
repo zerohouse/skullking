@@ -38,6 +38,16 @@ module.exports = function (app) {
     });
 
 
+    app.post('/api/user/name', function (req, res) {
+        const name = req.body.name;
+        User.findByIdAndUpdate(req.session.user._id, {$set: {name: name}}, ecb(function (user) {
+            req.session.user = user;
+            res.send(user);
+            req.session.user.name = name;
+        }));
+    });
+
+
 };
 
 function ecb(cb) {

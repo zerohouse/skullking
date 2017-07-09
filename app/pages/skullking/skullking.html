@@ -60,8 +60,7 @@
     <progressbar ng-show="game.duration" value="remain/game.duration*100"></progressbar>
     <div style="color:black;">
         <div ng-if="userShow">
-            <player ng-click="name(player)"
-                    ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
+            <player ng-class="{myturn:player.id === game.me.id&&player.turn&&game.phase==='submit'}"
                     index="$index"
                     ng-repeat="player in game.players"
                     game="game" player="player">

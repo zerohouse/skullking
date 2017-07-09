@@ -95,6 +95,24 @@
             popup.open('makeRoom', $scope);
         };
 
+
+        $scope.name = function () {
+            $scope.n = $rootScope.user.name;
+            popup.open('name', $scope);
+        };
+
+
+        $scope.reName = function (name) {
+            if (name.length < 2) {
+                pop.alert("Name must has at least 2 chars");
+                return;
+            }
+            $ajax.post('/api/user/name', {name: name}, true).then(function () {
+                $rootScope.user.name = name;
+                $scope.close();
+            });
+        };
+
         $scope.makeRoom = function (options) {
             $ajax.post('/api/newRoomCode', options, true).then(code => {
                 $state.go('skullking', {id: code.room, player: code.player});

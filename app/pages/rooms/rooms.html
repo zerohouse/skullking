@@ -7,7 +7,7 @@
             <span class="btn btn-primary" ng-click="loginPopup()">Login</span>
         </div>
         <div ng-if="user._id">
-            {{user.name}} ({{user.point}}) <span class="btn btn-primary" ng-click="logout()">Logout</span>
+            <span ng-click="name(user)">{{user.name}} <i class="fa fa-pencil"></i></span> ({{user.point}}) <span class="btn btn-primary" ng-click="logout()">Logout</span>
         </div>
     </div>
 

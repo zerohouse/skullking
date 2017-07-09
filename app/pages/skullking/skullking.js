@@ -129,18 +129,6 @@
             ChatSocket.emit('event', 'startGame');
         };
 
-        $scope.name = function (player) {
-            if ($scope.game.me.id !== player.id)
-                return;
-            $scope.n = $scope.game.me.name;
-            popup.open('name', $scope);
-        };
-
-        $scope.reName = function (name) {
-            ChatSocket.emit('playerEvent', 'name', name);
-            $scope.close();
-        };
-
         $scope.submit = function (card) {
             if (!card.submitable) {
                 pop.error("You must submit prime color card first.");
