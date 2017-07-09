@@ -3,6 +3,7 @@ const Round = require('./skullking.round');
 const Player = require('./skullking.player');
 const _ = require('lodash');
 const GameResult = require('./skullking.result.model');
+const moment = require('moment');
 
 function SkullKing(id, options) {
     this.id = id;
@@ -20,6 +21,15 @@ function SkullKing(id, options) {
     this.players = [];
 }
 
+SkullKing.prototype.checkAlive = function () {
+    if (this.onGame)
+        return true;
+    if (moment(this.createdAt).isBefore(new Date().getTime() - 10 * 60 * 1000))
+        return true;
+    if (moment(this.gameDoneAt).isBefore(new Date().getTime() - 10 * 60 * 1000))
+        return true;
+    return false;
+};
 
 SkullKing.prototype.addPlayer = function (playerKey, user) {
     const player = new Player(playerKey);
@@ -47,6 +57,7 @@ SkullKing.prototype.doneGame = function () {
     this.phase = '';
     this.duetime = null;
     this.duration = null;
+    this.gameDoneAt = new Date().getTime();
     clearTimeout(this.countEvent);
     const res = this.players
         .sort((p, p2) => {

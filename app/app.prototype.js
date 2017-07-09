@@ -138,7 +138,7 @@ Array.prototype.ignoreTypeContains = function (searchElement /*, fromIndex*/) {
     }
     return false;
 };
-/* jshint ignore:end */
+
 
 Array.prototype.toggle = function (el) {
     if (this.contains(el)) {
@@ -165,13 +165,11 @@ Array.prototype.findById = function (id) {
     return this.findBy("id", id);
 };
 
-/* jshint ignore:start */
 Array.prototype.findBy = function (name, value) {
     return this.find(function (el) {
         return el[name] == value;
     });
 };
-/* jshint ignore:end */
 
 Array.prototype.removeBy = function (name, id) {
     return this.remove(this.findBy(name, id));
@@ -233,3 +231,19 @@ String.prototype.newLine = function () {
 String.prototype.removeTags = function () {
     return this.replace(/(<([^>]+)>)|(<[^<]+)$/ig, "");
 };
+
+Number.prototype.withSuffix = function () {
+    var j = this % 10,
+        k = this % 100;
+    if (j == 1 && k != 11) {
+        return this + "st";
+    }
+    if (j == 2 && k != 12) {
+        return this + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return this + "rd";
+    }
+    return this + "th";
+};
+/* jshint ignore:end */

@@ -1,8 +1,17 @@
 const _ = require('lodash');
 const games = {};
-const SkullKing = require('./skullking/skullking.game');
 
-function SkullKingSocket(io) {
+function checkAndDestroyGame() {
+    _.forEach((v, key) => {
+        if (v.checkAlive())
+            return;
+        destroy(v);
+    });
+}
+
+setInterval(checkAndDestroyGame, 30000);
+
+function GameSocketProcessing(io) {
     io.on('connection', function (socket) {
         socket.on('join', function (data) {
             socket.join(data.id);
@@ -88,17 +97,18 @@ function SkullKingSocket(io) {
         });
     });
 
-    function destroy(id) {
-        const game = games[id];
-        if (!id || !game)
-            return;
-        game.destroy();
-        delete games[id];
-    }
+}
 
+
+function destroy(id) {
+    const game = games[id];
+    if (!id || !game)
+        return;
+    game.destroy();
+    delete games[id];
 }
 
 module.exports = {
-    socket: SkullKingSocket,
+    socket: GameSocketProcessing,
     games: games,
 };

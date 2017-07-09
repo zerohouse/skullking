@@ -1,4 +1,4 @@
-const games = require('./skullking').games;
+const games = require('./game.socket').games;
 const SkullKing = require('./skullking/skullking.game');
 const randomstring = require("randomstring");
 const _ = require('lodash');

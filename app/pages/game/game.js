@@ -23,6 +23,8 @@
         $scope.chatShow = false;
         $scope.userShow = true;
 
+        timeUpdate();
+
         ChatSocket.on("game", function (g) {
             $scope.timeAdjust = new Date().getTime() - game.timeAdjust;
             angular.copy(g, $scope.game);
@@ -48,7 +50,6 @@
                     return;
                 c.winable = getWinCard(stepCards.concat(c), game.prime) === c;
             });
-            timeUpdate();
             $scope.$apply();
         });
 
@@ -174,10 +175,18 @@
         })();
 
         function timeUpdate() {
-            if (!$scope.game || !$scope.game.duetime)
+            if (!game || !game.duetime) {
+                $timeout(timeUpdate, 1000);
                 return;
-            $scope.remain = (new Date().getTime() - $scope.timeAdjust) - $scope.game.duetime + $scope.game.duration;
-            $scope.$apply();
+            }
+
+            if ($scope.timeAdjust)
+                $scope.remain = (new Date().getTime() - $scope.timeAdjust) - game.duetime + game.duration;
+            else
+                $scope.remain = new Date().getTime() - game.duetime + game.duration;
+
+            if (!$scope.$$phase)
+                $scope.$apply();
             requestAnimationFrame(timeUpdate);
         }
 
