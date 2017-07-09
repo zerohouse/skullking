@@ -4,7 +4,7 @@
     function phase() {
         return {
             restrict: 'E',
-            templateUrl: '/directives/phase/phase.html',
+            templateUrl: '/directives/skullking/phase/phase.html',
             scope: {
                 game: '='
             },

@@ -5,7 +5,7 @@
         return {
             restrict: 'E',
             templateUrl: '/directives/chat/chat.html',
-            controller: function ($scope, ChatSocket, $timeout) {
+            controller: function ($scope, socket, $timeout) {
                 $scope.messages = [];
 
                 $scope.chatToggle = function () {
@@ -17,12 +17,12 @@
                     if (!message)
                         return;
                     $scope.messages.push({message: message, me: true});
-                    ChatSocket.emit("chat", {message: message});
+                    socket.emit("chat", {message: message});
                     $scope.message = '';
                     scrollAdjust();
                 };
 
-                ChatSocket.on("chat", function (message) {
+                socket.on("chat", function (message) {
                     if (!$scope.chatShow || $scope.log)
                         $scope.newChat = true;
                     $scope.messages.push(message);
@@ -32,7 +32,7 @@
                 });
 
                 $scope.$on('$destroy', function () {
-                    ChatSocket.removeAllListeners("chat");
+                    socket.removeAllListeners("chat");
                 });
 
                 function scrollAdjust() {

@@ -4,7 +4,7 @@
     function player() {
         return {
             restrict: 'E',
-            templateUrl: '/directives/player/player.html',
+            templateUrl: '/directives/skullking/player/player.html',
             scope: {
                 player: '=',
                 index: '=',

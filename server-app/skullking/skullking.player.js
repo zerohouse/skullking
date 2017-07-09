@@ -19,7 +19,8 @@ Player.prototype.saveResult = function (length) {
         return;
     User.findById(this.userId, (err, user) => {
         user.point += this.point;
-        user.ranks.push({rank: this.rank, players: length});
+        user.ranks.unshift({rank: this.rank, players: length});
+        this.ranks.splice(10);
         user.save(function (err, user) {
         });
     });

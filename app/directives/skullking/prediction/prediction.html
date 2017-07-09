@@ -1,10 +1,10 @@
 <div ng-show="game.me.prediction===null && game.phase==='prediction'">
     <h3>{{game.round.withSuffix()}} Round Prediction</h3>
-    - <b>You are the {{game.me.turnIndex.withSuffix()}} order</b>
+    <h5>- You are the {{game.me.turnIndex.withSuffix()}} order</h5>
 
     <div class="btn" ng-class="{'btn-primary':$index !== 0,'btn-danger':$index === 0}" ng-click="predict($index)"
          ng-repeat="round in (game.round+1).toArray()" style="margin:3px">
         {{$index}} Win
     </div>
 </div>
-<h1 ng-show="game.me.prediction!==null && game.phase==='prediction'">Wait for other player's prediction</h1>
+<h3 ng-show="game.me.prediction!==null && game.phase==='prediction'">Wait for other player's prediction...</h3>

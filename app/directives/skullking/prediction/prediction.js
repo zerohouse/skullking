@@ -7,8 +7,8 @@
             scope: {
                 game: '='
             },
-            templateUrl: '/directives/prediction/prediction.html',
-            controller: function ($scope, ChatSocket, popup) {
+            templateUrl: '/directives/skullking/prediction/prediction.html',
+            controller: function ($scope, socket, popup) {
                 $scope.getDoneSize = function () {
                     if (!$scope.game)
                         return 0;
@@ -20,7 +20,7 @@
                     var plus = no === 0 ? $scope.game.round * 10 : no * 20;
                     var minus = no === 0 ? $scope.game.round * 10 : "예측 실패 라운드 횟수 * 10";
                     popup.confirm(`성공시 ${plus}점 획득 <br> 실패시 ${minus}점 차감`, `${no}승 예측`).then(function () {
-                        ChatSocket.emit('playerEvent', 'predict', no);
+                        socket.emit('player', 'predict', no);
                         $scope.prediction = no;
                     });
                 };

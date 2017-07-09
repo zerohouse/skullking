@@ -41,10 +41,9 @@ function GameSocketProcessing(io) {
             socket.game.update();
         });
 
-        socket.on('event', function (event) {
+        socket.on('game', function (event, arg, arg2) {
             try {
-                if (event === 'startGame')
-                    socket.game.start();
+                socket.game[event](arg, arg2);
             }
             catch (e) {
                 socket.emit("e", e.toString());
@@ -52,17 +51,9 @@ function GameSocketProcessing(io) {
             socket.game.update();
         });
 
-        socket.on('playerEvent', function (event, no, arg2) {
+        socket.on('player', function (event, arg, arg2) {
             try {
-                if (event === 'predict') {
-                    socket.player.predict(socket.game, no);
-                }
-                else if (event === 'submit') {
-                    socket.player.submit(socket.game, no, arg2);
-                }
-                else if (event === 'name') {
-                    socket.player.name = no;
-                }
+                socket.player[event](socket.game, arg, arg2);
             }
             catch (e) {
                 socket.emit("e", e.toString());

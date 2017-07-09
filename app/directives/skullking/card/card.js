@@ -7,7 +7,7 @@
             scope: {
                 card: '='
             },
-            templateUrl: '/directives/card/card.html',
+            templateUrl: '/directives/skullking/card/card.html',
             controller: function ($scope, colors) {
                 $scope.getColor = function (name) {
                     return colors[name];

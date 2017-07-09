@@ -12,6 +12,12 @@ angular.module('app')
                 templateUrl: '/pages/skullking/skullking.html',
                 controller: 'skullkingCtrl',
                 layout: 'column'
+            })
+            .state("checkGame", {
+                url: "/check/:id/:player",
+                templateUrl: '/pages/check/check.html',
+                controller: 'checkCtrl',
+                layout: 'column'
             });
 
 

@@ -2,6 +2,6 @@
 
 /* Services */
 angular.module('app')
-    .factory('ChatSocket', function () {
+    .factory('socket', function () {
         return io.connect('/');
     });

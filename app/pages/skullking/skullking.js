@@ -2,7 +2,7 @@
     angular.module('app').controller('skullkingCtrl', skullkingCtrl);
     /* @ng-inject */
     /* Controllers */
-    function skullkingCtrl($scope, popup, ChatSocket, $stateParams, $window, pop, $state, $timeout) {
+    function skullkingCtrl($scope, popup, socket, $stateParams, $window, pop, $state, $timeout) {
         $scope.names = {
             prediction: "Prediction",
             submit: "Submit a Card"
@@ -15,7 +15,7 @@
         }, function (id) {
             if (!id)
                 return;
-            ChatSocket.emit('join', {id: id, player: $stateParams.player});
+            socket.emit('join', {id: id, player: $stateParams.player});
         });
 
 
@@ -25,7 +25,7 @@
 
         timeUpdate();
 
-        ChatSocket.on("game", function (g) {
+        socket.on("game", function (g) {
             $scope.timeAdjust = new Date().getTime() - game.timeAdjust;
             angular.copy(g, $scope.game);
             if (game.onGame !== onGame) {
@@ -98,7 +98,7 @@
             return winCard;
         }
 
-        ChatSocket.on("e", function (m) {
+        socket.on("e", function (m) {
             popup.close();
             if (m.type === "stepDone") {
                 var scope = $scope.$new();
@@ -111,7 +111,7 @@
         });
 
 
-        ChatSocket.on("err", function (error) {
+        socket.on("err", function (error) {
             popup.close();
             popup.alert(error);
             $state.go('rooms');
@@ -120,13 +120,13 @@
             }, 1000);
         });
 
-        ChatSocket.on("p", function (error) {
+        socket.on("p", function (error) {
             pop.error(error);
         });
 
 
         $scope.startGame = function () {
-            ChatSocket.emit('event', 'startGame');
+            socket.emit('game', 'start');
         };
 
         $scope.submit = function (card) {
@@ -138,13 +138,13 @@
                 return;
             if (card.type.name === 'pirateOR') {
                 popup.confirm("You can choose use this card as Pirate or Escape.", "Please make choice.", "Pirate", "Escape").then(function () {
-                    ChatSocket.emit('playerEvent', 'submit', card.id, true);
+                    socket.emit('player', 'submit', card.id, true);
                 }, function () {
-                    ChatSocket.emit('playerEvent', 'submit', card.id, false);
+                    socket.emit('player', 'submit', card.id, false);
                 });
                 return;
             }
-            ChatSocket.emit('playerEvent', 'submit', card.id);
+            socket.emit('player', 'submit', card.id);
         };
 
         $scope.getTurnPlayer = function () {
@@ -182,10 +182,10 @@
 
         $scope.$on("$destroy", function () {
             clearWatch();
-            ChatSocket.removeAllListeners("game");
-            ChatSocket.removeAllListeners("e");
-            ChatSocket.removeAllListeners("err");
-            ChatSocket.removeAllListeners("p");
+            socket.removeAllListeners("game");
+            socket.removeAllListeners("e");
+            socket.removeAllListeners("err");
+            socket.removeAllListeners("p");
             angular.element($window).off('resize');
         });
 

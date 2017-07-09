@@ -135,7 +135,7 @@ SkullKing.prototype.predictionDone = function () {
     if (!this.players.find(p => p.prediction === null)) {
         this.phase = "submit";
         this.alert(this.players.map((p, i) => {
-            return `${p.getName()} : ${p.prediction}wins prediction.`
+            return `${p.getName()} : ${p.prediction} wins prediction.`
         }).join("<br>"), "Prediction results");
         this.nextTurn();
     }

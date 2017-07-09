@@ -9,7 +9,7 @@
                 player: '=',
                 game: '='
             },
-            templateUrl: '/directives/submit-card/submit-card.html'
+            templateUrl: '/directives/skullking/submit-card/submit-card.html'
         };
     }
 })();
