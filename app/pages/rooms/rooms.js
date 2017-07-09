@@ -77,13 +77,13 @@
             if (!$rootScope.user._id) {
                 popup.confirm("When you become a member, your game recorded and you can earn points.", "Do you wish play game as non-member?").then(function () {
                     $ajax.get('/api/playerCode', {id: room.id, password: password}).then(player => {
-                        $state.go('game', {id: room.id, player: player});
+                        $state.go('skullking', {id: room.id, player: player});
                     });
                 });
                 return;
             }
             $ajax.get('/api/userPlayerCode', {id: room.id, password: password}).then(player => {
-                $state.go('game', {id: room.id, player: player});
+                $state.go('skullking', {id: room.id, player: player});
             });
         };
 
@@ -97,7 +97,7 @@
 
         $scope.makeRoom = function (options) {
             $ajax.post('/api/newRoomCode', options, true).then(code => {
-                $state.go('game', {id: code.room, player: code.player});
+                $state.go('skullking', {id: code.room, player: code.player});
                 popup.close();
             });
         };

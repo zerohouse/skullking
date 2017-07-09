@@ -7,10 +7,10 @@ angular.module('app')
                 templateUrl: '/pages/rooms/rooms.html',
                 controller: 'roomCtrl'
             })
-            .state("game", {
-                url: "/game/:id/:player",
-                templateUrl: '/pages/game/game.html',
-                controller: 'gameCtrl',
+            .state("skullking", {
+                url: "/skullking/:id/:player",
+                templateUrl: '/pages/skullking/skullking.html',
+                controller: 'skullkingCtrl',
                 layout: 'column'
             });
 

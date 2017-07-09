@@ -22,6 +22,8 @@ function SkullKing(id, options) {
 }
 
 SkullKing.prototype.checkAlive = function () {
+    if (this.players.length === 0 || !this.players.find(p => !p.disconnected))
+        return false;
     if (this.onGame)
         return true;
     if (moment(this.createdAt).isBefore(new Date().getTime() - 10 * 60 * 1000))

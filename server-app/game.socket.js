@@ -9,7 +9,7 @@ function checkAndDestroyGame() {
     });
 }
 
-setInterval(checkAndDestroyGame, 30000);
+setInterval(checkAndDestroyGame, 10000);
 
 function GameSocketProcessing(io) {
     io.on('connection', function (socket) {
@@ -31,7 +31,7 @@ function GameSocketProcessing(io) {
                 const ex = player.socket;
                 player.socket = socket;
                 ex.game = null;
-                ex.emit("err", "Connect from another place.");
+                ex.emit("err", "Connected from another place.");
                 ex.disconnect();
             }
             player.disconnected = false;

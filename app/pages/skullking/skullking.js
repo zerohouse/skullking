@@ -1,8 +1,8 @@
 (function () {
-    angular.module('app').controller('gameCtrl', gameCtrl);
+    angular.module('app').controller('skullkingCtrl', skullkingCtrl);
     /* @ng-inject */
     /* Controllers */
-    function gameCtrl($scope, popup, ChatSocket, $stateParams, $window, pop, $state, $timeout) {
+    function skullkingCtrl($scope, popup, ChatSocket, $stateParams, $window, pop, $state, $timeout) {
         $scope.names = {
             prediction: "Prediction",
             submit: "Submit a Card"
