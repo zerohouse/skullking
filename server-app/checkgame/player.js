@@ -1,42 +1,12 @@
-var logger = require('./../../utils/logger.js');
-var store = require('./../../utils/store.js');
-var db = require('./../../db/db.js');
-var highest = require('./../highest.js');
-
-function Player(socket, game) {
-    logger.debug(socket.session.user.name, socket.sid);
-    this.score = socket.session.user.score;
-    this.name = socket.session.user.name;
-    this.sid = socket.sid;
-    this.game = game;
+function Player(key, user) {
+    this.id = key;
+    // this.game = game;
     this.combo = 1;
     this.lastPoint = 1;
     this.last = new Date();
-    this.setSocket(socket);
-    const self = this;
-    socket.on('checkgame.check', function (selects) {
-        self.check(selects);
-    });
-
-    socket.on('checkgame.done', function () {
-        self.done();
-    });
-
-    socket.on('checkgame.steampack', function (i) {
-        self.steam(i);
-    });
-
-    socket.on('chat', function (message) {
-        message.from = self.getInfo();
-        if (message.to) {
-            self.game.getPlayer(message.to.sid).send(message);
-            return;
-        }
-        self.game.send(message);
-    });
 }
 
-var steam = [{point: 15, booster: 2, timeout: 30000, name: "헉헉"}, {
+const steam = [{point: 15, booster: 2, timeout: 30000, name: "헉헉"}, {
     point: 30,
     booster: 4,
     timeout: 30000,
@@ -63,12 +33,12 @@ Player.prototype.steam = function (i) {
     this.socket.emit('checkgame.steamstart', i);
     this.score = this.score - steam[i].point;
     this.booster = steam[i].booster;
-    this.game.sync();
-    var self = this;
+    this.game.update();
+    const self = this;
     setTimeout(function () {
         self.booster = undefined;
         self.emit('checkgame.steamend', i);
-        self.sync();
+        self.update();
     }, steam[i].timeout);
 };
 
@@ -76,28 +46,28 @@ Player.prototype.steam = function (i) {
 Player.prototype.check = function (selects) {
     if (this.delayCheck())
         return;
-    var check = this.game.check(selects);
+    const check = this.game.check(selects);
     if (!check) {
         this.plus(-1);
-        this.game.sync();
+        this.game.update();
         return;
     }
     this.plus(1);
-    this.game.sync();
+    this.game.update();
 };
 
 Player.prototype.done = function () {
     if (this.delayCheck())
         return;
-    var done = this.game.done();
+    const done = this.game.isDone();
     if (!done) {
         this.plus(-3);
-        this.game.sync();
+        this.game.update();
         return;
     }
     this.plus(3);
-    this.game.restart();
-    this.game.sync();
+    this.game.start();
+    this.game.update();
 };
 
 Player.prototype.plus = function (point) {
@@ -137,6 +107,10 @@ Player.prototype.delayCheck = function () {
     }
 };
 
+Player.prototype.getName = function () {
+    return this.name;
+};
+
 Player.prototype.getInfo = function () {
     const info = {};
     info.score = this.score;
@@ -147,9 +121,6 @@ Player.prototype.getInfo = function () {
     return info;
 };
 
-Player.prototype.setSocket = function (socket) {
-    this.socket = socket;
-};
 
 Player.prototype.save = function () {
     this.socket.session.user.score = this.score;

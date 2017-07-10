@@ -1,40 +1,75 @@
 const games = require('./game.socket').games;
-const SkullKing = require('./skullking/skullking.game');
+const gameTypes = {
+    SkullKing: require('./skullking/skullking.game'),
+    Check: require('./checkgame/game')
+};
 const randomstring = require("randomstring");
 const _ = require('lodash');
 const User = require('./user/user.model');
 
 module.exports = function (app) {
-    app.get('/api/playerCode', function (req, res) {
-        keyRoom(req, res);
-    });
 
-    app.get('/api/userPlayerCode', function (req, res) {
-        if (!req.session.user) {
-            res.sendError("Not logged");
+    app.post('/api/getCode', function (req, res) {
+        if (!req.body) {
+            res.sendError("Invalid Access.");
             return;
         }
-        if (games[req.session.user.room]) {
+
+        // 새로운 방 생성시
+        if (req.body.new) {
+            // if(!req.session.user)
+            //     req.session.user = {name:"sdf"};
+            if (!req.session.user) {
+                res.sendError("Not logged.");
+                return;
+            }
+            if (games[req.session.user.room] && games[req.session.user.room].players.findById(req.session.key)) {
+                res.send({
+                    player: req.session.user.room,
+                    room: req.session.key
+                });
+                return;
+            }
+            const options = req.body.options ? req.body.options : {};
+            if (!options.name)
+                options.name = `${req.session.user.name}'s game.`;
+            const room = randomstring.generate();
+            if (!gameTypes[req.body.type]) {
+                res.sendError("Invalid Access.");
+                return;
+            }
+            const game = new gameTypes[req.body.type](room, options);
+            games[room] = game;
+            const playerKey = randomstring.generate();
+            game.maker = req.session.user.name;
+            game.addPlayer(playerKey, req.session.user);
+            req.session.key = playerKey;
+            req.session.user.room = room;
+            res.send({
+                player: playerKey,
+                room: room
+            });
+            return;
+        }
+
+        // 기존 방 입장시
+        if (req.session.user && games[req.session.user.room]) {
             const player = games[req.session.user.room].players.findBy("userId", req.session.user._id);
             if (player) {
                 const key = randomstring.generate();
                 player.id = key;
                 req.session.key = key;
-                req.session.user.room = req.query.id;
+                req.session.user.room = req.body.id;
                 res.send(key);
                 return;
             }
         }
-        keyRoom(req, res);
-    });
-
-    function keyRoom(req, res) {
-        const game = games[req.query.id];
+        const game = games[req.body.id];
         if (!game) {
             res.sendError("Not exist game.");
             return;
         }
-        if (game.password && (game.password !== req.query.password)) {
+        if (game.password && (game.password !== req.body.password)) {
             res.sendError("Wrong password.");
             return;
         }
@@ -42,9 +77,9 @@ module.exports = function (app) {
         game.addPlayer(key, req.session.user);
         req.session.key = key;
         if (req.session.user)
-            req.session.user.room = req.query.id;
+            req.session.user.room = req.body.id;
         res.send(key);
-    }
+    });
 
     app.get('/api/rooms', function (req, res) {
         res.send(_.map(games, function (v, k) {
@@ -78,32 +113,4 @@ module.exports = function (app) {
             });
     });
 
-    app.post('/api/newRoomCode', function (req, res) {
-        if (!req.session.user) {
-            res.sendError("Not logged.");
-            return;
-        }
-        if (games[req.session.user.room] && games[req.session.user.room].players.findById(req.session.key)) {
-            res.send({
-                player: req.session.user.room,
-                room: req.session.key
-            });
-            return;
-        }
-        const options = req.body ? req.body : {};
-        if (!options.name)
-            options.name = `${req.session.user.name}'s game.`;
-        const room = randomstring.generate();
-        const game = new SkullKing(room, options);
-        games[room] = game;
-        const playerKey = randomstring.generate();
-        game.maker = req.session.user.name;
-        game.addPlayer(playerKey, req.session.user);
-        req.session.key = playerKey;
-        req.session.user.room = room;
-        res.send({
-            player: playerKey,
-            room: room
-        });
-    });
 };

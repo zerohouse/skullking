@@ -21,10 +21,27 @@ Game.prototype.send = function (message) {
 
 Game.prototype.join = function (socket) {
     this.players.push(new Player(socket, this));
-    this.sync(true);
+    this.update(true);
 };
 
-Game.prototype.sync = function (reset) {
+Game.prototype.addPlayer = function (playerKey, user) {
+    const player = new Player(playerKey, user);
+    if (user) {
+        player.name = user.name;
+        player.userId = user._id;
+    }
+    if (this.players.length === 0) {
+        player.maker = true;
+        this.maker = player.getName();
+    }
+    this.players.push(player);
+    setTimeout(() => {
+        if (player.disconnected)
+            this.players.remove(player);
+    }, 1000);
+};
+
+Game.prototype.update = function (reset) {
     const send = {};
     send.reset = reset;
     send.blocks = this.blocks;
@@ -35,7 +52,7 @@ Game.prototype.sync = function (reset) {
         send.players.push(player.getInfo());
     });
     this.players.forEach(function (player) {
-        player.socket.emit('checkgame.game', send);
+        player.socket.emit('game', send);
     });
 };
 
@@ -60,14 +77,14 @@ Game.prototype.getPlayerSize = function () {
 };
 
 Game.prototype.getPlayer = function (sid) {
-    for (var i = 0; i < this.players.length; i++) {
+    for (let i = 0; i < this.players.length; i++) {
         if (this.players[i].sid === sid)
             return this.players[i];
     }
 };
 
 
-Game.prototype.done = function () {
+Game.prototype.isDone = function () {
     return this.results.length === 0;
 };
 
@@ -75,7 +92,7 @@ Game.prototype.check = function (selects) {
     if (selects === undefined) return false;
     if (selects.length !== 3) return false;
     selects.sort();
-    var result = selects.join("");
+    const result = selects.join("");
     if (this.results.contains(result)) {
         this.results.remove(result);
         this.discovered.push(result);

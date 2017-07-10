@@ -70,21 +70,23 @@
 
         $scope.rooms = [];
 
-        $scope.go = function (room) {
+        function getRoomCodeAndGo(room) {
             let password;
             if (room.password)
                 password = prompt("Password?");
+            $ajax.post('/api/getCode', {id: room.id, password: password}, true).then(player => {
+                $state.go('skullking', {id: room.id, player: player});
+            });
+        }
+
+        $scope.go = function (room) {
             if (!$rootScope.user._id) {
                 popup.confirm("When you become a member, your game recorded and you can earn points.", "Do you wish play game as non-member?").then(function () {
-                    $ajax.get('/api/playerCode', {id: room.id, password: password}).then(player => {
-                        $state.go('skullking', {id: room.id, player: player});
-                    });
+                    getRoomCodeAndGo(room);
                 });
                 return;
             }
-            $ajax.get('/api/userPlayerCode', {id: room.id, password: password}).then(player => {
-                $state.go('skullking', {id: room.id, player: player});
-            });
+            getRoomCodeAndGo(room);
         };
 
         $scope.makeRoomPopup = function () {
@@ -114,7 +116,7 @@
         };
 
         $scope.makeRoom = function (options) {
-            $ajax.post('/api/newRoomCode', options, true).then(code => {
+            $ajax.post('/api/getCode', {type: 'SkullKing', new: true, options: options}, true).then(code => {
                 $state.go('skullking', {id: code.room, player: code.player});
                 popup.close();
             });
@@ -160,7 +162,11 @@
         };
 
         $scope.refresh();
-        $interval($scope.refresh, 5000);
+        var interval = $interval($scope.refresh, 5000);
+
+        $scope.$on('$destroy', function () {
+            $interval.cancel(interval);
+        });
 
         $scope.refreshRank = function () {
             $ajax.get('/api/ranks').then(function (res) {

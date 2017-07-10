@@ -1,4 +1,9 @@
-angular.module('app').controller('checkCtrl', function ($scope, pop, socket, $stateParams, $state, $timeout, $rootScope) {
+angular.module('app').controller('checkCtrl', function ($ajax, $scope, pop, socket, $stateParams, $state, $timeout, $rootScope) {
+
+    $ajax.post('/api/getCode', {type: 'Check', new: true}, true).then(code => {
+        $state.go('check', {id: code.room, player: code.player});
+        socket.emit('join', {id: code.room, player: code.player});
+    });
 
     var user = $scope.user = $rootScope.user;
 
@@ -46,7 +51,7 @@ angular.module('app').controller('checkCtrl', function ($scope, pop, socket, $st
             "150포인트를 소모하여 60초간 증가/감소하는 점수가 10배가 됩니다."];
         if (!confirm(alerts[i]))
             return;
-        socket.emit('checkgame.steampack', i);
+        socket.emit('player', 'steam', i);
     };
 
     $scope.roomId = $stateParams.id;
@@ -135,11 +140,11 @@ angular.module('app').controller('checkCtrl', function ($scope, pop, socket, $st
         $scope.selects.forEach(function (block) {
             selects.push($scope.blocks.indexOf(block));
         });
-        socket.emit('checkgame.check', selects);
+        socket.emit('player', 'check', selects);
     };
 
     $scope.done = function () {
-        socket.emit('checkgame.done');
+        socket.emit('player', 'done');
     };
 
     $scope.send = function (message) {
@@ -173,7 +178,8 @@ angular.module('app').controller('checkCtrl', function ($scope, pop, socket, $st
         $scope.steamend();
     });
 
-    socket.on('checkgame.game', function (send) {
+    socket.on('game', function (send) {
+        console.log(send);
         var selects;
         if (!send.reset) {
             selects = [];

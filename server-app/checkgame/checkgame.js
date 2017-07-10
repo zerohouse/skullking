@@ -4,7 +4,6 @@ var players = {};
 var best = {score: 0};
 var random = require('./../../utils/random.js');
 
-
 module.exports = function (io, socket, store, db, Message) {
     function userUpdate(socket) {
         if (!socket.session.user)
@@ -217,7 +216,6 @@ module.exports = function (io, socket, store, db, Message) {
             gameEnd(socket.roomId);
         socket.roomId = undefined;
         updatePlayers();
-
     }
 
     socket.on('disconnect', function () {
