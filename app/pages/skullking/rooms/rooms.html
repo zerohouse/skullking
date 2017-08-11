@@ -1,15 +1,5 @@
 <div class="container">
-
     <h3>SkullKing Online - OnePiece Theme</h3>
-    <div>
-        <div ng-if="!user._id">
-            <span class="btn btn-primary" ng-click="registerPopup()">Register</span>
-            <span class="btn btn-primary" ng-click="loginPopup()">Login</span>
-        </div>
-        <div ng-if="user._id">
-            <span ng-click="name(user)">{{user.name}} <i class="fa fa-pencil"></i></span> ({{user.point}}) <span class="btn btn-primary" ng-click="logout()">Logout</span>
-        </div>
-    </div>
 
     <div>
         <h5>Rooms <span ng-click="refresh()" class="label-warning label">Refresh</span></h5>

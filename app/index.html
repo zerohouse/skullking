@@ -42,6 +42,7 @@
     <script src="/app.ie.polyfill.js"></script>
     <script src="/app.js"></script>
     <script src="/app.prototype.js"></script>
+    <script src="/app.root.ctrl.js"></script>
     <script src="/config/ajax.js"></script>
     <script src="/config/route.config.js"></script>
     <script src="/config/route.js"></script>
@@ -60,16 +61,17 @@
     <script src="/directives/toggle/toggle.js"></script>
     <script src="/lib/jquery-ui.min.js"></script>
     <script src="/lib/moment.ko.js"></script>
-    <script src="/lib/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
+    <script src="/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="/lib/ui-dragdrop.js"></script>
-    <script src="/pages/check/check.js"></script>
-    <script src="/pages/rooms/rooms.js"></script>
+    <script src="/pages/puzzle/puzzle.js"></script>
+    <script src="/pages/puzzle/puzzle.room.js"></script>
+    <script src="/pages/puzzle/puzzleSingle.js"></script>
+    <script src="/pages/skullking/rooms/rooms.js"></script>
     <script src="/pages/skullking/skullking.js"></script>
     <script src="/service/colors.service.js"></script>
     <script src="/service/pop.service.js"></script>
     <script src="/service/popup/popup.service.js"></script>
     <script src="/service/socket.js"></script>
-    <script src="/template.js"></script>
     <!-- /include -->
     <!-- endbuild -->
 
@@ -98,8 +100,8 @@
     <link href="/lib/angular-material.layouts.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="/pages/check/check.css" rel="stylesheet" type="text/css">
-    <link href="/pages/rooms/rooms.css" rel="stylesheet" type="text/css">
+    <link href="/pages/puzzle/puzzle.css" rel="stylesheet" type="text/css">
+    <link href="/pages/skullking/rooms/rooms.css" rel="stylesheet" type="text/css">
     <link href="/pages/skullking/skullking.css" rel="stylesheet" type="text/css">
     <link href="/service/pop.css" rel="stylesheet" type="text/css">
     <link href="/service/popup/popup.css" rel="stylesheet" type="text/css">
@@ -116,8 +118,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;
@@ -130,6 +132,29 @@
     </script>
 </head>
 <body ng-cloak class="layout-column flex">
+<header class="navbar" style="margin-bottom:0">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="fa fa-bars menu-toggle hide-gt-xs" ng-click="isNavCollapsed = !isNavCollapsed"></a>
+            <a class="navbar-brand">Board Games</a>
+        </div>
+        <nav class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="skullkingrooms">SkullKing</a></li>
+                <li><a ui-sref="puzzlerooms">Robots</a>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="!user._id"><a ng-click="registerPopup()"> Register</a></li>
+                <li ng-if="!user._id"><a ng-click="loginPopup()">Login</a></li>
+                <li ng-if="user._id"><a ng-click="name(user)">{{user.name}} ({{user.point}}) </a>
+                </li>
+                <li ng-if="user._id">
+                    <a ng-click="logout()">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <!-- Contents -->
 <div ui-view class="flex"

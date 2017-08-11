@@ -1,15 +1,18 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var port = process.env.PORT || 8080;
-var session = require('express-session');
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = process.env.PORT || 8080;
+const session = require('express-session');
+
 
 app.use(session({
     secret: 'xcvlbjxpobjpxsdfbjpodfibjpo',
     resave: false,
     saveUninitialized: true
 }));
+
+
 app.use(require('body-parser').json());
 require('./app/app.prototype');
 require('./server-app/game.socket').socket(io);

@@ -35,8 +35,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;
@@ -49,6 +49,29 @@
     </script>
 </head>
 <body ng-cloak class="layout-column flex">
+<header class="navbar" style="margin-bottom:0">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="fa fa-bars menu-toggle hide-gt-xs" ng-click="isNavCollapsed = !isNavCollapsed"></a>
+            <a class="navbar-brand">Board Games</a>
+        </div>
+        <nav class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="skullkingrooms">SkullKing</a></li>
+                <li><a ui-sref="puzzlerooms">Robots</a>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="!user._id"><a ng-click="registerPopup()"> Register</a></li>
+                <li ng-if="!user._id"><a ng-click="loginPopup()">Login</a></li>
+                <li ng-if="user._id"><a ng-click="name(user)">{{user.name}} ({{user.point}}) </a>
+                </li>
+                <li ng-if="user._id">
+                    <a ng-click="logout()">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <!-- Contents -->
 <div ui-view class="flex"

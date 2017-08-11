@@ -1,6 +1,7 @@
 (function () {
     angular.module('app').controller('skullkingCtrl', skullkingCtrl);
     /* @ng-inject */
+
     /* Controllers */
     function skullkingCtrl($scope, popup, socket, $stateParams, $window, pop, $state, $timeout) {
         $scope.names = {
@@ -15,7 +16,7 @@
         }, function (id) {
             if (!id)
                 return;
-            socket.emit('join', {id: id, player: $stateParams.player});
+            socket.emit('join', {type: 'SkullKing', id: id, player: $stateParams.player});
         });
 
 
@@ -41,7 +42,7 @@
             game.me.turnIndex = game.players.findById(game.me.id).turnIndex;
 
             var stepCards;
-            if (!game.rounds || game.rounds.length === 0 || game.rounds.last().steps.length === 0);
+            if (!game.rounds || game.rounds.length === 0 || game.rounds.last().steps.length === 0) ;
             else
                 stepCards = game.rounds.last().steps.last().cards;
             game.me.cards.forEach(c => {
@@ -111,20 +112,6 @@
         });
 
 
-        socket.on("err", function (error) {
-            popup.close();
-            popup.alert(error);
-            $state.go('rooms');
-            $timeout(function () {
-                location.reload();
-            }, 1000);
-        });
-
-        socket.on("p", function (error) {
-            pop.error(error);
-        });
-
-
         $scope.startGame = function () {
             socket.emit('game', 'start');
         };
@@ -183,9 +170,7 @@
         $scope.$on("$destroy", function () {
             clearWatch();
             socket.removeAllListeners("game");
-            socket.removeAllListeners("e");
             socket.removeAllListeners("err");
-            socket.removeAllListeners("p");
             angular.element($window).off('resize');
         });
 

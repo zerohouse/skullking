@@ -1,5 +1,6 @@
 (function () {
     angular.module('app').controller('roomCtrl', roomCtrl);
+
     /* @ng-inject */
     function roomCtrl($scope, $rootScope, $state, popup, $ajax, pop, $interval) {
 
@@ -66,8 +67,6 @@
             winable: true
         }];
 
-        $rootScope.user = {};
-
         $scope.rooms = [];
 
         function getRoomCodeAndGo(room) {
@@ -98,62 +97,12 @@
         };
 
 
-        $scope.name = function () {
-            $scope.n = $rootScope.user.name;
-            popup.open('name', $scope);
-        };
-
-
-        $scope.reName = function (name) {
-            if (name.length < 2) {
-                pop.alert("Name must has at least 2 chars");
-                return;
-            }
-            $ajax.post('/api/user/name', {name: name}, true).then(function () {
-                $rootScope.user.name = name;
-                $scope.close();
-            });
-        };
-
         $scope.makeRoom = function (options) {
             $ajax.post('/api/getCode', {type: 'SkullKing', new: true, options: options}, true).then(code => {
                 $state.go('skullking', {id: code.room, player: code.player});
                 popup.close();
             });
         };
-
-        $scope.registerPopup = function () {
-            popup.open('register', $scope);
-        };
-
-        $scope.register = function (user) {
-            $ajax.post('/api/user', user, true).then(function (user) {
-                $rootScope.user = user;
-                popup.close();
-            });
-        };
-
-        $scope.loginPopup = function () {
-            popup.open('login', $scope);
-        };
-
-        $scope.login = function (user) {
-            $ajax.post('/api/user/login', user, true).then(function (res) {
-                $rootScope.user = res;
-                popup.close();
-            });
-        };
-
-        $scope.logout = function () {
-            $ajax.get('/api/user/logout').then(function () {
-                $rootScope.user = {};
-            });
-        };
-
-        $ajax.get('/api/user').then(function (res) {
-            $rootScope.user = res ? res : {};
-        });
-
 
         $scope.refresh = function () {
             $ajax.get('/api/rooms').then(function (res) {
@@ -176,8 +125,8 @@
                         return;
                     r.avgPoint = r.point / r.ranks.length;
                     r.avgRank = r.ranks.reduce((a, b) => {
-                            return a + (b.rank / b.players);
-                        }, 0) / r.ranks.length;
+                        return a + (b.rank / b.players);
+                    }, 0) / r.ranks.length;
                 });
             });
         };

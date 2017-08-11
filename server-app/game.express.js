@@ -1,7 +1,7 @@
 const games = require('./game.socket').games;
 const gameTypes = {
     SkullKing: require('./skullking/skullking.game'),
-    Check: require('./checkgame/game')
+    Puzzle:require('./puzzle/puzzle')
 };
 const randomstring = require("randomstring");
 const _ = require('lodash');

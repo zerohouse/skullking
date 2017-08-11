@@ -6,6 +6,7 @@ const GameResult = require('./skullking.result.model');
 const moment = require('moment');
 
 function SkullKing(id, options) {
+    this.type = 'skullking';
     this.id = id;
     this.name = options.name;
     this.password = options.password ? options.password : null;
