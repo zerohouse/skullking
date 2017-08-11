@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>목적지 : <i class="fa" style="font-size:40px;" ng-style="{color:game.spot.color}" ng-class="game.spot.icon"
+                 ng-if="game.spot.icon"></i></h1>
+    <span class="btn btn-primary" ng-click="short()">최단 경로 있다</span>
+    <span class="btn btn-primary" ng-click="noShort()">
+        <span ng-if="game.shorts.length>0">더 짧은 경로는 없다</span>
+        <span ng-if="game.shorts.length===0">포기</span>
+    </span>
+    <h3>현재 최단 경로 <span ng-if="!game.shorts.length===0"> : 못찾음</span></h3>
+    <h1 ng-if="game.proveTurn">현재 움직임:{{game.move}}</h1>
+    <span ng-if="game.duration">남은 시간 : {{remain / 1000 | number:1}}초</span>
+    <div ng-repeat="short in game.shorts">{{short.name}}님이 {{short.number}} 가능</div>
+    <div class="box">
+        <div>
+            <div class="block-row" ng-repeat="row in game.blocks">
+                <div class="block" ng-class="{prohibit:block.prohibit}" ng-repeat="block in row">
+                    <span class="right-bar" ng-if="!$last"
+                          ng-class="{showbar:block.right}"></span>
+                    <span class="bottom-bar" ng-if="!$parent.$last"
+                          ng-class="{showbar:block.bottom}"></span>
+                    <span class="spot">
+                    <i class="fa" ng-style="{color:block.color}" ng-class="block.icon" ng-if="block.icon"></i>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="robot in game.robots track by $index" class="robot" ng-style="robot.style()">
+            <i class="fa fa-caret-up" ng-click="move(robot,$index, 0)"></i>
+            <i class="fa fa-caret-down" ng-click="move(robot,$index, 1)"></i>
+            <i class="fa fa-caret-left" ng-click="move(robot,$index, 2)"></i>
+            <i class="fa fa-caret-right" ng-click="move(robot,$index, 3)"></i>
+        </div>
+        <div ng-repeat="robot in game.robots" class="start" ng-style="robot.startStyle()">
+        </div>
+    </div>
+    <div>
+        <div style="font-size:40px;" ng-style="{color:robot.color}">
+            <i class="fa fa-caret-left" ng-click="robot.left()"></i>
+            <i class="fa fa-caret-up" ng-click="robot.up()"></i>
+            <i class="fa fa-caret-down" ng-click="robot.down()"></i>
+            <i class="fa fa-caret-right" ng-click="robot.right()"></i>
+        </div>
+    </div>
+    <div>
+        <div ng-repeat="player in game.players">{{player.name}} / {{player.number}} / {{player.turn}} /
+            {{player.score}}
+        </div>
+    </div>
+
+</div>

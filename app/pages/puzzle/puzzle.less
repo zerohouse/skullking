@@ -1,0 +1,109 @@
+.box {
+  border: 5px solid black;
+  width: 645px;
+  height: 645px;
+  position: relative;
+  .start {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    opacity: 0.5;
+  }
+  .robot {
+    color: white;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    border: 2px solid #333;
+    z-index: 10;
+    //transition: 0.2s;
+    .fa {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      border-radius: 50%;
+    }
+    .fa:hover {
+      transform: scale(1.8);
+    }
+    .fa-caret-up {
+      left: 8px;
+      top: -2px;
+    }
+    .fa-caret-down {
+      left: 8px;
+      bottom: -3px;
+    }
+    .fa-caret-left {
+      left: -2px;
+      top: 8px;
+    }
+    .fa-caret-right {
+      right: -2px;
+      top: 8px;
+    }
+  }
+  .block {
+    .spot {
+      i {
+        font-size: 25px;
+        line-height: 38px;
+      }
+    }
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    float: left;
+    background: white;
+    position: relative;
+    color: black;
+    text-align: center;
+    .left-bar, .right-bar, .top-bar, .bottom-bar {
+      position: absolute;
+      background: #cccccc;
+    }
+    .showbar {
+      background: black;
+      z-index: 1;
+    }
+    .left-bar {
+      width: 5px;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+    .right-bar {
+      width: 5px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+    .bottom-bar {
+      height: 5px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .top-bar {
+      height: 5px;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+  }
+  .block.prohibit {
+    background: black;
+  }
+  .block:last-child {
+    width: 35px;
+  }
+  .block-row:last-child {
+    .block {
+      height: 35px;
+    }
+  }
+}
