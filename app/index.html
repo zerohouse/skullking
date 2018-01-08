@@ -77,15 +77,15 @@
 
     <!-- build:css(.) /styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/angular-toastr/dist/angular-toastr.css" />
-    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog.css" />
-    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog-theme-default.css" />
+    <link rel="stylesheet" href="/bower_components/angular-toastr/dist/angular-toastr.css"/>
+    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog.css"/>
+    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog-theme-default.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) /styles/main.css -->
     <!-- include: "type": "css", "files": "**/*.css" -->
 
-  <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/dialog/dialog.css" rel="stylesheet" type="text/css">
     <link href="/directives/chat/chat.css" rel="stylesheet" type="text/css">
     <link href="/directives/progress/progress.css" rel="stylesheet" type="text/css">
     <link href="/directives/skullking/card/card.css" rel="stylesheet" type="text/css">
@@ -132,18 +132,16 @@
     </script>
 </head>
 <body ng-cloak class="layout-column flex">
-<header class="navbar" style="margin-bottom:0">
-    <div class="container-fluid">
+<header class="navbar" style="background-color:white;margin-bottom:0">
+    <div class="container" style="background:white;">
         <div class="navbar-header">
             <a class="fa fa-bars menu-toggle hide-gt-xs" ng-click="isNavCollapsed = !isNavCollapsed"></a>
-            <a class="navbar-brand">Board Games</a>
+            <a class="navbar-brand" ui-sref="skullkingrooms">SKULL KING</a>
         </div>
         <nav class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
             <ul class="nav navbar-nav">
-                <li><a ui-sref="skullkingrooms">SkullKing</a></li>
-                <li><a ui-sref="puzzlerooms">Robots</a>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a ui-sref="skullkingrooms">SkullKing</a></li>-->
+                <!--<li><a ui-sref="puzzlerooms">Robots</a>-->
                 <li ng-if="!user._id"><a ng-click="registerPopup()"> Register</a></li>
                 <li ng-if="!user._id"><a ng-click="loginPopup()">Login</a></li>
                 <li ng-if="user._id"><a ng-click="name(user)">{{user.name}} ({{user.point}}) </a>

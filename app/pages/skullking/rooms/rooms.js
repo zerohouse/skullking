@@ -90,7 +90,7 @@
 
         $scope.makeRoomPopup = function () {
             if (!$rootScope.user._id) {
-                pop.alert("Non-member can't make a new game.");
+                pop.alert("Login Plz.");
                 return;
             }
             popup.open('makeRoom', $scope);

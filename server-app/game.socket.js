@@ -11,22 +11,22 @@ function checkAndDestroyGame() {
 
 setInterval(checkAndDestroyGame, 10000);
 
-const PuzzleGame = require('./puzzle/puzzle');
-const puzzle = new PuzzleGame();
-puzzle.start();
+// const PuzzleGame = require('./puzzle/puzzle');
+// const puzzle = new PuzzleGame();
+// puzzle.start();
 
 const join = {
-    Puzzle: (socket, data) => {
-        const player = puzzle.addPlayer(data.id);
-        player.socket = socket;
-        socket.player = player;
-        socket.game = puzzle;
-        socket.game.update();
-        socket.disconnectGame = function () {
-            puzzle.players.remove(player);
-            socket.game.update();
-        };
-    },
+    // Puzzle: (socket, data) => {
+    //     const player = puzzle.addPlayer(data.id);
+    //     player.socket = socket;
+    //     socket.player = player;
+    //     socket.game = puzzle;
+    //     socket.game.update();
+    //     socket.disconnectGame = function () {
+    //         puzzle.players.remove(player);
+    //         socket.game.update();
+    //     };
+    // },
     SkullKing: (socket, data) => {
         socket.join(data.id);
         let game = games[data.id];
